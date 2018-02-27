@@ -1,24 +1,36 @@
 <?php
 
-require("Libs/Model.php");
-require("Libs/View.php");
-require("Libs/Controller.php");
-require("Libs/Router.php");
+namespace App\Framework;
+
+require 'Model.php';
+require 'View.php';
+require 'Controller.php';
+require 'Router.php';
+require 'Autoloader.php';
+
+define('PATH_FILE_ROOT', dirname(__DIR__));
+
+echo "<ol><li>Bootstrap registered";
+
 
 spl_autoload_register(function($className) {
-	require("Controllers/" . $className . ".php");
+	$className = str_replace('\\', DIRECTORY_SEPARATOR, $className);
+
+	// this should be in: getClassRoute($className);
+	// Get rid off this App\ part in front of every namespace
+	$appPart = 'App\\';
+	$className = substr($className, strpos($className, $appPart) + strlen($appPart));
+	
+	if (is_file(PATH_FILE_ROOT . '/' . $className . '.php')) {
+        require(PATH_FILE_ROOT . '/' . $className . '.php');
+    }
 });
 
-// Define global constants
-define('ROOT_PATH', dirname(__DIR__));
+$router = new Router($_SERVER['REQUEST_URI'] ?? "");
 
-// Url handling
-$url = !empty($_GET["url"]) ? $_GET["url"] : null;
-$router = new Router($url);
-$route = $router->getRoute();
+require PATH_FILE_ROOT.'/Controllers/TestController.php';
+require PATH_FILE_ROOT.'/Models/Test.php';
 
-// Finally call a proper method
-$controller = new $route['controller']();
-call_user_func_array([$controller, $route['action']], $route['paramArr']);
+$controller = new \App\Controllers\TestController();
 
-// Add exceptions!
+echo "</ol>";

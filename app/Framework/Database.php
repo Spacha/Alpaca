@@ -2,14 +2,12 @@
 
 namespace App\Framework;
 
-Class Model
+Class Database
 {
 	protected $db;
 	
 	public function __construct()
 	{
-		$this->db = new Database();
-
-		echo "<li> Main Model";
+		echo "<li> Database registered";
 	}
 }

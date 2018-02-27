@@ -1,8 +1,8 @@
 <?php
 
-namespace Alpaca;
+namespace App\Framework;
 
 Class View
 {
-
+	//
 }

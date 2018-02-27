@@ -1,3 +1,3 @@
 <?php
 
-require("../Alpaca/Bootstrap.php");
+require '../app/Framework/Bootstrap.php';

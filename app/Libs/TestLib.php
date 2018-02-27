@@ -2,6 +2,6 @@
 
 namespace App\Libs;
 
-class Router {
+Class TestLib {
 	//
 }
