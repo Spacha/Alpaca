@@ -2,7 +2,7 @@
 
 namespace App\Framework\Libs;
 
-abstract Class Controller
+abstract class Controller
 {
 	public function __construct()
 	{

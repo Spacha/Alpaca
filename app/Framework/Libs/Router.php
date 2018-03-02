@@ -3,6 +3,7 @@
 namespace App\Framework\Libs;
 
 use App\Framework\Libs\Core;
+use App\Framework\Libs\RouteMatcher;
 use App\Framework\Exceptions\RoutingException;
 
 class Router
@@ -19,6 +20,8 @@ class Router
 		$this->setUrl($url);
 		$this->getRoutes();
 		$this->setCallables();
+
+		var_dump($this->routes);
 	}
 
 	/**
@@ -46,6 +49,8 @@ class Router
 	 */
 	protected function setUrl(string $url)
 	{
+		//RouteMatcher::match($url, $this->routes);
+
 		$url = rtrim($url, '/');
 		$this->url = strlen($url) ? $url : '/';
 	}
@@ -55,31 +60,6 @@ class Router
 	 */
 	protected function setCallables()
 	{
-		// /test/{userId} => /test\/[a-z,0-9]*/	
-		$route = "/test/{userId}";
-		$anyChar = "\[a-z,0-9\]+";
-		$brackets = "/\{(.*?)\}/";
-		$url = $this->url;
-
-		$regExpRoutes = [];
-
-		// transform pretty routes into ugly regExp
-		foreach ($this->routes as $match => $action) {
-			preg_match_all($brackets, $match, $matches);
-
-			if (count($matches[1])) $action[3] = $matches[1];
-
-			$key = preg_replace($brackets, $anyChar, $match);
-			$regExpRoutes[$key] = $action;
-		}
-		var_dump($regExpRoutes);
-
-		$exp = "/test\/[a-z,0-9]*/";
-		// '^\/test\/[0-9]+$/'
-		if (preg_match($exp, $this->url)) {
-			var_dump('woa');
-		}
-
 		// $this->controller = Core::controllerNamespace($route[0] ?? '');
 		// $this->method = $route[1] ?? '';
 		// $this->params = $route[2] ?? [];
@@ -97,6 +77,6 @@ class Router
 			$action = explode('@', $action);
 		});
 
-		$this->routes = $routes;
+		$this->routes = RouteMatcher::routesToRegExp($routes);
 	}
 }

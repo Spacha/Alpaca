@@ -57,7 +57,7 @@ class Bootstrap
 	 */
 	protected function setExceptionHandler()
 	{
-		new ExceptionHandler();
+		//new ExceptionHandler();
 	}
 
 	/**
