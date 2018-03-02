@@ -48,6 +48,8 @@ class Bootstrap
 	{
 		require_once __DIR__ . '/Libs/Core.php';
 		require_once __DIR__ . '/Libs/Autoloader.php';
+
+		require_once __DIR__ . '/helpers.php';
 	}
 
 	/**

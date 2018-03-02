@@ -8,7 +8,12 @@ use App\Models\Test;
 
 class TestController extends Controller
 {
-	public function home($userId = 0)
+	public function home()
+	{
+		echo "Home sweet home!";
+	}
+
+	public function list($userId = 0)
 	{
 		$users = Test::items();
 

@@ -5,6 +5,7 @@
 */
 
 return [
-	'/' 	=> 'TestController@index',
-	'/test' => 'TestController@test'
+	'/' 					=> 'TestController@home',
+	'/test' 				=> 'TestController@list',
+	'/test/{userId}' 		=> 'TestController@list',
 ];

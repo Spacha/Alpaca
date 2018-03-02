@@ -16,11 +16,9 @@ class Router
 
 	public function __construct($url = '')
 	{
+		$this->setUrl($url);
 		$this->getRoutes();
-
-		$this->controller = Core::controllerNamespace('TestController');
-		$this->method = 'home';
-		$this->params = [];
+		$this->setCallables();
 	}
 
 	/**
@@ -29,7 +27,7 @@ class Router
 	public function callAction()
 	{
 		if (!class_exists($this->controller))
-			throw new RoutingException("Contoller {$this->controller} doesn't exist.");
+			throw new RoutingException("Controller {$this->controller} doesn't exist.");
 
 		$controller = new $this->controller();
 
@@ -37,14 +35,42 @@ class Router
 			throw new RoutingException("Method {$this->method} doesn't exist.");
 
 		// Call the controller's method
-		call_user_func_array(
-			[$controller, $this->method],
-			$this->params
-		);	
+		call_user_func_array([$controller, $this->method], $this->params);
 	}
 
+	/**
+	 * Trim and set the url. Empty url is converted to a slash: '/'
+	 */
+	protected function setUrl(string $url)
+	{
+		$url = rtrim($url, '/');
+		$this->url = strlen($url) ? $url : '/';
+	}
+
+	/**
+	 * Set the callables based on url
+	 */
+	protected function setCallables()
+	{
+		$route = $this->routes[$this->url] ?? [];
+
+		$this->controller = Core::controllerNamespace($route[0] ?? '');
+		$this->method = $route[1] ?? '';
+		$this->params = $route[2] ?? [];
+	}
+
+	/**
+	 * Load route config and explode it into route-callable pairs
+	 */
 	protected function getRoutes()
 	{
+		$routes = config('routes');
 
+		// Explode route syntax to callables
+		array_walk($routes, function(&$action, $match) {
+			$action = explode('@', $action);
+		});
+
+		$this->routes = $routes;
 	}
 }

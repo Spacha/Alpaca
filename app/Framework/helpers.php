@@ -4,7 +4,7 @@
 // no need to relaod the whole thing every time, right?
 function config($config = '')
 {
-	$configPath = PATH_FILE_ROOT . '/config/' . $config . '.php';
+	$configPath = PATH_ROOT . '/config/' . $config . '.php';
 
 	$configFile = file_exists($configPath)
 		? require($configPath)
