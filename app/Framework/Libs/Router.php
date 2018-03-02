@@ -5,7 +5,7 @@ namespace App\Framework\Libs;
 use App\Framework\Libs\Core;
 use App\Framework\Exceptions\RoutingException;
 
-Class Router
+class Router
 {
 	protected $url = '';
 	protected $routes = [];

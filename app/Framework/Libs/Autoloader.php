@@ -4,7 +4,7 @@ namespace App\Framework\Libs;
 
 use App\Framework\Libs\Core;
 
-Class Autoloader
+class Autoloader
 {
 	/**
 	 * Registers class loader for the spl autoloader

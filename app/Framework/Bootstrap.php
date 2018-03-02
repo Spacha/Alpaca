@@ -2,9 +2,10 @@
 
 namespace App\Framework;
 
-use App\Framework\Libs\Autoloader;
 use App\Framework\Libs\Core;
 use App\Framework\Libs\Router;
+use App\Framework\Libs\ExceptionHandler;
+use App\Framework\Libs\Autoloader;
 
 class Bootstrap
 {
@@ -15,6 +16,7 @@ class Bootstrap
 		$this->defineConstants();
 		$this->requireVitals();
 		$this->loadAutoloader();
+		$this->setExceptionHandler();
 	}
 
 	/**
@@ -46,6 +48,14 @@ class Bootstrap
 	{
 		require_once __DIR__ . '/Libs/Core.php';
 		require_once __DIR__ . '/Libs/Autoloader.php';
+	}
+
+	/**
+	 * 
+	 */
+	protected function setExceptionHandler()
+	{
+		new ExceptionHandler();
 	}
 
 	/**
