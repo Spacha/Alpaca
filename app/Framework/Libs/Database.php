@@ -2,14 +2,14 @@
 
 namespace App\Framework;
 
-Class Model
+use PDO;
+
+Class Database extends PDO
 {
 	protected $db;
 	
 	public function __construct()
 	{
-		$this->db = new Database();
-
-		echo "<li> Main Model";
+		echo "<li> Database registered";
 	}
 }

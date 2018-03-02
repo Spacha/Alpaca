@@ -2,12 +2,10 @@
 
 namespace App\Framework;
 
-Class Database
+abstract Class Controller
 {
-	protected $db;
-	
 	public function __construct()
 	{
-		echo "<li> Database registered";
+		echo "<li> Main controller";
 	}
 }

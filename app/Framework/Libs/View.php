@@ -2,7 +2,7 @@
 
 namespace App\Framework;
 
-Class View
+abstract Class View
 {
 	//
 }
