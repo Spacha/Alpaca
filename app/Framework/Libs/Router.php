@@ -16,7 +16,9 @@ class Router
 
 	public function __construct($url = '')
 	{
-		$this->controller = Core::controllerNamespace('TestCaontroller');
+		$this->getRoutes();
+
+		$this->controller = Core::controllerNamespace('TestController');
 		$this->method = 'home';
 		$this->params = [];
 	}
@@ -29,13 +31,20 @@ class Router
 		if (!class_exists($this->controller))
 			throw new RoutingException("Contoller {$this->controller} doesn't exist.");
 
-		// Call the specified controller
 		$controller = new $this->controller();
+
+		if (!method_exists($controller, $this->method))
+			throw new RoutingException("Method {$this->method} doesn't exist.");
 
 		// Call the controller's method
 		call_user_func_array(
 			[$controller, $this->method],
 			$this->params
 		);	
+	}
+
+	protected function getRoutes()
+	{
+
 	}
 }
