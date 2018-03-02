@@ -1,0 +1,29 @@
+<?php
+
+namespace App\Framework\Libs;
+
+use App\Framework\Libs\Core;
+
+Class Autoloader
+{
+	/**
+	 * Registers class loader for the spl autoloader
+	 */
+	public function __construct()
+	{
+		spl_autoload_register([$this, 'loader']);
+	}
+
+	/**
+	 * Loader method which handles loading every class for the application's needs
+	 *
+	 * @param string $className Class name the spl-registerer injects
+	 */
+	private function loader($className)
+	{
+		$file = PATH_ROOT . Core::classRoute($className) . '.php';
+
+		if (is_file($file))
+			require($file);
+	}
+}
