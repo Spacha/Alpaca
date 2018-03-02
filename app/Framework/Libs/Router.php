@@ -26,13 +26,16 @@ class Router
 	 */
 	public function callAction()
 	{
-		if (!class_exists($this->controller))
+		if (!class_exists($this->controller)) {
 			throw new RoutingException("Controller {$this->controller} doesn't exist.");
+		}
 
+		// Register the controller
 		$controller = new $this->controller();
 
-		if (!method_exists($controller, $this->method))
+		if (!method_exists($controller, $this->method)) {
 			throw new RoutingException("Method {$this->method} doesn't exist.");
+		}
 
 		// Call the controller's method
 		call_user_func_array([$controller, $this->method], $this->params);
@@ -52,11 +55,34 @@ class Router
 	 */
 	protected function setCallables()
 	{
-		$route = $this->routes[$this->url] ?? [];
+		// /test/{userId} => /test\/[a-z,0-9]*/	
+		$route = "/test/{userId}";
+		$anyChar = "\[a-z,0-9\]+";
+		$brackets = "/\{(.*?)\}/";
+		$url = $this->url;
 
-		$this->controller = Core::controllerNamespace($route[0] ?? '');
-		$this->method = $route[1] ?? '';
-		$this->params = $route[2] ?? [];
+		$regExpRoutes = [];
+
+		// transform pretty routes into ugly regExp
+		foreach ($this->routes as $match => $action) {
+			preg_match_all($brackets, $match, $matches);
+
+			if (count($matches[1])) $action[3] = $matches[1];
+
+			$key = preg_replace($brackets, $anyChar, $match);
+			$regExpRoutes[$key] = $action;
+		}
+		var_dump($regExpRoutes);
+
+		$exp = "/test\/[a-z,0-9]*/";
+		// '^\/test\/[0-9]+$/'
+		if (preg_match($exp, $this->url)) {
+			var_dump('woa');
+		}
+
+		// $this->controller = Core::controllerNamespace($route[0] ?? '');
+		// $this->method = $route[1] ?? '';
+		// $this->params = $route[2] ?? [];
 	}
 
 	/**
