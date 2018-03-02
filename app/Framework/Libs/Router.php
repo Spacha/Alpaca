@@ -3,6 +3,7 @@
 namespace App\Framework\Libs;
 
 use App\Framework\Libs\Core;
+use App\Framework\Exceptions\RoutingException;
 
 Class Router
 {
@@ -15,7 +16,7 @@ Class Router
 
 	public function __construct($url = '')
 	{
-		$this->controller = Core::controllerNamespace('TestController');
+		$this->controller = Core::controllerNamespace('TestCaontroller');
 		$this->method = 'home';
 		$this->params = [];
 	}
@@ -25,6 +26,9 @@ Class Router
 	 */
 	public function callAction()
 	{
+		if (!class_exists($this->controller))
+			throw new RoutingException("Contoller {$this->controller} doesn't exist.");
+
 		// Call the specified controller
 		$controller = new $this->controller();
 
