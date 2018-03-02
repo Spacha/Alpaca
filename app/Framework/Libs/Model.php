@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Framework;
+namespace App\Framework\Libs;
 
 abstract Class Model
 {
@@ -8,8 +8,11 @@ abstract Class Model
 	
 	public function __construct()
 	{
-		$this->db = new Database();
-
 		echo "<li> Main Model";
+	}
+
+	public function connect()
+	{
+		$this->db = new Database();
 	}
 }

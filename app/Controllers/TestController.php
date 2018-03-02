@@ -2,18 +2,20 @@
 
 namespace App\Controllers;
 
-use App\Framework\Controller;
-use App\Framework\Model;
+use App\Framework\Libs\Controller;
+
+use App\Models\Test;
 
 class TestController extends Controller
 {
-	protected $model;
-
-	public function __construct()
+	public function home($userId = 0)
 	{
-		parent::__construct();
-		$this->model = new Model();
+		$users = Test::items();
 
-		echo "<li> Test Controller";
+		if ($userId) {
+			echo 'User: '.$userId;
+		} else {
+			echo var_dump($users);
+		}
 	}
 }
