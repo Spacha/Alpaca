@@ -20,8 +20,6 @@ class Router
 		$this->setUrl($url);
 		$this->getRoutes();
 		$this->setCallables();
-
-		var_dump($this->routes);
 	}
 
 	/**
@@ -49,8 +47,6 @@ class Router
 	 */
 	protected function setUrl(string $url)
 	{
-		//RouteMatcher::match($url, $this->routes);
-
 		$url = rtrim($url, '/');
 		$this->url = strlen($url) ? $url : '/';
 	}
@@ -60,9 +56,11 @@ class Router
 	 */
 	protected function setCallables()
 	{
-		// $this->controller = Core::controllerNamespace($route[0] ?? '');
-		// $this->method = $route[1] ?? '';
-		// $this->params = $route[2] ?? [];
+		$action = RouteMatcher::match($this->url, $this->routes);
+		
+		$this->controller = Core::controllerNamespace($action[0] ?? '');
+		$this->method = $action[1] ?? '';
+		$this->params = $action[2] ?? [];
 	}
 
 	/**

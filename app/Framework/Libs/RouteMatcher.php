@@ -12,19 +12,38 @@ class RouteMatcher
 	 */
 	public static function routesToRegExp(array $routes) : array
 	{
-		$route = "/test/{userId}";
-		$anyChar = "\[a-z,0-9\]+";
-		$brackets = "/\{(.*?)\}/";
+		// These match to some ocurrences in the routes
+		$find = [
+			'any' 			=> '(.*?)+',		// anything that ocurres at least once
+			'brackets' 		=> '/\{(.*?)\}/',	// brackets which contain at least one character
+			'slash' 		=> '/\//',
+		];
 
 		$regExpRoutes = [];
 
 		// transform pretty routes into ugly regExp
 		foreach ($routes as $match => $action) {
-			preg_match_all($brackets, $match, $matches);
 
+			$match = (strlen($match) > 1)
+				? trim($match, "/")
+				: $match;
+
+			// get parameter names and save them to actions for later use
+			preg_match_all($find['brackets'], $match, $matches);
 			if (count($matches[1])) $action[3] = $matches[1];
 
-			$key = preg_replace($brackets, $anyChar, $match);
+			// replace brackets with matching regExp
+			preg_replace(
+				[$find['brackets'], $find['slash']],
+				[$find['any'], "\/"],
+				$match
+			);
+
+			$key = preg_replace($find['brackets'], $find['any'], $match);
+			$key = preg_replace("/\//", "\/", $key);
+
+			// add wrappers and end operator ($)
+			$key = "/{$key}$/";
 			$regExpRoutes[$key] = $action;
 		}
 		
@@ -38,14 +57,15 @@ class RouteMatcher
 	 * @param array $routes
 	 * @return bool
 	 */
-	public static function match(string $url, array $routes) : bool
+	public static function match(string $url, array $routes) : array
 	{
-		$exp = "/test\/[a-z,0-9]*/";
-
-		if (preg_match($exp, $url)) {
-			return true;
+		// Loop through routes and check if any of them matches the url
+		foreach ($routes as $match => $action) {
+			if (preg_match($match, $url)) {
+				return $action;
+			}
 		}
 
-		return false;
+		return [];
 	}
 }
