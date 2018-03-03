@@ -2,6 +2,8 @@
 
 namespace App\Framework\Libs;
 
+use App\Framework\Exceptions\RoutingException;
+
 /**
  * @todo Maybe this should have SyntaxTransformer or something
  */
@@ -45,8 +47,8 @@ class RouteMatcher
 			// add starting and ending delimeters and push to array
 
 			$formattedRoutes["/^\/{$url}$/"] = [
-				'action' => $action,
-				'params' => $paramKeys[1]
+				'action' 	=> $action,
+				'paramKeys' => $paramKeys[1]
 			];
 		}
 
@@ -83,11 +85,7 @@ class RouteMatcher
 
 				preg_match_all($match, $url, $params);
 
-				$result = [
-					'action' => self::buildAction($action['action'], $params[1]),
-					'params' => $action['params']
-				];
-
+				$result = self::buildAction($action, $params[1]);
 			}	
 		}
 
@@ -101,11 +99,24 @@ class RouteMatcher
 	 * @param array $params parameters we want to pass along
 	 * @return array Action array with controller, method and parameters ordered nicely
 	 */
-	protected static function buildAction(string $actionString, array $params = []) : array
+	protected static function buildAction(array $parts, array $params) : array
 	{
 		// Explode route syntax to callables
-		$action = explode('@', $actionString);
-		$action[] = $params;
+		$action = explode('@', $parts['action']);
+
+		if (count($action) > 2)
+			throw new RoutingException("Invalid route definition: {$parts['action']}.");
+
+		$paramArr = [];
+
+		// Make key value pairs of parameters
+		// For example:
+		// route: test/{userId} and url: test/12 => "usedId" => 12
+		for($i = 0; $i < count($params); $i++) {
+			$paramArr[$parts['paramKeys'][$i] ?? 'unknown'] = $params[$i];
+		}
+
+		$action[] = $paramArr;
 
 		return $action;
 	}
