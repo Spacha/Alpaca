@@ -20,11 +20,6 @@ class RouteMatcher
 		// also #-_?&
 		*/
 
-		// Explode route syntax to callables
-		array_walk($routes, function(&$action) {
-			$action = explode('@', $action);
-		});
-
 		$find = [
 			'any' 		=> '([a-zA-Z0-9åäö]+)',
 			'brackets' 	=> '/\{(.*?)\}/',
@@ -33,12 +28,13 @@ class RouteMatcher
 
 		$formattedRoutes = [];
 
+		// @todo Group and separate these into own methods
 		foreach ($routes as $url => $action) {
 
 			$url = trim($url, "/");
 
-			// extract parameted keys from route for later use
-			preg_match_all($find['brackets'], $url, $params);
+			// extract parameter keys from route for later use
+			preg_match_all($find['brackets'], $url, $paramKeys);
 
 			// replace brackets with matching exceptions
 			$url = preg_replace($find['brackets'], $find['any'], $url);
@@ -47,7 +43,11 @@ class RouteMatcher
 			$url = preg_replace($find['literals'], "\/", $url);
 
 			// add starting and ending delimeters and push to array
-			$formattedRoutes["/^\/{$url}$/"] = [$action, $params[1]];
+
+			$formattedRoutes["/^\/{$url}$/"] = [
+				'action' => $action,
+				'params' => $paramKeys[1]
+			];
 		}
 
 		return $formattedRoutes;
@@ -76,12 +76,37 @@ class RouteMatcher
 	{
 		$result = ['',[]];
 
-		array_walk($routes, function($action, $match) use ($url, &$result) {
+		foreach ($routes as $match => $action) {
 			if (preg_match($match, $url)) {
-				$result = $action;
-			}
-		});
-		
+
+				// if we have a match, build an action for it
+
+				preg_match_all($match, $url, $params);
+
+				$result = [
+					'action' => self::buildAction($action['action'], $params[1]),
+					'params' => $action['params']
+				];
+
+			}	
+		}
+
 		return $result;
+	}
+
+	/**
+	 *
+	 * @todo Extract this to Parser / SyntaxTransformer
+	 * @param string $actionString Pretty string version of the action (route syntax)
+	 * @param array $params parameters we want to pass along
+	 * @return array Action array with controller, method and parameters ordered nicely
+	 */
+	protected static function buildAction(string $actionString, array $params = []) : array
+	{
+		// Explode route syntax to callables
+		$action = explode('@', $actionString);
+		$action[] = $params;
+
+		return $action;
 	}
 }
