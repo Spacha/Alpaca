@@ -50,6 +50,10 @@ class Bootstrap
 		require_once __DIR__ . '/Libs/Autoloader.php';
 
 		require_once __DIR__ . '/helpers.php';
+		// Require vital Alpaca parts 
+		//Core::requireVitals();
+		// Require others, like files user has configured to be loaded (app/helper.php...)
+		//Core::requireExtras();
 	}
 
 	/**
