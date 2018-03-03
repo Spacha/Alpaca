@@ -55,6 +55,8 @@ class RouteMatcher
 
 			// extract parameter keys from route for later use
 			preg_match_all($find['brackets'], $url, $paramKeys);
+			$paramKeys = array_unset($paramKeys);
+
 
 			// replace brackets with matching exceptions
 			$url = preg_replace($find['brackets'], $find['any'], $url);
@@ -65,7 +67,7 @@ class RouteMatcher
 			// add starting and ending delimeters and push to array
 			$formattedRoutes["/^\/{$url}$/"] = [
 				'action' 	=> $action,
-				'paramKeys' => $paramKeys[1]
+				'paramKeys' => $paramKeys
 			];
 		}
 
@@ -86,11 +88,11 @@ class RouteMatcher
 		foreach ($routes as $match => $action) {
 			if (preg_match($match, $url)) {
 
-				// if we have a match, build an action for it
-
+				// if we have a match, let's build an action for it
 				preg_match_all($match, $url, $params);
+				$params = array_unset($params);
 
-				$result = self::buildAction($action, $params[1] ?? []);
+				$result = self::buildAction($action, $params ?? []);
 			}	
 		}
 
@@ -118,11 +120,14 @@ class RouteMatcher
 		// For example:
 		// route: test/{userId} and url: test/12 => "usedId" => 12
 		for($i = 0; $i < count($params); $i++) {
-			$paramArr[$parts['paramKeys'][$i] ?? 'unknown'] = $params[$i];
+
+			$paramKey = $parts['paramKeys'][0][$i] ?? 'unknown';
+			$paramArr[$paramKey] = $params[$i][0];
+
 		}
 
 		$action[2] = $paramArr;
-
+		
 		return $action;
 	}
 }
