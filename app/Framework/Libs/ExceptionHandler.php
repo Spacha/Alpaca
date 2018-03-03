@@ -6,12 +6,17 @@ use App\Framework\Logs\ErrorLog;
 
 class ExceptionHandler
 {
+	protected $dump = false;
+
 	/**
 	 * Set exception handler
 	 */
-	public function __construct()
+	public function __construct($dump = false)
 	{
-		set_exception_handler([$this, 'handler']);
+		$this->dump = $dump;
+		
+		if (!$this->dump)
+			set_exception_handler([$this, 'handler']);
 	}
 
 	/**
@@ -19,8 +24,15 @@ class ExceptionHandler
 	 */
 	public function handler($e)
 	{
+		$trace = "
+			<div style='padding: 1rem;'>
+				In File <span style='font-size: 110%; font-weight: bold;'>".$e->getFile()."</span> on line <span style='font-size: 110%; font-weight: bold;'>".$e->getLine()."</span>
+			</div>
+		";
+		//print_r($e->getTrace());
 		echo "<h1>Error</h1>";
-		echo "<b>Error!</b> {$e->getMessage()} (code {$e->getCode()})";
+		echo "<div style='background: #666; color: #fff; padding: 1rem;'>{$e->getMessage()} (code {$e->getCode()})</div>";
+		echo "{$trace}<hr>";
 
 		ErrorLog::write($e);
 
