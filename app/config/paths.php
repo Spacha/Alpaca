@@ -1,8 +1,11 @@
 <?php
 
-/**
-	Paths to application's files and folders
-*/
+/*---------------------------------------------------------
+ * Paths to Alpaca's files and folders.
+ *---------------------------------------------------------
+ *
+ *
+ */
 
 return [
 	//

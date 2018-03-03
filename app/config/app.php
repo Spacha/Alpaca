@@ -1,8 +1,11 @@
 <?php
 
-/**
-	Application main config file
-*/
+/*---------------------------------------------------------
+ * Application main config file
+ *---------------------------------------------------------
+ *
+ *
+ */
 
 return [
 	// Application name

@@ -1,12 +1,15 @@
 <?php
 
-/**
-	Application specific routes
-*/
+/*---------------------------------------------------------
+ * Application specific routes
+ *---------------------------------------------------------
+ *
+ *
+ */
 
 return [
-	'/' 					=> 'TestController@home',
-	'/test' 				=> 'TestController@test',
-	'/test/{userId}' 		=> 'TestController@list',
-	'/test/{userId}/kakka' 	=> 'TestController@kakka',
+	'/' 									=> 'TestController@home',
+	'/users' 								=> 'TestController@user',
+	'/users/{userId}' 						=> 'TestController@user',
+	'/users/{userId}/posts/{postId}' 		=> 'TestController@posts',
 ];
