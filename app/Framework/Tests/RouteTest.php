@@ -10,8 +10,15 @@ class RouteTest extends Test implements TestInterFace
 {
 	protected $routes = [];
 
+	/**
+	 * Boot it up.
+	 * Don't forget to construct parent constructor, otherwise the test won't work!
+	 *
+	 * @param array $routes
+	 */
 	public function __construct($routes = [])
 	{
+		parent::__construct();
 		$this->routes = $routes;
 	}
 
@@ -24,7 +31,7 @@ class RouteTest extends Test implements TestInterFace
 	 */
 	public function run(Closure $callback) : bool
 	{
-		return $this->runTests($this->tests(), $callback, $this->routes);
+		return $this->runTests($this->tests(), $callback, [$this->routes]);
 	}
 
 	/**

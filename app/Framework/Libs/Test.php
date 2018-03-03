@@ -8,49 +8,53 @@ class Test
 {
 	protected $status = true;
 	protected $results = [];
+	protected $validator;
 
 	/**
-	* @todo Make more general arrays so we can have tests with multiple parameters:
-	*		$tests = [
-	*			[
-	*				'params' => [param1, param2, ...],
-	*				'expectation' => true
-	*			]
-	*		]
-	* @param array $tests Array conatining tests we will run through
-	* @param Closure $callback Function/method we want to test
-	*
-	*/
-	protected function validator($expectation, $result)
+	 * Boot up the Test Engine
+	 *
+	 * @param $validator Array or String of user defined validator
+	 */
+	public function __construct($validator = null)
 	{
-		echo $expectation ." => ". $result . PHP_EOL;
-		return $expectation == $result;
+		$this->setValidator($validator ?? [$this, 'validator']);
 	}
-	protected function runTests(array $tests, Closure $callback, ...$params)
+
+	/**
+	 * Run the tests user provided by calling the callback for each one
+	 *
+	 * @param array $tests Array containing test rows
+	 * @param Closure $callback Function/method we will test
+	 * @param array $params Array of parameters to pass be passed to the callable
+	 * @return bool True on success, false on failure
+	 */
+	protected function runTests(array $tests, Closure $callback, array $params = []) : bool
 	{
 		foreach ($tests as $test => $expectation) {
+
+			// call the function we want to test
 			$result = $callback($test, $params[0]);
 
-			$this->saveResults(
-				$test,
-				$result,
-				$expectation,
-				$this->validator($expectation, $result[0])
-			);
+			// validate test result
+			$status = call_user_func_array($this->validator, [$expectation, $result[0]]);
+
+			// test failed
+			if (!$status) $this->status = false;
+
+			$this->saveResults($test, $result, $expectation, $status);
 		}
 
-			// $result = $callback($url, $this->routes);
-			// $success = $result[0] == $expectation;
-
-			// $this->results[$url]['result'] = $result;
-			// $this->results[$url]['success'] = $success;
-
-			// // test failed
-			// if (!$result) $testSuccess = false;
-
-		return true;
+		return $this->status;
 	}
 
+	/**
+	 * Save test results to object state
+	 *
+	 * @param string $test
+	 * @param $result
+	 * @param $expectation
+	 * @param bool $status
+	 */
 	protected function saveResults(string $test, $result, $expectation, bool $status)
 	{
 		$this->results[$test] = [
@@ -58,6 +62,27 @@ class Test
 			'expectation' => $expectation,
 			'status' => $status,
 		];
+	}
+
+	/**
+	 * Set user-defined validator
+	 *
+	 * @param $validator String or Array of callable function
+	 */
+	protected function setValidator($validator = null)
+	{
+		$this->validator = $validator;
+	}
+
+	/**
+	 * The default validator which simply compares if two of them are the same
+	 *
+	 * @param $expectation Value the testable function should return to be successful
+	 * @param $result Result we actually got from the function
+	 */
+	protected function validator($expectation, $result)
+	{
+		return $expectation == $result;
 	}
 
 	/**
