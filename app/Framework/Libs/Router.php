@@ -43,7 +43,7 @@ class Router
 	}
 
 	/**
-	 * Trim and set the url. Empty url is converted to a slash: '/'
+	 * Trim trailing slash and set the url. Empty url is converted to a slash
 	 */
 	protected function setUrl(string $url)
 	{
@@ -52,14 +52,11 @@ class Router
 	}
 
 	/**
-	 * Set the callables based on url
+	 * Set the callables based on the url
 	 */
 	protected function setCallables()
 	{
-		//var_dump($this->routes);
 		$action = RouteMatcher::getCallables($this->url, $this->routes);
-
-		die(var_dump($action));
 		
 		$this->controller = Core::controllerNamespace($action[0] ?? '');
 		$this->method = $action[1] ?? '';
@@ -71,7 +68,6 @@ class Router
 	 */
 	protected function getRoutes()
 	{
-		$routes = config('routes');
-		$this->routes = RouteMatcher::routesToRegExp($routes);
+		$this->routes = RouteMatcher::handleRoutes(config('routes'));
 	}
 }

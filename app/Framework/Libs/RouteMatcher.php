@@ -10,6 +10,29 @@ use App\Framework\Exceptions\RoutingException;
 class RouteMatcher
 {
 	/**
+	 * Return handled routes array
+	 *
+	 * @param array $routes Array of beautified routes
+	 * @return array Handled routes
+	 */
+	public static function handleRoutes(array $routes) : array
+	{
+		return self::routesToRegExp($routes);
+	}
+
+	/**
+	 * Checks if given url matches any of the given routes.
+	 *
+	 * @param string $url
+	 * @param array $routes
+	 * @return bool
+	 */
+	public static function getCallables(string $url, array $routes) : array
+	{
+		return self::match($url, $routes);
+	}
+
+	/**
 	 * Converts beautified route strings into regular expressions
 	 *
 	 * @param array $routes Array of beautified routes
@@ -45,7 +68,6 @@ class RouteMatcher
 			$url = preg_replace($find['literals'], "\/", $url);
 
 			// add starting and ending delimeters and push to array
-
 			$formattedRoutes["/^\/{$url}$/"] = [
 				'action' 	=> $action,
 				'paramKeys' => $paramKeys[1]
@@ -53,18 +75,6 @@ class RouteMatcher
 		}
 
 		return $formattedRoutes;
-	}
-
-	/**
-	 * Checks if given url matches any of the given routes.
-	 *
-	 * @param string $url
-	 * @param array $routes
-	 * @return bool
-	 */
-	public static function getCallables(string $url, array $routes) : array
-	{
-		return self::match($url, $routes);
 	}
 
 	/**
@@ -85,7 +95,7 @@ class RouteMatcher
 
 				preg_match_all($match, $url, $params);
 
-				$result = self::buildAction($action, $params[1]);
+				$result = self::buildAction($action, $params[1] ?? []);
 			}	
 		}
 
@@ -95,16 +105,16 @@ class RouteMatcher
 	/**
 	 *
 	 * @todo Extract this to Parser / SyntaxTransformer
-	 * @param string $actionString Pretty string version of the action (route syntax)
+	 * @param string $parts Associative array of pretty string version of the action (route syntax) and parameter keys of the route
 	 * @param array $params parameters we want to pass along
 	 * @return array Action array with controller, method and parameters ordered nicely
 	 */
-	protected static function buildAction(array $parts, array $params) : array
+	protected static function buildAction(array $parts, $params = []) : array
 	{
 		// Explode route syntax to callables
-		$action = explode('@', $parts['action']);
+		$action = explode('@', $parts['action']) ?? [];
 
-		if (count($action) > 2)
+		if (count($action) !== 2)
 			throw new RoutingException("Invalid route definition: {$parts['action']}.");
 
 		$paramArr = [];
@@ -116,7 +126,7 @@ class RouteMatcher
 			$paramArr[$parts['paramKeys'][$i] ?? 'unknown'] = $params[$i];
 		}
 
-		$action[] = $paramArr;
+		$action[2] = $paramArr;
 
 		return $action;
 	}

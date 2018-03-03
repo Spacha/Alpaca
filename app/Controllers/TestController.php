@@ -24,6 +24,7 @@ class TestController extends Controller
 
 		if (count($params)) {
 			echo "<li>LIST WITH PARAMS";
+			echo "User: ". $params['userId'];
 		} else {
 			echo "<li>EMPTY LIST";
 		}
