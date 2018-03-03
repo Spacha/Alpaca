@@ -9,7 +9,6 @@ use Closure;
 class RouteTest extends Test implements TestInterFace
 {
 	protected $routes = [];
-	protected $results = [];
 
 	public function __construct($routes = [])
 	{
@@ -18,29 +17,14 @@ class RouteTest extends Test implements TestInterFace
 
 	/**
 	 * Run the test by calling matcher.
+	 * @todo Most of these should go to Test class!
 	 *
 	 * @param Closure $matcher Callback function we want to test.
 	 * @return bool True on success, false on failure
 	 */
-	public function run(Closure $matcher) : bool
+	public function run(Closure $callback) : bool
 	{
-		$strings = $this->tests();
-		$testSuccess = true;
-		echo "<li>Running tester...";
-
-		// Run the test strings
-		foreach ($strings as $url => $expectation) {
-			$result = $matcher($url, $this->routes);
-			$success = $result[0] == $expectation;
-
-			$this->results[$url]['result'] = $result;
-			$this->results[$url]['success'] = $success;
-
-			// test failed
-			if (!$result) $testSuccess = false;
-		}
-
-		return $testSuccess;
+		return $this->runTests($this->tests(), $callback, $this->routes);
 	}
 
 	/**
