@@ -17,7 +17,7 @@ class RouteMatcher
 	 */
 	public static function handleRoutes(array $routes) : array
 	{
-		return self::routesToRegExp($routes);
+		return self::routesToRegex($routes);
 	}
 
 	/**
@@ -38,15 +38,10 @@ class RouteMatcher
 	 * @param array $routes Array of beautified routes
 	 * @return array
 	 */
-	public static function routesToRegExp(array $routes) : array
+	public static function routesToRegex(array $routes) : array
 	{
-		/*
-		// Better method name maybe (HOX: this is called from Router)?
-		// also #-_?&
-		*/
-
 		$find = [
-			'any' 		=> '([a-zA-Z0-9åäö]+)',
+			'any' 		=> '([a-zA-Z0-9åäö_-]+)',
 			'brackets' 	=> '/\{(.*?)\}/',
 			'literals'	=> '/\//'
 		];

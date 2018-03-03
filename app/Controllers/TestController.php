@@ -18,18 +18,18 @@ class TestController extends Controller
 		echo "<li>JUST TEST";
 	}
 
-	public function list($params = [])
+	public function list($data = [])
 	{
 		$users = Test::items();
 
-		if (count($params)) {
+		if (count($data)) {
 			echo "<li>LIST WITH PARAMS";
-			echo "User: ". $params['userId'];
+			echo "User: ". $data['userId'];
 		} else {
 			echo "<li>EMPTY LIST";
 		}
 
-		if (isset($params['userId'])) {
+		if (isset($data['userId'])) {
 			// echo "<h1>User {$params['userId']}</h1>";
 		} else {
 			// echo var_dump($users);
