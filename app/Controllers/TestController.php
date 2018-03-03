@@ -13,12 +13,12 @@ class TestController extends Controller
 		echo "Home sweet home!";
 	}
 
-	public function list($userId = 0)
+	public function list($params = [])
 	{
 		$users = Test::items();
 
-		if ($userId) {
-			echo 'User: '.$userId;
+		if (isset($params['userId'])) {
+			echo "<h1>User {$params['userId']}</h1>";
 		} else {
 			echo var_dump($users);
 		}

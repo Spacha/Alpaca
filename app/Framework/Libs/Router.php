@@ -39,7 +39,7 @@ class Router
 		}
 
 		// Call the controller's method
-		call_user_func_array([$controller, $this->method], $this->params);
+		call_user_func_array([$controller, $this->method], [$this->params]);
 	}
 
 	/**

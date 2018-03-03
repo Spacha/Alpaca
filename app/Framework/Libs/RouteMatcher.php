@@ -14,7 +14,7 @@ class RouteMatcher
 	{
 		// These match to some ocurrences in the routes
 		$find = [
-			'any' 			=> '(.*?)+',		// anything that ocurres at least once
+			'any' 			=> '(.*?)',		// anything that ocurres at least once
 			'brackets' 		=> '/\{(.*?)\}/',	// brackets which contain at least one character
 			'slash' 		=> '/\//',
 		];
@@ -30,7 +30,7 @@ class RouteMatcher
 
 			// get parameter names and save them to actions for later use
 			preg_match_all($find['brackets'], $match, $matches);
-			if (count($matches[1])) $action[3] = $matches[1];
+			if (count($matches[1])) $action[2] = $matches[1];
 
 			// replace brackets with matching regExp
 			preg_replace(
@@ -59,10 +59,23 @@ class RouteMatcher
 	 */
 	public static function match(string $url, array $routes) : array
 	{
+		// THIS IS HORRIFIC! DO IT AGAIN!
+
 		// Loop through routes and check if any of them matches the url
 		foreach ($routes as $match => $action) {
 			if (preg_match($match, $url)) {
+				// get parameters if there are any
+				preg_match_all($match, $url, $params);
+				if (isset($params[1]) && count($params[1])) {
+					$newParams = [];
+					foreach ($params[1] as $key => $param) {
+						$newParams[$action[2][$key]] = $param;
+					}
+					$action[2] = $newParams;
+				}
+
 				return $action;
+
 			}
 		}
 
