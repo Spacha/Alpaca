@@ -23,6 +23,7 @@ class Test
 	/**
 	 * Run the tests user provided by calling the callback for each one
 	 *
+	 * @todo Generalize this! Not even usable in most cases!
 	 * @param array $tests Array containing test rows
 	 * @param Closure $callback Function/method we will test
 	 * @param array $params Array of parameters to pass be passed to the callable
@@ -87,8 +88,13 @@ class Test
 
 	/**
 	 * Print out prettified results for debugging purposes
+	 * 
 	 * @todo Require an associated view file for this (phtml).
-	 *		 Clean this up!
+	 * @todo Clean this up!
+	 * @todo Generalize!
+	 *
+	 * idea: in ExampletTest:
+	 * 		 $this->printPrettyResults($layoutFile, $stuff)
 	 */
 	public function printPrettyResults()
 	{
@@ -101,11 +107,15 @@ class Test
 		echo "<thead><tr><th>Test Url</th> <th>Result</th> <th>Expectation</th> <th>Status</th></tr></thead>";
 		
 		foreach ($this->results as $url => $result) {
+			$params = $result['result'][1];
+
 			$background = $result['status'] ? 'green' : 'red';
 			$resultLabel = $result['status'] ? 'PASSED' : 'FAILED';
-			$action = $result['result'][0] ?? '';
-			$params = implode(', ', $result['result'][1] ?? []);
-			$expectation = $result['expectation'] ?? '';
+			$action = $result['result'][0][0] ?? '';
+			$params = implode(', ', $params ?? []);
+			$expectation = is_array($result['expectation'])
+				? $result['expectation'][0][0]
+				: $result['expectation'];
 
 			echo (
 				"<tr style='border: 1px solid #aaa;'>

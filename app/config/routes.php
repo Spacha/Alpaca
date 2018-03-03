@@ -6,6 +6,7 @@
 
 return [
 	'/' 					=> 'TestController@home',
-	'/test' 				=> 'TestController@list',
+	'/test' 				=> 'TestController@test',
 	'/test/{userId}' 		=> 'TestController@list',
+	'/test/{userId}/kakka' 	=> 'TestController@kakka',
 ];

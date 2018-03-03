@@ -56,7 +56,10 @@ class Router
 	 */
 	protected function setCallables()
 	{
-		$action = RouteMatcher::match($this->url, $this->routes);
+		//var_dump($this->routes);
+		$action = RouteMatcher::getCallables($this->url, $this->routes);
+
+		die(var_dump($action));
 		
 		$this->controller = Core::controllerNamespace($action[0] ?? '');
 		$this->method = $action[1] ?? '';
@@ -69,12 +72,6 @@ class Router
 	protected function getRoutes()
 	{
 		$routes = config('routes');
-
-		// Explode route syntax to callables
-		array_walk($routes, function(&$action, $match) {
-			$action = explode('@', $action);
-		});
-
 		$this->routes = RouteMatcher::routesToRegExp($routes);
 	}
 }

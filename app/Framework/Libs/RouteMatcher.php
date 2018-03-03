@@ -2,6 +2,9 @@
 
 namespace App\Framework\Libs;
 
+/**
+ * @todo Maybe this should have SyntaxTransformer or something
+ */
 class RouteMatcher
 {
 	/**
@@ -12,42 +15,42 @@ class RouteMatcher
 	 */
 	public static function routesToRegExp(array $routes) : array
 	{
-		// These match to some ocurrences in the routes
+		/*
+		// Better method name maybe (HOX: this is called from Router)?
+		// also #-_?&
+		*/
+
+		// Explode route syntax to callables
+		array_walk($routes, function(&$action) {
+			$action = explode('@', $action);
+		});
+
 		$find = [
-			'any' 			=> '(.*?)',		// anything that ocurres at least once
-			'brackets' 		=> '/\{(.*?)\}/',	// brackets which contain at least one character
-			'slash' 		=> '/\//',
+			'any' 		=> '([a-zA-Z0-9åäö]+)',
+			'brackets' 	=> '/\{(.*?)\}/',
+			'literals'	=> '/\//'
 		];
 
-		$regExpRoutes = [];
+		$formattedRoutes = [];
 
-		// transform pretty routes into ugly regExp
-		foreach ($routes as $match => $action) {
+		foreach ($routes as $url => $action) {
 
-			$match = (strlen($match) > 1)
-				? trim($match, "/")
-				: $match;
+			$url = trim($url, "/");
 
-			// get parameter names and save them to actions for later use
-			preg_match_all($find['brackets'], $match, $matches);
-			if (count($matches[1])) $action[2] = $matches[1];
+			// extract parameted keys from route for later use
+			preg_match_all($find['brackets'], $url, $params);
 
-			// replace brackets with matching regExp
-			preg_replace(
-				[$find['brackets'], $find['slash']],
-				[$find['any'], "\/"],
-				$match
-			);
+			// replace brackets with matching exceptions
+			$url = preg_replace($find['brackets'], $find['any'], $url);
 
-			$key = preg_replace($find['brackets'], $find['any'], $match);
-			$key = preg_replace("/\//", "\/", $key);
+			// add backslash in front of literals
+			$url = preg_replace($find['literals'], "\/", $url);
 
-			// add wrappers and end operator ($)
-			$key = "/{$key}$/";
-			$regExpRoutes[$key] = $action;
+			// add starting and ending delimeters and push to array
+			$formattedRoutes["/^\/{$url}$/"] = [$action, $params[1]];
 		}
-		
-		return $regExpRoutes;
+
+		return $formattedRoutes;
 	}
 
 	/**
@@ -57,28 +60,28 @@ class RouteMatcher
 	 * @param array $routes
 	 * @return bool
 	 */
-	public static function match(string $url, array $routes) : array
+	public static function getCallables(string $url, array $routes) : array
 	{
-		// THIS IS HORRIFIC! DO IT AGAIN!
+		return self::match($url, $routes);
+	}
 
-		// Loop through routes and check if any of them matches the url
-		foreach ($routes as $match => $action) {
+	/**
+	 * Get the last matching ocurrence from given route array.
+	 *
+	 * @param string $url
+	 * @param array $routes
+	 * @return array Matching array from route array or empty array if no match
+	 */
+	protected static function match(string $url, array $routes) : array
+	{
+		$result = ['',[]];
+
+		array_walk($routes, function($action, $match) use ($url, &$result) {
 			if (preg_match($match, $url)) {
-				// get parameters if there are any
-				preg_match_all($match, $url, $params);
-				if (isset($params[1]) && count($params[1])) {
-					$newParams = [];
-					foreach ($params[1] as $key => $param) {
-						$newParams[$action[2][$key]] = $param;
-					}
-					$action[2] = $newParams;
-				}
-
-				return $action;
-
+				$result = $action;
 			}
-		}
-
-		return [];
+		});
+		
+		return $result;
 	}
 }
