@@ -31,7 +31,7 @@ class RouteTest extends Test implements TestInterFace
 		// Run the test strings
 		foreach ($strings as $url => $expectation) {
 			$result = $matcher($url, $this->routes);
-			$success = $result == $expectation;
+			$success = $result[0] == $expectation;
 
 			$this->results[$url]['result'] = $result;
 			$this->results[$url]['success'] = $success;

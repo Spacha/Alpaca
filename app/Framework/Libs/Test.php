@@ -17,11 +17,13 @@ class Test
 		foreach ($this->results as $url => $result) {
 			$background = $result['success'] ? 'green' : 'red';
 			$resultLabel = $result['success'] ? 'PASSED' : 'FAILED';
+			$action = $result['result'][0] ?? '';
+			$params = implode(', ', $result['result'][1] ?? []);
 
 			echo (
 				"<tr style='border: 1px solid #aaa;'>
 					<td>{$url}</td>
-					<td>{$result['result']}</td>
+					<td>{$action}({$params})</td>
 					<td style='background: {$background};'>{$resultLabel}</td>
 				</tr>"
 			);
