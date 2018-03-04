@@ -29,12 +29,11 @@ class Bootstrap
 		);
 
 		// What if route changes or something? We don't need to register all again?
-
 		$this->router->callAction();
 	}
 
 	/**
-	 * Define global constants to be used anywhere in the application
+	 * Define global constants to be used anywhere in the application.
 	 */
 	protected function defineConstants()
 	{
@@ -42,7 +41,7 @@ class Bootstrap
 	}
 
 	/**
-	 * Require manually those files we need before autoloading
+	 * Require manually those files we need before autoloading.
 	 */
 	protected function requireVitals()
 	{
@@ -57,18 +56,18 @@ class Bootstrap
 	}
 
 	/**
-	 * 
-	 */
-	protected function setExceptionHandler()
-	{
-		new ExceptionHandler();
-	}
-
-	/**
-	  * Register autoloader to load all class dependencies for the application
+	  * Register autoloader to load all class dependencies for the application.
 	  */
 	protected function loadAutoloader()
 	{
 		new Autoloader();
+	}
+
+	/**
+	 * Set exception handler for the application.
+	 */
+	protected function setExceptionHandler()
+	{
+		new ExceptionHandler();
 	}
 }

@@ -51,3 +51,17 @@ function array_unset(array &$array, $index = 0) : array
 	unset($array[$index]);
 	return array_values($array);
 }
+
+/**
+ * Dumps given variable and kills the program.
+ * 
+ * @param $var Variable you want to get dumped
+ **/
+function dd($var = null)
+{
+	echo "<pre>";
+	
+	die(var_dump($var));
+
+	echo "</pre>";
+}
