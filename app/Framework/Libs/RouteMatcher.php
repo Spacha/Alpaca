@@ -33,6 +33,19 @@ class RouteMatcher
 	}
 
 	/**
+	 * Find and extract certain ocurrences from a string to an array
+	 * 
+	 * @param $match The needle
+	 * @param $subject The haystack
+	 * @return array Array of needles
+	 */
+	protected static function extractParts($match, $subject) : array
+	{
+		preg_match_all($brackets, $url, $params);
+		return array_unset($params)[0];
+	}
+
+	/**
 	 * Converts beautified route strings into regular expressions
 	 *
 	 * @param array $routes Array of beautified routes
@@ -40,49 +53,42 @@ class RouteMatcher
 	 */
 	public static function routesToRegex(array $routes) : array
 	{
-		$find = [
-			'any' 				=> '([a-zA-Z0-9åäö_-]+)',
-			'anyOrNothing'		=> '([a-zA-Z0-9åäö_-]*)',
-			'brackets' 			=> '/\{(.*?)\}/',
-			'optional' 			=> '/^\?(.*?)/',
-			'literals'			=> '/\//'
-		];
+		// Regular expressions
+		$brackets = '/\{(.*?)\}/';
+		$optional = '/^\?(.*?)/';
+		$any = '([a-zA-Z0-9åäö_-]+)';
+		$anyOrNothing = '([a-zA-Z0-9åäö_-]*)';
 
 		$formattedRoutes = [];
 
-		// @todo Group and separate these into own methods
 		foreach ($routes as $url => $action) {
 
+			$paramClause = $any;
 			$url = trim($url, "/");
 
 			// extract parameter keys from route for later use
-			preg_match_all($find['brackets'], $url, $paramKeys);
-			$paramKeys = array_unset($paramKeys);
+			$params = self::extractParts($brackets, $url);
 
-			$optional = false;
-			// match optional parameters
-			foreach ($paramKeys[0] as $key => &$value) {
-				// Regex::hasQuestionmark($value, 0);
-				// SyntaxTransformer::isOptionalParam($value);
-				if (preg_match($find['optional'], $value)) {
-					
-					$optional = true;
-					$value = str_replace('?', '', $value);
+			// find optional parameters
+			foreach ($params as $$param) {
+				if (preg_match($optional, $param)) {
+
+					// remove the question mark from param name
+					str_replace($url, '[/]?', strrpos($url, '/'), 1);
+
+					// make last slash optional
 					$url = substr_replace($url, '[/]?', strrpos($url, '/'), 1);
+					$param = str_replace('?', '', $param);
+					$paramClause = $anyOrNothing;
 				}
 			}
 
-			// replace brackets with matching exceptions
-			$url = $optional
-				? preg_replace($find['brackets'], $find['anyOrNothing'], $url)
-				: preg_replace($find['brackets'], $find['any'], $url);
-
-			// add backslash in front of literals
-			$url = preg_replace($find['literals'], "\/", $url);
+			// make expressions of brackets and make slashes literal
+			$url = preg_replace([$brackets, "/\//"], [$paramClause, "\/"], $url);
 
 			// add starting and ending delimeters and push to array
 			$formattedRoutes["/^\/{$url}$/"] = [
-				'action' 	=> $action,
+				'action' => $action,
 				'paramKeys' => $paramKeys
 			];
 		}
@@ -135,7 +141,7 @@ class RouteMatcher
 		// Make key value pairs of parameters
 		for($i = 0; $i < count($params); $i++) {
 
-			$paramKey = $parts['paramKeys'][0][$i] ?? 'unknown';
+			$paramKey = $parts['paramKeys'][$i] ?? 'unknown';
 			$paramArr[$paramKey] = $params[$i][0];
 
 		}
