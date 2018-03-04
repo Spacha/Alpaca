@@ -24,6 +24,6 @@ class Autoloader
 		$file = PATH_ROOT . Core::classRoute($className) . '.php';
 
 		if (is_file($file))
-			require($file);
+			require_once($file);
 	}
 }
