@@ -41,9 +41,11 @@ class RouteMatcher
 	public static function routesToRegex(array $routes) : array
 	{
 		$find = [
-			'any' 		=> '([a-zA-Z0-9åäö_-]+)',
-			'brackets' 	=> '/\{(.*?)\}/',
-			'literals'	=> '/\//'
+			'any' 				=> '([a-zA-Z0-9åäö_-]+)',
+			'anyOrNothing'		=> '([a-zA-Z0-9åäö_-]*)',
+			'brackets' 			=> '/\{(.*?)\}/',
+			'optional' 			=> '/^\?(.*?)/',
+			'literals'			=> '/\//'
 		];
 
 		$formattedRoutes = [];
@@ -57,9 +59,23 @@ class RouteMatcher
 			preg_match_all($find['brackets'], $url, $paramKeys);
 			$paramKeys = array_unset($paramKeys);
 
+			$optional = false;
+			// match optional parameters
+			foreach ($paramKeys[0] as $key => &$value) {
+				// Regex::hasQuestionmark($value, 0);
+				// SyntaxTransformer::isOptionalParam($value);
+				if (preg_match($find['optional'], $value)) {
+					
+					$optional = true;
+					$value = str_replace('?', '', $value);
+					$url = substr_replace($url, '[/]?', strrpos($url, '/'), 1);
+				}
+			}
 
 			// replace brackets with matching exceptions
-			$url = preg_replace($find['brackets'], $find['any'], $url);
+			$url = $optional
+				? preg_replace($find['brackets'], $find['anyOrNothing'], $url)
+				: preg_replace($find['brackets'], $find['any'], $url);
 
 			// add backslash in front of literals
 			$url = preg_replace($find['literals'], "\/", $url);
@@ -83,7 +99,7 @@ class RouteMatcher
 	 */
 	protected static function match(string $url, array $routes) : array
 	{
-		$result = ['',[]];
+		$result = ['','',[]];
 
 		foreach ($routes as $match => $action) {
 			if (preg_match($match, $url)) {
@@ -117,8 +133,6 @@ class RouteMatcher
 		$paramArr = [];
 
 		// Make key value pairs of parameters
-		// For example:
-		// route: test/{userId} and url: test/12 => "usedId" => 12
 		for($i = 0; $i < count($params); $i++) {
 
 			$paramKey = $parts['paramKeys'][0][$i] ?? 'unknown';
@@ -127,7 +141,7 @@ class RouteMatcher
 		}
 
 		$action[2] = $paramArr;
-		
+
 		return $action;
 	}
 }

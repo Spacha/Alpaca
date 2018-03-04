@@ -8,10 +8,16 @@ use App\Models\Test;
 
 class TestController extends Controller
 {
-	protected $header = "
+	protected $header = '';
+
+	public function __construct()
+	{
+		$this->header = "
 		<a href='/'>Home</a> |
 		<a href='/users'>Users</a> |
-		<a href='/error'>Cause Error</a>";
+		<a href='/error'>Cause Error</a> |
+		<a href='/secret/". rand(0,1000) ."'>Secret</a> |";
+	}
 
 	public function home(array $data)
 	{
@@ -29,7 +35,7 @@ class TestController extends Controller
 
 		if (isset($userId)) {
 			
-			// Show user page
+			// View a user
 
 			$user = Test::user($userId);
 
@@ -57,19 +63,33 @@ class TestController extends Controller
 		// @todo maybe $data should be this object's property so we can simply use: $this->data('userId'); 
 		$userId = data($data, 'userId');
 		$postId = data($data, 'postId');
+		$pageId = data($data, 'pageId');
+
+		$route = "/users/{$userId}/posts";
 
 		echo $this->header;
-		echo "<h2><a href='/users/{$userId}'><</a> Posts</h2>";
+		echo "<h2><a href='{$route}'><</a> Posts</h2>";
 
 		if (isset($postId)) {
+			$route = $route."/".$postId;
 
-			// Show post page
+			// View a post
 
 			//$post = Test::post($postId);
 
 			echo "<h3>Post title</h3>";
 			echo "<p>Post id: {$postId}</p>";
 			echo "<p>Post content</p>";
+
+			echo "<p><a href='{$route}/1'>Show extra 1</a></p>";
+			echo "<p><a href='{$route}/2'>Show extra 2</a></p>";
+
+			if (isset($pageId)) {
+				echo "<p><a href='{$route}'>Close extra</a></p>";
+				echo "<div style='padding: 5rem; background: linear-gradient(#999, #333)'>
+					EXTRAAA NUMBEER {$pageId}!!!
+				</div>";
+			}
 
 		} else {
 
@@ -78,7 +98,7 @@ class TestController extends Controller
 			//$posts = Test::posts($postId);
 
 			for ($id=0; $id < 10; $id++) {
-				echo "<li><a href='/users/{$userId}/posts/{$id}'>Post id {$id}</li>";
+				echo "<li><a href='{$route}/{$id}'>Post id {$id}</li>";
 			}
 		}
 	}

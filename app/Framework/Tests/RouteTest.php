@@ -52,21 +52,22 @@ class RouteTest extends Test implements TestInterFace
 	protected function tests() : array
 	{
 
-		// Test-string						// Expected Result
+		// Test-string									// Expected Result
 
 		return [
-			'/'							=> 'TestController@home',
-			'/tes'						=> '',
-			'/test'						=> 'TestController@test',
-			'/testi'					=> '',
-			'/test/a'					=> 'TestController@list',
-			'/test/penis/paska'			=> '',
-			'/test/12'					=> 'TestController@list',
-			'/test/penis'				=> 'TestController@list',
-			'/test/12/uloste/pieru'		=> '',
-			'/test/12/kakka'			=> 'TestController@kakka',
-			'/test/penis/kakka'			=> 'TestController@kakka',
-			'/test/penis/kakka/ulostaminen'	=> ''
+			'/' 										=> 'TestController@home',
+			'/users' 									=> 'TestController@user',
+			'/users/123' 								=> 'TestController@user',
+			'/users/1224/posts'	 						=> 'TestController@posts',
+			'/users/33/posts/asa' 						=> 'TestController@posts',
+			'/users/asas/posts/as/sas'					=> 'TestController@posts',
+			'/secret/asas'								=> 'AnotherController@home',
+			'/secret/123'								=> 'AnotherController@home',
+			'/secret'									=> 'AnotherController@home',
+
+			'/secret/0/sas'								=> '',
+			'/users/11/aa'								=> '',
+			'/secret/123/assasa'						=> '',
 		];
 	}
 }

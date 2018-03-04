@@ -37,7 +37,8 @@ class Test
 			$result = $callback($test, $params[0]);
 
 			// validate test result
-			$status = call_user_func_array($this->validator, [$expectation, $result[0]]);
+			$try = ($result[0] && $result[1]) ? $result[0]."@".$result[1] : "";
+			$status = call_user_func_array($this->validator, [$expectation, $try]);
 
 			// test failed
 			if (!$status) $this->status = false;
@@ -96,8 +97,11 @@ class Test
 	 * idea: in ExampletTest:
 	 * 		 $this->printPrettyResults($layoutFile, $stuff)
 	 */
-	public function printPrettyResults()
+	public function printPrettyResults($dump = false)
 	{
+		if ($dump)
+			return var_dump($this->results);
+
 		$status = $this->status
 			? "<span style='background: green; color: #fff;'>OK</span>"
 			: "<span style='background: red; color: #fff;'>FAILED</span>";
@@ -107,11 +111,14 @@ class Test
 		echo "<thead><tr><th>Test Url</th> <th>Result</th> <th>Expectation</th> <th>Status</th></tr></thead>";
 		
 		foreach ($this->results as $url => $result) {
-			$params = $result['result'][1];
+			$params = $result['result'][2];
 
 			$background = $result['status'] ? 'green' : 'red';
 			$resultLabel = $result['status'] ? 'PASSED' : 'FAILED';
-			$action = $result['result'][0][0] ?? '';
+			
+			$action = $result['result'][0] ?? '';
+			if ($action) $action .= '@'.$result['result'][1];
+
 			$params = implode(', ', $params ?? []);
 			$expectation = is_array($result['expectation'])
 				? $result['expectation'][0][0]
