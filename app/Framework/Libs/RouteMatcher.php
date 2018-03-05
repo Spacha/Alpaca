@@ -134,8 +134,6 @@ class RouteMatcher
 					$param = $param[0];
 				}
 
-				//bb($url, $match, $params);
-
 				$result = $this->buildAction($action, $params ?? []);
 			}	
 		}
@@ -150,27 +148,32 @@ class RouteMatcher
 	 * @param array $params parameters we want to pass along
 	 * @return array Action array with controller, method and parameters ordered nicely
 	 */
-	protected function buildAction(array $parts, $params = []) : array
+	protected function buildAction(array $action, $params = []) : array
 	{
 		// Explode route syntax to callables
-		$action = explode('@', $parts['action']) ?? [];
+		$actionParts = explode('@', $action['action']) ?? [];
 
-		if (count($action) !== 2)
-			throw new RoutingException("Invalid route definition: {$parts['action']}.");
+		if (count($actionParts) !== 2)
+			throw new RoutingException("Invalid route definition: {$action['action']}.");
 
 		$paramArr = [];
 
 		// Make key value pairs of parameters
 		for($i = 0; $i < count($params); $i++) {
 
-			$paramKey = $parts['paramKeys'][$i] ?? 'unknown';
+			// filter empty parameters
+			if (!isset($params[$i]) || empty($params[$i])) continue;
+
+			$paramKey = $action['paramKeys'][$i] ?? 'unknown';
 			$paramArr[$paramKey] = $params[$i];
 
 		}
 
-		$action[2] = $paramArr;
-
-		return $action;
+		return [
+			'controller' 	=> $actionParts[0],
+			'method' 		=> $actionParts[1],
+			'params' 		=> $paramArr
+		];
 	}
 
 	/**
