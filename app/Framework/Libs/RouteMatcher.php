@@ -2,6 +2,7 @@
 
 namespace App\Framework\Libs;
 
+use App\Framework\Libs\Core;
 use App\Framework\Exceptions\RoutingException;
 
 class RouteMatcher
@@ -170,7 +171,7 @@ class RouteMatcher
 		}
 
 		return [
-			'controller' 	=> $actionParts[0],
+			'controller' 	=> Core::controllerNamespace($actionParts[0]),
 			'method' 		=> $actionParts[1],
 			'params' 		=> $paramArr
 		];

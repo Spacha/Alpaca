@@ -2,7 +2,6 @@
 
 namespace App\Framework\Libs;
 
-use App\Framework\Libs\Core;
 use App\Framework\Libs\RouteMatcher;
 use App\Framework\Exceptions\RoutingException;
 
@@ -75,8 +74,8 @@ class Router
 	{
 		$action = $this->matcher->getAction();
 		
-		$this->controller = Core::controllerNamespace($action['controller'] ?? '');
-		$this->method = $action['method'] ?? '';
-		$this->params = $action['params'] ?? [];
+		$this->controller 	= $action['controller'] ?? '';
+		$this->method 		= $action['method'] ?? '';
+		$this->params 		= $action['params'] ?? [];
 	}
 }
