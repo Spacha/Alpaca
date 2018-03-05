@@ -61,13 +61,16 @@ class RouteTest extends Test implements TestInterFace
 			'/users/1224/posts'	 						=> 'TestController@posts',
 			'/users/33/posts/asa' 						=> 'TestController@posts',
 			'/users/asas/posts/as/sas'					=> 'TestController@posts',
-			'/secret/asas'								=> 'AnotherController@home',
-			'/secret/123'								=> 'AnotherController@home',
-			'/secret'									=> 'AnotherController@home',
+			'/users/433/posts/7/12'						=> 'TestController@posts',
 
-			'/secret/0/sas'								=> '',
+			'/secret/asas'								=> 'AnotherController@test',
+			'/secret'									=> 'AnotherController@test',
+			'/secret/123'								=> 'AnotherController@test',
+			'/secret/11/122'							=> 'AnotherController@test',
+			'/secret/0/sas'								=> 'AnotherController@test',
+
+			'/secret/123/rg/porkkana'					=> '',
 			'/users/11/aa'								=> '',
-			'/secret/123/assasa'						=> '',
 		];
 	}
 }

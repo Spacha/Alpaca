@@ -29,13 +29,7 @@ class RouteMatcher
 	 */
 	public function getAction() : array
 	{
-		$test = new \App\Framework\Tests\RouteTest($this->routes);
-		$test->run(function($url) {
-			return $this->getCallables($url);
-		});
-		$test->printPrettyResults();
-return [];
-		//return $this->getCallables();
+		return $this->getCallables();
 	}
 
 	/**
@@ -80,8 +74,7 @@ return [];
 
 		foreach ($routes as $url => $action) {
 
-			//$paramClause = $this->regex('something');
-			$paramClause = '([a-zA-Z0-9åäö_-]+)';
+			$paramClause = $this->regex('something');
 
 			$url = trim($url, "/");
 
@@ -96,8 +89,6 @@ return [];
 
 					$param = str_replace('?', '', $param);
 					$paramClause = $this->regex('anything');
-					//$paramClause = '([a-zA-Z0-9åäö_-]*)';
-				} else {
 
 				}
 			}
@@ -122,26 +113,14 @@ return [];
 	}
 
 	/**
-	 * Make slashes in front of optional parameters also optional by matching
-	 * ocurrences of pattern '/{?' which simply means that there is a slash and
-	 * after that, a parameter starting by question mark, which means optional.
-	 *
-	 * @param string $url
-	 * @return string
-	 */
-	protected function optionalizeSlashes(string $url) : string
-	{
-		return preg_replace('/(\/)(?=\{\?)/', '[/]?', $url);
-	}
-
-	/**
 	 * Get the last matching ocurrence from given route array.
 	 *
 	 * @return array Matching array from route array or empty array if no match
 	 */
-	protected function getCallables(string $url) : array
+	protected function getCallables() : array
 	{
 		$result = 	['','',[]];
+		$url = $this->url;
 		$routes = $this->routes;
 
 		foreach ($routes as $match => $action) {
@@ -184,7 +163,7 @@ return [];
 		// Make key value pairs of parameters
 		for($i = 0; $i < count($params); $i++) {
 
-			$paramKey = $parts['paramKeys'][0][$i] ?? 'unknown';
+			$paramKey = $parts['paramKeys'][$i] ?? 'unknown';
 			$paramArr[$paramKey] = $params[$i];
 
 		}
@@ -216,5 +195,18 @@ return [];
 	protected function isOptional(string $param) : bool
 	{
 		return preg_match($this->regex('optional'), $param);
+	}
+
+	/**
+	 * Make slashes in front of optional parameters also optional by matching
+	 * ocurrences of pattern '/{?' which simply means that there is a slash and
+	 * after that, a parameter starting by question mark, which means optional.
+	 *
+	 * @param string $url
+	 * @return string
+	 */
+	protected function optionalizeSlashes(string $url) : string
+	{
+		return preg_replace('/(\/)(?=\{\?)/', '[/]?', $url);
 	}
 }

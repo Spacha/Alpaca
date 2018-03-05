@@ -27,4 +27,9 @@ class AnotherController extends Controller
 
 		echo "<p><a href='/'>Go to home</a></p>";
 	}
+
+	public function test($data)
+	{
+		print_r($data);
+	}
 }
