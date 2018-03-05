@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Framework\Libs\Controller;
+use App\Framework\Libs\Request;
 
 use App\Models\Another;
 
@@ -30,6 +31,13 @@ class AnotherController extends Controller
 
 	public function test($data)
 	{
-		print_r($data);
+		//print_r($data);
+	}
+
+	public function pages($pageId = 0, $postId = 0, $commentId = 0)
+	{
+		echo "PageId: {$pageId}".PHP_EOL;
+		echo "PostId: {$postId}".PHP_EOL;
+		echo "CommentId: {$commentId}";
 	}
 }

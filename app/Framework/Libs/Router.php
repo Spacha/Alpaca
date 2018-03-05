@@ -39,8 +39,20 @@ class Router
 			throw new RoutingException("Method {$this->method} doesn't exist.");
 		}
 
-		// Call the controller's method
-		call_user_func_array([$controller, $this->method], [$this->params]);
+		call_user_func_array([$controller, $this->method], $this->params);
+	}
+
+	/**
+	 * Build the request
+	 *
+	 * @return Request
+	 **/
+	protected function buildRequest() : Request
+	{
+		$request = new Request();
+		$request->setParams($this->params);
+
+		return $request;
 	}
 
 	/**
@@ -63,8 +75,8 @@ class Router
 	{
 		$action = $this->matcher->getAction();
 		
-		$this->controller = Core::controllerNamespace($action[0] ?? '');
-		$this->method = $action[1] ?? '';
-		$this->params = $action[2] ?? [];
+		$this->controller = Core::controllerNamespace($action['controller'] ?? '');
+		$this->method = $action['method'] ?? '';
+		$this->params = $action['params'] ?? [];
 	}
 }
