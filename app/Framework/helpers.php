@@ -26,10 +26,16 @@ function config(string $config = '') : array
 	return $configFile;
 }
 
+
+/*---------------------------------------------------------
+ * 		VARIABLE HELPERS
+ *---------------------------------------------------------
+ *
+ */
+
 /**
  * Get data value from array. Checks if stuff exists for you.
  *
- * @todo Put this to main Controller
  * @param array $params parameter array which Router passed to the method
  * @return Return the value from the array or null if not found
  */
@@ -38,6 +44,18 @@ function data($params = [], $key = '')
 	return $params[$key] ?? null;
 }
 
+/**
+ * Prevents unwanted errors from happening. Return $var if exist,
+ * otherwise return default value which is null as default
+ *
+ * @param $var The variable
+ * @param $default If $var is undefined, use this, null as default
+ * @return Return the value or default value
+ */
+function opt($var = null, $default = null)
+{
+	return $var ?? $default;
+}
 
 /**
  * Unset element from array and return reindexed array
@@ -51,6 +69,13 @@ function array_unset(array &$array, $index = 0) : array
 	unset($array[$index]);
 	return array_values($array);
 }
+
+
+/*---------------------------------------------------------
+ * 		DEVELOPMENT HELPERS
+ *---------------------------------------------------------
+ *
+ */
 
 /**
  * Dumps given variable and kills the program.
