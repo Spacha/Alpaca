@@ -65,3 +65,23 @@ function dd($var = null)
 
 	echo "</pre>";
 }
+
+/**
+ * Dumps all given variables without killing the program.
+ * Also separates all of them nicely
+ * 
+ * @param ...$vars All the variables you want to be dumped
+ * @return void
+ **/
+function bb(...$vars)
+{
+	print_r('_______________________________________________________');
+
+	foreach ($vars as $var) {
+		print_r(PHP_EOL);
+		print_r($var);
+		print_r(PHP_EOL);
+	}
+
+	print_r('_______________________________________________________');
+}
