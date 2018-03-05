@@ -19,21 +19,20 @@ class TestController extends Controller
 		<a href='/secret/". rand(0,1000) ."'>Secret</a> |";
 	}
 
-	public function home(array $data)
+	public function home()
 	{
 		echo $this->header;
 		echo "<h2>Home</h2>";
 	}
 
-	public function user(array $data)
+	public function user($userId = 0, $postId = 0, $pageId = 0)
 	{
 		$users = Test::users();
-		$userId = data($data, 'userId');
 
 		echo $this->header;
 		echo "<h2><a href='/users'><</a> Users</h2>";
 
-		if (isset($userId)) {
+		if ($userId) {
 			
 			// View a user
 
@@ -58,19 +57,14 @@ class TestController extends Controller
 		}
 	}
 
-	public function posts(array $data)
+	public function posts($userId, $postId = 0, $pageId = 0)
 	{
-		// @todo maybe $data should be this object's property so we can simply use: $this->data('userId'); 
-		$userId = data($data, 'userId');
-		$postId = data($data, 'postId');
-		$pageId = data($data, 'pageId');
-
 		$route = "/users/{$userId}/posts";
 
 		echo $this->header;
 		echo "<h2><a href='{$route}'><</a> Posts</h2>";
 
-		if (isset($postId)) {
+		if ($postId) {
 			$route = $route."/".$postId;
 
 			// View a post
@@ -84,7 +78,7 @@ class TestController extends Controller
 			echo "<p><a href='{$route}/1'>Show extra 1</a></p>";
 			echo "<p><a href='{$route}/2'>Show extra 2</a></p>";
 
-			if (isset($pageId)) {
+			if ($pageId) {
 				echo "<p><a href='{$route}'>Close extra</a></p>";
 				echo "<div style='padding: 5rem; background: linear-gradient(#999, #333)'>
 					EXTRAAA NUMBEER {$pageId}!!!

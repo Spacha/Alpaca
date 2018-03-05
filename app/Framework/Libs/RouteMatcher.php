@@ -3,7 +3,7 @@
 namespace App\Framework\Libs;
 
 use App\Framework\Libs\Core;
-use App\Framework\Exceptions\RoutingException;
+use App\Framework\Exceptions\InternalException;
 
 class RouteMatcher
 {
@@ -155,7 +155,7 @@ class RouteMatcher
 		$actionParts = explode('@', $action['action']) ?? [];
 
 		if (count($actionParts) !== 2)
-			throw new RoutingException("Invalid route definition: {$action['action']}.");
+			throw new InternalException("Invalid route definition: {$action['action']}.", 500);
 
 		$paramArr = [];
 
