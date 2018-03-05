@@ -4,6 +4,8 @@ namespace App\Framework\Libs;
 
 use App\Framework\Logs\ErrorLog;
 
+use Throwable;
+
 class ExceptionHandler
 {
 	protected $dump = false;
@@ -11,18 +13,15 @@ class ExceptionHandler
 	/**
 	 * Set exception handler
 	 */
-	public function __construct($dump = false)
-	{
-		$this->dump = $dump;
-		
-		if (!$this->dump)
-			set_exception_handler([$this, 'handler']);
+	public function __construct()
+	{	
+		set_exception_handler([$this, 'handler']);
 	}
 
 	/**
 	 * Exception handler that catches exceptions and redirects them accordingly.
 	 */
-	public function handler($e)
+	public function handler(Throwable $e)
 	{
 		$trace = "
 			<div style='padding: 1rem;'>
