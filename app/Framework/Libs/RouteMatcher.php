@@ -4,45 +4,68 @@ namespace App\Framework\Libs;
 
 use App\Framework\Exceptions\RoutingException;
 
-/**
- * @todo Maybe this should have SyntaxTransformer or something
- */
 class RouteMatcher
 {
-	/**
-	 * Return handled routes array
-	 *
-	 * @param array $routes Array of beautified routes
-	 * @return array Handled routes
-	 */
-	public static function handleRoutes(array $routes) : array
-	{
-		return self::routesToRegex($routes);
-	}
+	protected $routes = [];
+	protected $url = '';
 
 	/**
-	 * Checks if given url matches any of the given routes.
+	 * Set the url and routes
 	 *
 	 * @param string $url
 	 * @param array $routes
-	 * @return bool
+	 * @return void
 	 */
-	public static function getCallables(string $url, array $routes) : array
+	public function __construct(string $url, array $routes)
 	{
-		return self::match($url, $routes);
+		$this->setUrl($url);
+		$this->routes = $this->routesToRegex($routes);
 	}
 
 	/**
-	 * Find and extract certain ocurrences from a string to an array
-	 * 
-	 * @param $match The needle
-	 * @param $subject The haystack
-	 * @return array Array of needles
+	 * Gives ready-to-use action based on the current route
+	 *
+	 * @return array The callables in an array
 	 */
-	protected static function extractParts($match, $subject) : array
+	public function getAction() : array
 	{
-		preg_match_all($brackets, $url, $params);
-		return array_unset($params)[0];
+		$test = new \App\Framework\Tests\RouteTest($this->routes);
+		$test->run(function($url) {
+			return $this->getCallables($url);
+		});
+		$test->printPrettyResults();
+return [];
+		//return $this->getCallables();
+	}
+
+	/**
+	 * Get regular expressions
+	 *
+	 * @param string $key The regex key
+	 * @return strign The regex
+	 */
+	protected function regex($key) : string
+	{
+		$regex = [
+			'optional' 	=> '/^\?(.*?)/',
+			'brackets' 	=> '/\{(.*?)\}/',
+			'something' => '([a-zA-Z0-9åäö_-]+)',
+			'anything' 	=> '([a-zA-Z0-9åäö_-]*)'
+		];
+
+		return $regex[$key] ?? '';
+	}
+
+	/**
+	 * Trim trailing slash and set the url. Empty url is converted to a slash.
+	 *
+	 * @param string $url
+	 * @return void
+	 */
+	protected function setUrl(string $url)
+	{
+		$url = rtrim($url, '/');
+		$this->url = strlen($url) ? $url : '/';
 	}
 
 	/**
@@ -51,70 +74,90 @@ class RouteMatcher
 	 * @param array $routes Array of beautified routes
 	 * @return array
 	 */
-	public static function routesToRegex(array $routes) : array
+	public function routesToRegex(array $routes) : array
 	{
-		// Regular expressions
-		$brackets = '/\{(.*?)\}/';
-		$optional = '/^\?(.*?)/';
-		$any = '([a-zA-Z0-9åäö_-]+)';
-		$anyOrNothing = '([a-zA-Z0-9åäö_-]*)';
-
-		$formattedRoutes = [];
+		$regexRoutes = [];
 
 		foreach ($routes as $url => $action) {
 
-			$paramClause = $any;
+			//$paramClause = $this->regex('something');
+			$paramClause = '([a-zA-Z0-9åäö_-]+)';
+
 			$url = trim($url, "/");
 
 			// extract parameter keys from route for later use
-			$params = self::extractParts($brackets, $url);
+			$params = $this->extractParts($this->regex('brackets'), $url)[0];
 
-			// find optional parameters
-			foreach ($params as $$param) {
-				if (preg_match($optional, $param)) {
+			// Find optional parameters and
+			// remove question mark from the route and 
+			// make the last slash optional
+			foreach ($params as &$param) {
+				if ($this->isOptional($param)) {
 
-					// remove the question mark from param name
-					str_replace($url, '[/]?', strrpos($url, '/'), 1);
-
-					// make last slash optional
-					$url = substr_replace($url, '[/]?', strrpos($url, '/'), 1);
 					$param = str_replace('?', '', $param);
-					$paramClause = $anyOrNothing;
+					$paramClause = $this->regex('anything');
+					//$paramClause = '([a-zA-Z0-9åäö_-]*)';
+				} else {
+
 				}
 			}
 
+			// make slashes optional
+			$url = $this->optionalizeSlashes($url, count($params));
+
 			// make expressions of brackets and make slashes literal
-			$url = preg_replace([$brackets, "/\//"], [$paramClause, "\/"], $url);
+			$url = preg_replace(
+				[$this->regex('brackets'), "/\//"],
+				[$paramClause, "\/"],
+			$url);
 
 			// add starting and ending delimeters and push to array
-			$formattedRoutes["/^\/{$url}$/"] = [
+			$regexRoutes["/^\/{$url}$/"] = [
 				'action' => $action,
-				'paramKeys' => $paramKeys
+				'paramKeys' => $params
 			];
 		}
 
-		return $formattedRoutes;
+		return $regexRoutes;
+	}
+
+	/**
+	 * Make slashes in front of optional parameters also optional by matching
+	 * ocurrences of pattern '/{?' which simply means that there is a slash and
+	 * after that, a parameter starting by question mark, which means optional.
+	 *
+	 * @param string $url
+	 * @return string
+	 */
+	protected function optionalizeSlashes(string $url) : string
+	{
+		return preg_replace('/(\/)(?=\{\?)/', '[/]?', $url);
 	}
 
 	/**
 	 * Get the last matching ocurrence from given route array.
 	 *
-	 * @param string $url
-	 * @param array $routes
 	 * @return array Matching array from route array or empty array if no match
 	 */
-	protected static function match(string $url, array $routes) : array
+	protected function getCallables(string $url) : array
 	{
-		$result = ['','',[]];
+		$result = 	['','',[]];
+		$routes = $this->routes;
 
 		foreach ($routes as $match => $action) {
 			if (preg_match($match, $url)) {
 
 				// if we have a match, let's build an action for it
-				preg_match_all($match, $url, $params);
-				$params = array_unset($params);
+				$params = $this->extractParts($match, $url);
 
-				$result = self::buildAction($action, $params ?? []);
+				// USE SMARTED METHOD!
+				foreach ($params as &$param) {
+					$param = $param[0];
+				}
+
+				//bb($url, $match, $params);
+
+				$result = $this->buildAction($action, $params ?? []);
 			}	
 		}
 
@@ -128,7 +171,7 @@ class RouteMatcher
 	 * @param array $params parameters we want to pass along
 	 * @return array Action array with controller, method and parameters ordered nicely
 	 */
-	protected static function buildAction(array $parts, $params = []) : array
+	protected function buildAction(array $parts, $params = []) : array
 	{
 		// Explode route syntax to callables
 		$action = explode('@', $parts['action']) ?? [];
@@ -141,13 +184,37 @@ class RouteMatcher
 		// Make key value pairs of parameters
 		for($i = 0; $i < count($params); $i++) {
 
-			$paramKey = $parts['paramKeys'][$i] ?? 'unknown';
-			$paramArr[$paramKey] = $params[$i][0];
+			$paramKey = $parts['paramKeys'][0][$i] ?? 'unknown';
+			$paramArr[$paramKey] = $params[$i];
 
 		}
 
 		$action[2] = $paramArr;
 
 		return $action;
+	}
+
+	/**
+	 * Find and extract certain ocurrences from a string to an array
+	 * 
+	 * @param $match The needle
+	 * @param $subject The haystack
+	 * @return array Array of needles
+	 */
+	protected function extractParts(string $match, string $subject) : array
+	{
+		preg_match_all($match, $subject, $needles);
+		return array_unset($needles) ?? [];
+	}
+
+	/**
+	 * Return true if given parameter is optional
+	 *
+	 * @param string $param
+	 * @return 
+	 **/
+	protected function isOptional(string $param) : bool
+	{
+		return preg_match($this->regex('optional'), $param);
 	}
 }

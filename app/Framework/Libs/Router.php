@@ -8,8 +8,7 @@ use App\Framework\Exceptions\RoutingException;
 
 class Router
 {
-	protected $url = '';
-	protected $routes = [];
+	protected $matcher;
 	
 	protected $controller;
 	protected $method;
@@ -17,13 +16,15 @@ class Router
 
 	public function __construct($url = '')
 	{
-		$this->setUrl($url);
-		$this->getRoutes();
+		// @todo think about the name, 'matcher'...
+		$this->initMatcher($url);
 		$this->setCallables();
 	}
 
 	/**
-	 * Calls the specified controller
+	 * Calls the specified controller with methods and parameters.
+	 *
+	 * @return void
 	 */
 	public function callAction()
 	{
@@ -43,31 +44,27 @@ class Router
 	}
 
 	/**
-	 * Trim trailing slash and set the url. Empty url is converted to a slash
+	 * Register the matcher class and set routes to it
+	 * 
+	 * @param string $url
+	 * @return void
 	 */
-	protected function setUrl(string $url)
+	protected function initMatcher(string $url)
 	{
-		$url = rtrim($url, '/');
-		$this->url = strlen($url) ? $url : '/';
+		$this->matcher = new RouteMatcher($url, config('routes'));
 	}
 
 	/**
 	 * Set the callables based on the url
+	 *
+	 * @return void
 	 */
 	protected function setCallables()
 	{
-		$action = RouteMatcher::getCallables($this->url, $this->routes);
+		$action = $this->matcher->getAction();
 		
 		$this->controller = Core::controllerNamespace($action[0] ?? '');
 		$this->method = $action[1] ?? '';
 		$this->params = $action[2] ?? [];
-	}
-
-	/**
-	 * Load route config and explode it into route-callable pairs
-	 */
-	protected function getRoutes()
-	{
-		$this->routes = RouteMatcher::handleRoutes(config('routes'));
 	}
 }
