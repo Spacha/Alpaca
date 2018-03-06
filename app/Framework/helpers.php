@@ -28,6 +28,36 @@ function config(string $config = '') : array
 
 
 /*---------------------------------------------------------
+ * 		PATH HELPERS
+ *---------------------------------------------------------
+ *
+ */
+
+/**
+ * Return given path related to app root
+ *
+ * @param string $path
+ * @return string
+ */
+function app_root(string $path)
+{
+	return PATH_ROOT.'/'.$path;
+}
+
+/**
+ * Return given path related to public root
+ *
+ * @todo Cannot use config like this!
+ * @param string $path
+ * @return string
+ */
+function public_root(string $path)
+{
+	$paths = config('paths');
+	return dirname(PATH_ROOT).'/'.$paths['public'].'/'.$path;
+}
+
+/*---------------------------------------------------------
  * 		VARIABLE HELPERS
  *---------------------------------------------------------
  *
