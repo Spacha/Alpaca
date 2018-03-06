@@ -22,7 +22,7 @@ class Router
 	public function __construct(string $url, string $method)
 	{
 		$this->initMatcher($url, $method);
-		$this->setCallables();
+		$this->setAction();
 	}
 
 	/**
@@ -41,32 +41,21 @@ class Router
 		if (!method_exists($controller, $this->method))
 			throw new RoutingException("Method {$this->method} doesn't exist.");
 
-		$arguments = $this->getMethodArguments();
+		$arguments = $this->getArguments();
 
 		// Call the action
 		call_user_func_array([$controller, $this->method], $arguments);
 	}
 
-	public function getMethodArguments() : array
-	{
-		$request = $this->initRequest();	
-
-		$arguments = [];
-		$arguments[] = $request;
-		$arguments[] = $this->params;
-
-		return $arguments;
-	}
-
 	/**
-	 * Build the request
+	 * Build the request.
 	 *
 	 * @return Request
 	 **/
 	protected function initRequest() : Request
 	{
 		$request = new Request();
-		$request->setData($this->params);
+		$request->injectPostData($this->params);
 
 		return $request;
 	}
@@ -83,16 +72,31 @@ class Router
 	}
 
 	/**
-	 * Set the callables based on the url
+	 * Set the action or 'callables' based on the current url
 	 *
 	 * @return void
 	 */
-	protected function setCallables()
+	protected function setAction()
 	{
 		$action = $this->matcher->getAction();
 		
 		$this->controller 	= $action['controller'] ?? '';
 		$this->method 		= $action['method'] ?? '';
 		$this->params 		= $action['params'] ?? [];
+	}
+
+	/**
+	 * Get all arguments based on current request method.
+	 *
+	 * @return array
+	 */
+	public function getArguments() : array
+	{
+		$request = $this->initRequest();
+
+		$arguments = [$request];
+		$arguments += $this->params;
+
+		return $arguments;
 	}
 }

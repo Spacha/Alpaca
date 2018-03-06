@@ -5,18 +5,17 @@ namespace App\Framework\Libs;
 use App\Framework\Exceptions\InternalException;
 
 /**
-* 
+* Handles http request specific stuff. Instance of this class is passed
+* to every method that uses post data.
 */
 class Request
 {
-	protected $getData = [];
 	protected $postData = [];
 
 	public function __construct()
 	{
-		if ($this->method() == 'POST') {
-			$this->postData = $_POST;
-		}
+		if ($this->method() == 'POST')
+			$this->setPostData();
 	}
 
 	/**
@@ -40,17 +39,47 @@ class Request
 	 * Set an array of parameters to object's data property
 	 * Setting a single value is easy: $this->setData(['key' => 'value'])
 	 *
-	 * @param mixed $params Single variable or array
+	 * @param array $data
 	 * @return void
 	 */
-	public function setData($data)
+	public function injectPostData(array $data)
 	{
 		if (is_array($data)) {
 			$this->postData += $data;
 		}
 	}
 
-	// public static function uri() : string {}
+	/**
+	 * Sets the current post data as the object's property
+	 *
+	 * @return void
+	 **/
+	protected function setPostData()
+	{
+		$this->postData = $_POST;
+	}
+
+
+	/*------------
+	* Static tools
+	*-----------*/
+
+
+	/**
+	 * Returns the current uri.
+	 *
+	 * @return string
+	 */
+	public static function uri() : string
+	{
+		return $_SERVER['REQUEST_URI'];
+	}
+
+	/**
+	 * Returns the current request method
+	 *
+	 * @return string
+	 */
 	public static function method() : string
 	{
 		return $_SERVER['REQUEST_METHOD'];

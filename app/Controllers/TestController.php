@@ -22,21 +22,57 @@ class TestController extends Controller
 		<a href='/secret/". rand(0,1000) ."'>Secret</a> |";
 	}
 
-	public function home()
+
+	public function posts(Request $request)
 	{
+	  // Getting a single parameter
+	  $userId = $request->data('userId');
+	  $postId = $request->data('postId');
+
+	  var_dump("User's id: {$userId} and post's id: {$postId}");
+
+	  // Getting all parameters
+	  $allParams = $request->data();
+	  
+	  var_dump($allParams);
+	}
+
+	public function home(Request $request)
+	{
+		echo public_root('img/miika.jpg');
 		echo $this->header;
 		echo "<h2>Home</h2>";
-		echo "<form action='/papers' method='POST'><button type='submit'>Submit</button><form>";
+		echo "<form action='/ripuli/send' method='POST'>";
+
+		echo "<p><input type='text' name='file_name' placeholder='File name' /></p>";
+		echo "<p><textarea name='content' placeholder='Content...'></textarea></p>";
+		echo "<button type='submit'>Submit</button>";
+
+		echo "</form>";
 	}
 
-	public function papers(Request $request)
+	public function papers(Request $request, $subject)
 	{
-		//$paperId = $request->paperId;
+		$content = opt($request->data('content'), 'No content provided.');
 
-		//echo "I'm a controller and I got: {$paperId} safely!";
+		$success = Test::insert($request->data('file_name'), $request->data('content'), true);
 
-		header('Location: /');
+		$route = $success
+			? "/"
+			: "/error";
+
+		header("Location: {$route}");
 	}
+
+	public function users(Request $request)
+	{
+		$userId = $request->data('userId');
+		echo "Moikka. Tässä on sulle vähän dataa: {$userId}".PHP_EOL;
+
+		print_r($request->data());
+	}
+
+	// OLD STUFF
 
 	public function user($userId = 0, $postId = 0, $pageId = 0)
 	{
@@ -66,47 +102,6 @@ class TestController extends Controller
 
 			foreach ($users as $user) {
 				echo "<li><a href='/users/{$user['id']}'>User id {$user['id']}</a></li>";
-			}
-		}
-	}
-
-	public function posts($userId, $postId = 0, $pageId = 0)
-	{
-
-		$route = "/users/{$userId}/posts";
-
-		echo $this->header;
-		echo "<h2><a href='{$route}'><</a> Posts</h2>";
-
-		if ($postId) {
-			$route = $route."/".$postId;
-
-			// View a post
-
-			//$post = Test::post($postId);
-
-			echo "<h3>Post title</h3>";
-			echo "<p>Post id: {$postId}</p>";
-			echo "<p>Post content</p>";
-
-			echo "<p><a href='{$route}/1'>Show extra 1</a></p>";
-			echo "<p><a href='{$route}/2'>Show extra 2</a></p>";
-
-			if ($pageId) {
-				echo "<p><a href='{$route}'>Close extra</a></p>";
-				echo "<div style='padding: 5rem; background: linear-gradient(#999, #333)'>
-					EXTRAAA NUMBEER {$pageId}!!!
-				</div>";
-			}
-
-		} else {
-
-			// Show user's post listing
-
-			//$posts = Test::posts($postId);
-
-			for ($id=0; $id < 10; $id++) {
-				echo "<li><a href='{$route}/{$id}'>Post id {$id}</li>";
 			}
 		}
 	}
