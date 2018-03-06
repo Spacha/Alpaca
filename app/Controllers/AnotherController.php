@@ -9,7 +9,7 @@ use App\Models\Another;
 
 class AnotherController extends Controller
 {
-	public function home($data)
+	public function home()
 	{
 		$pageId = data($data, 'pageId');
 

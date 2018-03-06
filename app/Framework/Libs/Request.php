@@ -51,6 +51,6 @@ class Request
 			return $this->params[$key];
 		}
 
-		throw new InternalException("Parameter {$param} not found.");
+		throw new InternalException("Parameter {$key} not found.");
 	}
 }

@@ -43,9 +43,10 @@ class RouteMatcher
 	{
 		$regex = [
 			'optional' 	=> '/^\?(.*?)/',
+			'method'	=> '/^(\&|\$)\:/',
 			'brackets' 	=> '/\{(.*?)\}/',
 			'something' => '([a-zA-Z0-9åäö_-]+)',
-			'anything' 	=> '([a-zA-Z0-9åäö_-]*)'
+			'anything' 	=> '([a-zA-Z0-9åäö_-]*)',
 		];
 
 		return $regex[$key] ?? '';
@@ -59,12 +60,18 @@ class RouteMatcher
 	 */
 	protected function setUrl(string $url)
 	{
-		$url = rtrim($url, '/');
+		$this->url = rtrim(parse_url($url, PHP_URL_PATH), '/');
 		$this->url = strlen($url) ? $url : '/';
 	}
 
 	/**
 	 * Converts beautified route strings into regular expressions
+	 *
+	 * @todo These regex things should be in their own Object!
+	 * (public) routesToRegex
+	 * (public) match
+	 * (protected) extractParts
+	 * (protected) isOptional
 	 *
 	 * @param array $routes Array of beautified routes
 	 * @return array
@@ -77,20 +84,22 @@ class RouteMatcher
 
 			$paramClause = $this->regex('something');
 
+			// Parse request method
+			$method = $this->getMethod($url);
+
 			$url = trim($url, "/");
 
 			// extract parameter keys from route for later use
 			$params = $this->extractParts($this->regex('brackets'), $url)[0];
 
-			// Find optional parameters and
-			// remove question mark from the route and 
-			// make the last slash optional
+			// find optional parameters
 			foreach ($params as &$param) {
 				if ($this->isOptional($param)) {
-
+					// remove question mark from the route
 					$param = str_replace('?', '', $param);
-					$paramClause = $this->regex('anything');
 
+					// make the last slash optional
+					$paramClause = $this->regex('anything');
 				}
 			}
 
@@ -98,19 +107,44 @@ class RouteMatcher
 			$url = $this->optionalizeSlashes($url, count($params));
 
 			// make expressions of brackets and make slashes literal
-			$url = preg_replace(
-				[$this->regex('brackets'), "/\//"],
-				[$paramClause, "\/"],
-			$url);
+			$url = trim(preg_replace(
+				[$this->regex('method'), $this->regex('brackets'), "/\//"],
+				['', $paramClause, '\/'],
+			$url));
 
 			// add starting and ending delimeters and push to array
 			$regexRoutes["/^\/{$url}$/"] = [
+				'method' => $method,
 				'action' => $action,
 				'paramKeys' => $params
 			];
 		}
 
+		//bb($regexRoutes);
+		
 		return $regexRoutes;
+	}
+	protected function getMethod(string $url) : string
+	{
+		preg_match_all($this->regex('method'), $url, $results);
+
+		if (isset($results[1]) && isset($results[1][0])) {	
+			return  $this->getMethodByKey($results[1][0]);
+		}
+
+		throw new InternalException("Method missing from route definiton {$url}.");
+	}
+	protected function getMethodByKey(string $key)
+	{
+		$methods = [
+			'&' => 'GET',
+			'$' => 'POST'
+		];
+
+		if(array_key_exists($key, $methods))
+			return $methods[$key];
+		else
+			return false;
 	}
 
 	/**
