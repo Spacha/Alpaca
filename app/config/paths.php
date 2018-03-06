@@ -8,5 +8,5 @@
  */
 
 return [
-	//
+	'public'	=> 'public'
 ];

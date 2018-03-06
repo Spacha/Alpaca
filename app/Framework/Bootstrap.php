@@ -5,6 +5,7 @@ namespace App\Framework;
 use App\Framework\Libs\{
 	Core,
 	Router,
+	Request,
 	Autoloader,
 	ExceptionHandler
 };
@@ -27,7 +28,8 @@ class Bootstrap
 	public function run()
 	{
 		$this->router = new Router(
-			$_SERVER['REQUEST_URI'] ?? ''
+			Request::uri(),
+			Request::method()
 		);
 
 		// What if route changes or something? We don't need to register all again?

@@ -6,11 +6,22 @@ use App\Framework\Libs\Model;
 
 class Test extends Model
 {
-	public function __construct()
+	public static function insert(string $fileName, string $content, bool $overwrite = false) : bool
 	{
-		// connect();
-		echo "Test Model";
+		$fullName = app_root("logs/tests/{$fileName}.txt");
+
+		if (file_exists($fullName))
+			return "Cannot overwrite file {$fullName}";
+
+		$myfile = fopen($fullName, "w") or die("Unable to open file!");
+		
+		fwrite($myfile, $content);
+		fclose($myfile);
+
+		return true;
 	}
+
+
 
 	public static function user($id)
 	{
