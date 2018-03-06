@@ -2,10 +2,12 @@
 
 namespace App\Framework;
 
-use App\Framework\Libs\Core;
-use App\Framework\Libs\Router;
-use App\Framework\Libs\ExceptionHandler;
-use App\Framework\Libs\Autoloader;
+use App\Framework\Libs\{
+	Core,
+	Router,
+	Autoloader,
+	ExceptionHandler
+};
 
 class Bootstrap
 {

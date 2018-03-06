@@ -2,8 +2,12 @@
 
 namespace App\Framework\Libs;
 
-use App\Framework\Libs\RouteMatcher;
-use App\Framework\Exceptions\RoutingException;
+use App\Framework\{
+	Libs\Request,
+	Libs\RouteMatcher,
+	Exceptions\RoutingException
+};
+
 
 class Router
 {
@@ -27,18 +31,20 @@ class Router
 	 */
 	public function callAction()
 	{
-		if (!class_exists($this->controller)) {
+		$request = new Request();
+		$request->setParams($this->params);
+
+		if (!class_exists($this->controller))
 			throw new RoutingException("Controller {$this->controller} doesn't exist.");
-		}
 
 		// Register the controller
 		$controller = new $this->controller();
 
-		if (!method_exists($controller, $this->method)) {
+		if (!method_exists($controller, $this->method))
 			throw new RoutingException("Method {$this->method} doesn't exist.");
-		}
 
-		call_user_func_array([$controller, $this->method], $this->params);
+		// Call the action
+		call_user_func_array([$controller, $this->method], [$request]);
 	}
 
 	/**
