@@ -33,24 +33,9 @@
 
 return [
 	// this could be also defined just as: '$'
-	'&: /'									=> 'TestController@home',
-	'&: users/{?userId}'					=> 'TestController@users',
-
+	'&:'									=> 'TestController@home',
+	'&: users / {?userId}'					=> 'TestController@users',
+	
 	'$: users/add-user'						=> 'TestController@storeUser',
-
-	'$: users/add-user'						=> 'TestController@storeUser',
-
-	'$: paper/{?paperId}' 					=> 'TestController@papers',
+	'$: papers' 							=> 'TestController@papers',
 ];
-
-// return [
-// 	'/' 										=> 'TestController@home',
-// 	'users/{?userId}' 							=> 'TestController@user',
-// 	'users/{userId}/posts/{?postId}/{?pageId}'	=> 'TestController@posts',
-
-// 	'secret/{?pageId}/{?moi}'					=> 'AnotherController@test',
-
-// 	'pages/{?pageId}/{?postId}/{?commentId}'	=> 'AnotherController@pages',
-
-// 	'paper/{paperId}' => 'TestController@papers'
-// ];

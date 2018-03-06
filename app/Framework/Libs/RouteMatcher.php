@@ -8,7 +8,9 @@ use App\Framework\Exceptions\InternalException;
 class RouteMatcher
 {
 	protected $routes = [];
+	
 	protected $url = '';
+	protected $method = '';
 
 	/**
 	 * Set the url and routes
@@ -20,7 +22,12 @@ class RouteMatcher
 	public function __construct(string $url, array $routes)
 	{
 		$this->setUrl($url);
+		$this->setMethod();
 		$this->routes = $this->routesToRegex($routes);
+	}
+	public function setMethod() : void
+	{
+		$this->method = $_SERVER['REQUEST_METHOD'];
 	}
 
 	/**
@@ -119,8 +126,6 @@ class RouteMatcher
 				'paramKeys' => $params
 			];
 		}
-
-		//bb($regexRoutes);
 		
 		return $regexRoutes;
 	}
@@ -154,12 +159,14 @@ class RouteMatcher
 	 */
 	protected function getCallables() : array
 	{
+		$url = 		$this->url;
+		$method = 	$this->method;
+		$routes = 	$this->routes;
+
 		$result = 	['','',[]];
-		$url = $this->url;
-		$routes = $this->routes;
 
 		foreach ($routes as $match => $action) {
-			if (preg_match($match, $url)) {
+			if (preg_match($match, $url) && $this->method == $action['method']) {
 
 				// if we have a match, let's build an action for it
 				$params = $this->extractParts($match, $url);

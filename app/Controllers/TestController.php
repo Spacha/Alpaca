@@ -26,13 +26,16 @@ class TestController extends Controller
 	{
 		echo $this->header;
 		echo "<h2>Home</h2>";
+		echo "<form action='/papers' method='POST'><button type='submit'>Submit</button><form>";
 	}
 
 	public function papers(Request $request)
 	{
-		$paperId = $request->paperId;
+		//$paperId = $request->paperId;
 
-		echo "I'm a controller and I got: {$paperId} safely!";
+		//echo "I'm a controller and I got: {$paperId} safely!";
+
+		header('Location: /');
 	}
 
 	public function user($userId = 0, $postId = 0, $pageId = 0)
