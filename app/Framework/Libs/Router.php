@@ -15,12 +15,13 @@ class Router
 	
 	protected $controller;
 	protected $method;
-	protected $params = [];
 
-	public function __construct($url = '')
+	protected $params = [];
+	protected $postData = [];
+
+	public function __construct(string $url, string $method)
 	{
-		// @todo think about the name, 'matcher'...
-		$this->initMatcher($url);
+		$this->initMatcher($url, $method);
 		$this->setCallables();
 	}
 
@@ -31,9 +32,6 @@ class Router
 	 */
 	public function callAction()
 	{
-		$request = new Request();
-		$request->setParams($this->params);
-
 		if (!class_exists($this->controller))
 			throw new RoutingException("Controller {$this->controller} doesn't exist.");
 
@@ -43,8 +41,21 @@ class Router
 		if (!method_exists($controller, $this->method))
 			throw new RoutingException("Method {$this->method} doesn't exist.");
 
+		$arguments = $this->getMethodArguments();
+
 		// Call the action
-		call_user_func_array([$controller, $this->method], [$request]);
+		call_user_func_array([$controller, $this->method], $arguments);
+	}
+
+	public function getMethodArguments() : array
+	{
+		$request = $this->initRequest();	
+
+		$arguments = [];
+		$arguments[] = $request;
+		$arguments[] = $this->params;
+
+		return $arguments;
 	}
 
 	/**
@@ -52,10 +63,10 @@ class Router
 	 *
 	 * @return Request
 	 **/
-	protected function buildRequest() : Request
+	protected function initRequest() : Request
 	{
 		$request = new Request();
-		$request->setParams($this->params);
+		$request->setData($this->params);
 
 		return $request;
 	}
@@ -66,9 +77,9 @@ class Router
 	 * @param string $url
 	 * @return void
 	 */
-	protected function initMatcher(string $url)
+	protected function initMatcher(string $url, string $method)
 	{
-		$this->matcher = new RouteMatcher($url, config('routes'));
+		$this->matcher = new RouteMatcher($url, $method, config('routes'));
 	}
 
 	/**

@@ -5,52 +5,54 @@ namespace App\Framework\Libs;
 use App\Framework\Exceptions\InternalException;
 
 /**
- * This class is not in real use. It's just an experimental thing!
- * Yeshh.
- */
+* 
+*/
 class Request
 {
-	protected $params = [];
+	protected $getData = [];
+	protected $postData = [];
 
-	/**
-	 * Sets array of parameters as the object's properties.
-	 * 
-	 * NOT IN USE!
-	 *
-	 * @param array $params
-	 * @return void
-	 */
-	public function setParams(array $params) : void
+	public function __construct()
 	{
-		foreach ($params as $key => $value) { 
-			$this->__set($key, $value);
+		if ($this->method() == 'POST') {
+			$this->postData = $_POST;
 		}
 	}
 
 	/**
-	 * Set a single parameter
+	 * Get a piece or all of the data stored to object's $data property
 	 *
-	 * @param string $ey 
-	 * @param $value 
-	 * @return void
+	 * @param sting $name 	Name or key of the data piece
+	 * @return mixed 		Value of the data or an associative array of them
 	 */
-	public function __set(string $key, $value) : void
+	public function data(string $name = '')
 	{
-		$this->params[$key] = $value;
+		if (!strlen($name))
+			return $this->postData;
+
+		if (array_key_exists($name, $this->postData))
+			return $this->postData[$name];
+
+		return null;
 	}
 
 	/**
-	 * Get a single parameter
+	 * Set an array of parameters to object's data property
+	 * Setting a single value is easy: $this->setData(['key' => 'value'])
 	 *
-	 * @param string $param
-	 * @return $param
-	 **/
-	public function __get(string $key)
+	 * @param mixed $params Single variable or array
+	 * @return void
+	 */
+	public function setData($data)
 	{
-		if (array_key_exists($key, $this->params)) {
-			return $this->params[$key];
+		if (is_array($data)) {
+			$this->postData += $data;
 		}
+	}
 
-		throw new InternalException("Parameter {$key} not found.");
+	// public static function uri() : string {}
+	public static function method() : string
+	{
+		return $_SERVER['REQUEST_METHOD'];
 	}
 }

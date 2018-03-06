@@ -17,8 +17,7 @@
  * The first sign in the beginning of the route definition
  * is method in use. The method key is followed by a semicolon
  * and space for clarity, though this is optional. Definitions without
- * method are considered as GET request. It's still recommended to use method
- * sign in all request since it adds clarity.
+ * method are considered as GET request.
  * & => GET
  * $ => POST
  *
@@ -29,13 +28,19 @@
  * {parameter}
  * {?optionalParam}
  *
+ * We now accept WHITESPACES in routes. Not recommended but possible.
+ *
+ * Idea: We could accept names without method tag and default it as GET
  */
 
 return [
 	// this could be also defined just as: '$'
-	'&:'									=> 'TestController@home',
-	'&: users / {?userId}'					=> 'TestController@users',
-	
-	'$: users/add-user'						=> 'TestController@storeUser',
-	'$: papers' 							=> 'TestController@papers',
+	'&: /'									=> 'TestController@home',
+	'&: users/{?userId}'					=> 'TestController@users',
+
+	'$: {someId}/papers/{?another}' 							=> 'TestController@papers',
+
+
+
+	'&: users/{userId}/posts/{postId}' => 'TestController@posts'
 ];

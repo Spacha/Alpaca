@@ -19,15 +19,11 @@ class RouteMatcher
 	 * @param array $routes
 	 * @return void
 	 */
-	public function __construct(string $url, array $routes)
+	public function __construct(string $url, string $method, array $routes)
 	{
 		$this->setUrl($url);
-		$this->setMethod();
+		$this->method = $method;
 		$this->routes = $this->routesToRegex($routes);
-	}
-	public function setMethod() : void
-	{
-		$this->method = $_SERVER['REQUEST_METHOD'];
 	}
 
 	/**
@@ -139,17 +135,13 @@ class RouteMatcher
 	 */
 	protected function getCallables() : array
 	{
-		$url = 		$this->url;
-		$method = 	$this->method;
-		$routes = 	$this->routes;
-
 		$result = 	['','',[]];
 
-		foreach ($routes as $match => $action) {
+		foreach ($this->routes as $match => $action) {
 
-			if ($this->isMatchingUrl($match, $url, $action['method'])) {
+			if ($this->isMatchingUrl($match, $this->url, $action['method'])) {
 				// if we have a match, let's build an action for it
-				$params = $this->extractParts($match, $url);
+				$params = $this->extractParts($match, $this->url);
 
 				// @todo USE SMARTED METHOD!
 				foreach ($params as &$param) {
