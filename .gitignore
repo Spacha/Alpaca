@@ -52,3 +52,4 @@ Temporary Items
 
 dbconfig.php
 /app/logs
+/vendor
