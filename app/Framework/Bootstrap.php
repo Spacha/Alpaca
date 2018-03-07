@@ -1,4 +1,8 @@
 <?php
+/**
+ * This is the entry point of the whole application.
+ * This boots up everything.
+ */
 
 namespace App\Framework;
 
@@ -10,10 +14,18 @@ use App\Framework\Libs\{
 	ExceptionHandler
 };
 
+/**
+*
+*/
 class Bootstrap
 {
 	protected $router;
 
+	/**
+	 * Call initializing methods
+	 *
+	 * @return void
+	 */
 	public function __construct()
 	{
 		$this->defineConstants();
@@ -24,6 +36,8 @@ class Bootstrap
 
 	/**
 	 * Run the application
+	 *
+	 * @return void
 	 */
 	public function run()
 	{
@@ -38,6 +52,8 @@ class Bootstrap
 
 	/**
 	 * Define global constants to be used anywhere in the application.
+	 *
+	 * @return void
 	 */
 	protected function defineConstants()
 	{
@@ -46,6 +62,8 @@ class Bootstrap
 
 	/**
 	 * Require manually those files we need before autoloading.
+	 *
+	 * @return void
 	 */
 	protected function requireVitals()
 	{
@@ -61,6 +79,8 @@ class Bootstrap
 
 	/**
 	  * Register autoloader to load all class dependencies for the application.
+	  *
+	 * @return void
 	  */
 	protected function loadAutoloader()
 	{
@@ -69,6 +89,8 @@ class Bootstrap
 
 	/**
 	 * Set exception handler for the application.
+	 *
+	 * @return void
 	 */
 	protected function setExceptionHandler()
 	{
