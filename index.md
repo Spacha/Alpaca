@@ -33,7 +33,7 @@ Of course you can pass parameters to your controller. To use parameters, you nee
 define them in your routes.
 
 For example:
-****
+
 ```php
 '&: users/{userId}/posts/{postId}' => 'UserController@posts'
 ```
@@ -83,7 +83,7 @@ public function update(Request $request, $companyId)
 
 As you can see in the example above, the *data()*-method of the Request object, returns the specified data piece or if you don’t pass any arguments to the method, you get all the data at once.
 
-**Optional parameters**
+## Optional parameters
 If you define a parameter to be optional, it simply means that the route is accessible whether the user did or didn’t pass a parameter within the route. To define an optional parameter, use a question mark in front of the parameter name.
 
 
