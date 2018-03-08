@@ -120,7 +120,7 @@ $currentPageId = opt($request->data('showSidebar'), 1);
 ## Array_unset()
 ```php
 array array_unset(array, [index=0]);
-
+```
 
 Removes an element from given array and reindexes remaining elements to start from 0. By default, the index is zero so it removes the first element.
 
