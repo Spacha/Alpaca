@@ -1,0 +1,10 @@
+---
+---
+
+@import 'jekyll-theme-cayman';
+
+img.project-logo {
+    height: 70px;
+    vertical-align: middle;
+    padding-right: 1rem;
+}
