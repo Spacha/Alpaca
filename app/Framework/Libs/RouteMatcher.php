@@ -87,17 +87,17 @@ class RouteMatcher
 
 			$paramClause = $this->regex('something');
 
-			// Parse request method
+			// Get the request method
 			$method = $this->getMethodFromRoute($url);
 
-			// Trim stuff
-			$url = trim($url, '/');
+			// Trim method keys and spaces and slashes
+			$url = trim(preg_replace($this->regex('method'), '', $url), '/ ');
 			$url = str_replace(' ', '', $url);
 
-			// extract parameter keys from route for later use
+			// Extract parameter keys from the route for later use
 			$params = $this->extractParts($this->regex('brackets'), $url)[0];
 
-			// find optional parameters
+			// Find optional parameters
 			foreach ($params as &$param) {
 				if ($this->isOptional($param)) {
 					// remove question mark from the route
@@ -108,16 +108,16 @@ class RouteMatcher
 				}
 			}
 
-			// make slashes optional
+			// Make slashes optional
 			$url = $this->optionalizeSlashes($url, count($params));
 
-			// make expressions of brackets and make slashes literal
+			// Make expressions of brackets and make slashes literal
 			$url = trim(preg_replace(
-				[$this->regex('method'), $this->regex('brackets'), "/\//"],
-				['', $paramClause, '\/'],
+				[$this->regex('brackets'), "/\//"],
+				[$paramClause, '\/'],
 			$url));
 
-			// add starting and ending delimeters and push to array
+			// Add starting and ending delimeters and push to array
 			$regexRoutes["/^\/{$url}$/"] = [
 				'method' => $method,
 				'action' => $action,
