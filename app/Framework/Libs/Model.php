@@ -2,17 +2,19 @@
 
 namespace App\Framework\Libs;
 
-abstract Class Model
+use App\Framework\Libs\Database;
+
+abstract class Model
 {
 	protected $db;
 	
 	public function __construct()
 	{
-		echo "<li> Main Model";
+		$this->db = $this->connect();
 	}
 
 	public function connect()
 	{
-		$this->db = new Database();
+		return new Database(dbConfig('test'));
 	}
 }

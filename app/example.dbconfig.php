@@ -8,9 +8,10 @@
  */
 
 return [
-	'host' 				=> 'localhost',
+	'connection'		=> 'mysql:host=127.0.0.1',
 	'name' 				=> 'alpaca',
 	'user' 				=> 'root',
 	'password' 			=> '',
-	'table_prefix' 		=> ''
+	'table_prefix' 		=> '',
+	'options'			=> []
 ];

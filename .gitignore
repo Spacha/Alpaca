@@ -50,6 +50,6 @@ Temporary Items
 # Alpaca
 # =========================
 
-dbconfig.php
+/app/dbconfig.php
 /app/logs
 /vendor

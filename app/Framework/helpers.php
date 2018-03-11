@@ -15,15 +15,28 @@
  * @param string $config Config file's name matching one in app/config
  * @return array Config file as array if found
  */
-function config(string $config = '') : array
+function config(string $config = '', bool $anywhere = false) : array
 {
-	$configPath = PATH_ROOT . '/config/' . $config . '.php';
+	$configPath = $anywhere
+		? $config
+		: PATH_ROOT . '/config/' . $config . '.php';
 
 	$configFile = file_exists($configPath)
 		? require($configPath)
 		: [];
 
 	return $configFile;
+}
+
+/**
+ * Get the database configuration if found.
+ *
+ * @param string $name name of the config file
+ * @return array
+ **/
+function dbConfig($name = '')
+{
+	return config(PATH_ROOT . '/dbConfig.php', true);
 }
 
 
