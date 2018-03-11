@@ -10,6 +10,8 @@ class Database extends PDO
 {
 	protected $pdo;
 
+	public $query = '';
+
 	public function __construct($config)
 	{
 		// Connect to database
@@ -42,9 +44,22 @@ class Database extends PDO
 	{
 		$whereClause = $where ? " WHERE {$where}" : "";
 
-		$query = $this->pdo->prepare("SELECT * FROM {$table}{$whereClause}");
-		$query->execute();
-		
-		return $query->fetchAll(PDO::FETCH_CLASS);
+		$this->query = $this->pdo->prepare("SELECT * FROM {$table}{$whereClause}");
+		return $this;
+	}
+
+	public function first()
+	{
+		$this->query->execute();
+		$this->query->setFetchMode(PDO::FETCH_CLASS, 'App\Models\User'); 
+
+		return $this->query->fetch();
+	}
+
+	public function get()
+	{
+		$this->query->execute();
+
+		return $this->query->fetchAll(PDO::FETCH_CLASS);
 	}
 }
