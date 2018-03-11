@@ -15,13 +15,14 @@ class Database extends PDO
 	public function __construct($config)
 	{
 		// Connect to database
-		$this->pdo = $this->connect($config);
+		$this->connect($config);
+
 	}
 
 	protected function connect($config)
 	{
 		try {
-			return new PDO(
+			parent::__construct(
 				$config['connection'] .';dbname='. $config['name'],
                 $config['user'],
                 $config['password'],
@@ -46,7 +47,7 @@ class Database extends PDO
 		$fieldNames = implode('`, `', array_keys($data));
 		$fieldValues = ':'. implode(', :', array_keys($data));
 
-		$this->query = $this->pdo->prepare("INSERT INTO $table (`$fieldNames`) VALUES($fieldValues)");
+		$this->query = $this->prepare("INSERT INTO $table (`$fieldNames`) VALUES($fieldValues)");
 		
 		foreach ($data as $key => $value) {
             $this->query->bindValue(":$key", $value);
@@ -66,7 +67,7 @@ class Database extends PDO
 	{
 		$whereClause = $where ? " WHERE {$where}" : "";
 
-		$this->query = $this->pdo->prepare("SELECT * FROM {$table}{$whereClause}");
+		$this->query = $this->prepare("SELECT * FROM {$table}{$whereClause}");
 		return $this;
 	}
 
