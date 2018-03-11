@@ -12,10 +12,5 @@
  */
 
 return [
-	// this could be also defined just as: '$'
-	'&: /'									=> 'TestController@home',
-	'&: users/{?userId}'					=> 'TestController@users',
-	'&: users/{userId}/posts/{postId}' 		=> 'TestController@posts',
-
-	'$: {subject}/send'				 		=> 'TestController@papers',
+	'&: /' => 'ExampleController@foo'
 ];
