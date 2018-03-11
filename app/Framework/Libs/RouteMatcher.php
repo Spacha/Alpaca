@@ -63,7 +63,7 @@ class RouteMatcher
 	 */
 	protected function setUrl(string $url)
 	{
-		$this->url = rtrim(parse_url($url, PHP_URL_PATH), '/');
+		$url = rtrim(parse_url($url, PHP_URL_PATH), '/');
 		$this->url = strlen($url) ? $url : '/';
 	}
 
