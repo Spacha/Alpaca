@@ -35,8 +35,30 @@ class Database extends PDO
 	/**
 	 * Description
 	 *
-	 * @todo 	Return instance of the class, for example App\Models\User
-				And use array of wheres!
+	 * @todo This is not gonna be like this for long!
+	 * @param string $table
+	 * @param array $data
+	 * @return bool
+	 */
+	public function insert(string $table, array $data)
+	{
+		ksort($data);
+		$fieldNames = implode('`, `', array_keys($data));
+		$fieldValues = ':'. implode(', :', array_keys($data));
+
+		$this->query = $this->pdo->prepare("INSERT INTO $table (`$fieldNames`) VALUES($fieldValues)");
+		
+		foreach ($data as $key => $value) {
+            $this->query->bindValue(":$key", $value);
+        }
+        
+        return $this->query->execute();
+	}
+
+	/**
+	 * Prepare a select query.
+	 *
+	 * @todo 	And use array of wheres!
 	 * @param string string
 	 * @return void
 	 */
@@ -48,15 +70,26 @@ class Database extends PDO
 		return $this;
 	}
 
-	public function first()
+	/**
+	 * Fetch first matching row.
+	 *
+	 * @param string $object Object to return
+	 * @return object
+	 */
+	public function first($object = 'stdClass')
 	{
 		$this->query->execute();
-		$this->query->setFetchMode(PDO::FETCH_CLASS, 'App\Models\User'); 
+		$this->query->setFetchMode(PDO::FETCH_CLASS, $object);
 
 		return $this->query->fetch();
 	}
 
-	public function get()
+	/**
+	 * Return the results as an array of objects
+	 *
+	 * @return array
+	 */
+	public function get() : array
 	{
 		$this->query->execute();
 
