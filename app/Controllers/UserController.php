@@ -33,31 +33,21 @@ class UserController extends Controller
 	{
 		$user = $this->model->view($userId);
 
-		echo $this->header;
-
 		// user not found
 		if (!$user)
 			die('User not found.');
 		
-		echo "<ul>";
-			echo "<li> ID: {$user->id}";
-			echo "<li> Name: {$user->name}";
-			echo "<li> Age: {$user->age}";
-		echo "</ul>";
+		return new View('users.view', [
+			'header' => $this->header,
+			'user' => $user
+		]);
 	}
 
 	public function create()
 	{
-		echo $this->header;
-
-		echo "<h1>Create a user</h1>";
-
-		echo "<form action='/users/add' method='POST'>";
-			echo "<input type='text' name='name' placeholder='Name' />";
-			echo "<input type='number' name='age' placeholder='Age' />";
-			echo "<input type='text' name='phone' placeholder='Phone' />";
-			echo "<button type='submit'>Add</button>";
-		echo "</form>";
+		return new View('users.add', [
+			'header' => $this->header
+		]);
 	}
 
 	public function add(Request $request)

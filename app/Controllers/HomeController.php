@@ -4,7 +4,8 @@ namespace App\Controllers;
 
 use App\Framework\Libs\{
 	Controller,
-	Request
+	Request,
+	View
 };
 
 use App\Models\Test;
@@ -15,19 +16,11 @@ class HomeController extends Controller
 
 	public function home()
 	{
-		echo $this->header;
-
-		echo "<h1>Home</h1>";
-		echo "<p>This is home. Home sweet home!</p>";
-		echo "<img src='images/logo_blue.svg' style='width: 5rem;' />";
+		return new View('home.home', ['header' => $this->header]);
 	}
 
 	public function about()
 	{
-		echo $this->header;
-
-		echo "<h1>About</h1>";
-		echo "<p>Contains documentation from here and there… About everything for now, until I care to split different subjects into their own files.</p>";
-		echo "<p>– Spacha</p>";
+		return new View('about.about', ['header' => $this->header]);
 	}
 }
