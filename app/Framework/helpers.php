@@ -58,6 +58,22 @@ function app_root(string $path)
 }
 
 /**
+ * Get a path from the path config file by the key.
+ *
+ * @param string $name 	The path key
+ * @param string $after Path coming after the base path
+ * @return string 		The corresponding path if found, or the key if path is not found
+ */
+function app_path(string $name, string $after = '')
+{
+	$paths = config('paths');
+	if (array_key_exists($name, $paths))
+		return PATH_ROOT.'/'.$paths[$name].'/'.$after;
+	else
+		return $name.'/'.$after;
+}
+
+/**
  * Return given path related to public root
  *
  * @todo Cannot use config like this!
