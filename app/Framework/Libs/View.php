@@ -2,6 +2,12 @@
 
 namespace App\Framework\Libs;
 
+/**
+ * @todo 	This class should be rethought from the first line to the last.
+ * 			Templating engine, layouts...
+ *			We shouldn't have to define snippets every time: ['header', 'footer']
+ *			Instead, extract the keys from the .phtml files.
+ */
 class View
 {
 	protected $snippets = [];
