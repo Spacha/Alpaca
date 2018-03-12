@@ -9,8 +9,7 @@ class View
 
 	public function __construct($template, $data = [])
 	{
-		//$this->template = $template;
-		$this->template = app_path('views', 'users/list.phtml');
+		$this->template = $this->templatePath($template);
 		$this->data = $data;
 		$this->render();
 	}
@@ -20,5 +19,10 @@ class View
 		extract($this->data);
 
 		require $this->template;
+	}
+
+	protected function templatePath(string $template) : string
+	{
+		return app_path('views', str_replace('.', DIRECTORY_SEPARATOR, $template).'.phtml');
 	}
 }
