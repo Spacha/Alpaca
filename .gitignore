@@ -54,3 +54,7 @@ Temporary Items
 /app/logs
 /vendor
 /docs
+.sass-cache/
+
+/public/css/
+/public/js/
