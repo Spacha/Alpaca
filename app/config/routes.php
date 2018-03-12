@@ -12,5 +12,11 @@
  */
 
 return [
-	'&: /' => 'ExampleController@foo'
+	'&:'										=> 'HomeController@home',
+	'&: about'									=> 'HomeController@about',
+	
+	'&: users'									=> 'UserController@list',
+	'&: users/{userId}'							=> 'UserController@view',
+	'&: users/create'							=> 'UserController@create',
+	'$: users/add'								=> 'UserController@add',
 ];
