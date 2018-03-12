@@ -12,8 +12,6 @@ use App\Models\User;
 
 class UserController extends Controller
 {
-	protected $header = '<a href="/">Home</a> | <a href="/users">Users</a> | <a href="/about">About</a><hr>';
-
 	public function __construct()
 	{
 		parent::__construct(new User());
@@ -24,9 +22,8 @@ class UserController extends Controller
 		$users = $this->model->list();
 
 		return new View('users.list', [
-			'header' => $this->header,
 			'users' => $users
-		]);
+		], ['header', 'footer']);
 	}
 
 	public function view(Request $request, $userId)
@@ -38,16 +35,13 @@ class UserController extends Controller
 			die('User not found.');
 		
 		return new View('users.view', [
-			'header' => $this->header,
 			'user' => $user
-		]);
+		], ['header', 'footer']);
 	}
 
 	public function create()
 	{
-		return new View('users.add', [
-			'header' => $this->header
-		]);
+		return new View('users.add', [], ['header', 'footer']);
 	}
 
 	public function add(Request $request)

@@ -1,5 +1,4 @@
-
-<?=$header?>
+<?=$snippets['header']?>
 
 <p><a href='/users/create'>+ Add user</a></p>
 
@@ -8,3 +7,5 @@
 		<li><a href='/users/<?=$user->id?>'><?=$user->name?></a></li>
 	<?php endforeach; ?>
 </ul>
+
+<?=$snippets['footer']?>
