@@ -22,6 +22,7 @@ class UserController extends Controller
 		$users = $this->model->list();
 
 		return new View('users.list', [
+			'active' => 'users',
 			'users' => $users
 		], ['header', 'footer']);
 	}
@@ -35,13 +36,14 @@ class UserController extends Controller
 			die('User not found.');
 		
 		return new View('users.view', [
+			'active' => 'users',
 			'user' => $user
 		], ['header', 'footer']);
 	}
 
 	public function create()
 	{
-		return new View('users.add', [], ['header', 'footer']);
+		return new View('users.add', ['active' => 'users'], ['header', 'footer']);
 	}
 
 	public function add(Request $request)

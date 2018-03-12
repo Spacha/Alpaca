@@ -1,11 +1,19 @@
 <?=$snippets['header']?>
 
-<p><a href='/users/create'>+ Add user</a></p>
 
-<ul>
-	<?php foreach($users as $user): ?>
-		<li><a href='/users/<?=$user->id?>'><?=$user->name?></a></li>
-	<?php endforeach; ?>
-</ul>
+<article class="main">
+	<div class="wrapper">
+		<h1><span>Users</span></h1>
+
+		<p><a href='/users/create'>+ Add user</a></p>
+
+		<ul>
+			<?php foreach($users as $user): ?>
+				<li><a href='/users/<?=$user->id?>'><?=$user->name?></a></li>
+			<?php endforeach; ?>
+		</ul>
+
+	</div>
+</article>
 
 <?=$snippets['footer']?>

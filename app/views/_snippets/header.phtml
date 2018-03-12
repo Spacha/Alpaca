@@ -1,1 +1,29 @@
-<a href="/">Home</a> | <a href="/users">Users</a> | <a href="/about">About</a>
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Alpaca Development</title>
+
+		<link rel="stylesheet" href="<?='/css/app.css'?>">
+	</head>
+	<body>
+
+		<nav class="main">
+			<div class="wrapper clearfix">
+
+				<div class="main-logo">
+					<a href="/">
+						<img src="/images/logo_blue.svg" alt="logo" />
+						<span>Dummy<span>app</span></span>
+					</a>
+				</div>
+
+				<div class="top-nav">
+					<ul class="top-nav">
+						<li class="<?=(isset($active) && $active == 'home') ?'active':''?>"><a href="/">Home</a></li>
+						<li class="<?=(isset($active) && $active == 'users') ?'active':''?>"><a href="/users">Users</a></li>
+						<li class="<?=(isset($active) && $active == 'about') ?'active':''?>"><a href="/about">About</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+		
