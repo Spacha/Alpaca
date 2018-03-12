@@ -1,0 +1,10 @@
+
+<?=$header?>
+
+<p><a href='/users/create'>+ Add user</a></p>
+
+<ul>
+	<?php foreach($users as $user): ?>
+		<li><a href='/users/<?=$user->id?>'><?=$user->name?></a></li>
+	<?php endforeach; ?>
+</ul>

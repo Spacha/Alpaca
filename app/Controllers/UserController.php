@@ -2,8 +2,11 @@
 
 namespace App\Controllers;
 
-use App\Framework\Libs\Controller;
-use App\Framework\Libs\Request;
+use App\Framework\Libs\{
+	Controller,
+	Request,
+	View
+};
 
 use App\Models\User;
 
@@ -20,17 +23,10 @@ class UserController extends Controller
 	{
 		$users = $this->model->list();
 
-		echo $this->header;
-
-		echo "<p><a href='/users/create'>+ Add user</a></p>";
-
-		echo "<ul>";
-
-		foreach($users as $user) {
-			echo "<li><a href='/users/{$user->id}'>{$user->name}</a></li>";
-		}
-
-		echo "</ul>";
+		return new View('users.list', [
+			'header' => $this->header,
+			'users' => $users
+		]);
 	}
 
 	public function view(Request $request, $userId)
