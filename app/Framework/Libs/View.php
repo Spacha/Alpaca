@@ -17,8 +17,8 @@ class View
 	public function __construct($template, $data = [], $snippets = [])
 	{
 		$this->template = $this->templatePath($template);
-		$this->setSnippets($snippets);
 		$this->data = $data;
+		$this->setSnippets($snippets);
 
 		$this->render();
 	}
@@ -43,6 +43,7 @@ class View
 
 		foreach($snippets as $snippet) {
 			ob_start();
+			extract($this->data);
 			require app_path('views', '_snippets/'.$snippet.'.phtml');
 			$result[$snippet] = ob_get_clean();
 		}
