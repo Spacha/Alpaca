@@ -5,6 +5,10 @@ namespace App\Framework\Libs;
 use App\Framework\Libs\Core;
 use App\Framework\Exceptions\InternalException;
 
+/**
+ * Takes care of parsing and matching urls and routes.
+ * Contains also some grammar stuff.
+ */
 class RouteMatcher
 {
 	protected $routes = [];
