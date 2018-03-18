@@ -122,7 +122,8 @@ class RouteMatcher
 			$url));
 
 			// Add starting and ending delimeters and push to array
-			$regexRoutes["/^\/{$url}$/"] = [
+			$regexRoutes[] = [
+				'url' => "/^\/{$url}$/",
 				'method' => $method,
 				'action' => $action,
 				'paramNames' => $params
@@ -141,12 +142,11 @@ class RouteMatcher
 	{
 		$result = 	['','',[]];
 
-		foreach ($this->routes as $match => $action) {
-
-			if ($this->isMatchingUrl($match, $this->url, $action['method'])) {
+		foreach ($this->routes as $action) {
+			
+			if ($this->isMatchingUrl($action['url'], $this->url, $action['method'])) {
 				// if we have a match, let's build an action for it
-				$params = $this->extractParts($match, $this->url);
-
+				$params = $this->extractParts($action['url'], $this->url);
 				// @todo USE SMARTED METHOD!
 				foreach ($params as &$param) {
 					$param = $param[0];
