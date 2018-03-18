@@ -19,4 +19,14 @@ return [
 	'&: users/{userId}'							=> 'UserController@view',
 	'&: users/create'							=> 'UserController@create',
 	'$: users/add'								=> 'UserController@add',
+
+	// Authentication
+
+	'&: login'									=> 'UserController@login',
+	'$: login'									=> 'UserController@tryLogin',
+
+	'&: register'								=> 'UserController@register',
+	'$: register'								=> 'UserController@tryRegister',
+
+	'&: logout'									=> 'UserController@logout',
 ];

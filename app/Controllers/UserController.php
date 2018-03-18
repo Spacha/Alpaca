@@ -56,4 +56,15 @@ class UserController extends Controller
 
 		header("Location: /users/{$id}");
 	}
+
+	// Authentication
+
+	public function login()
+	{
+		return new View('auth.login', [], ['header', 'footer']);
+	}
+
+	public function tryLogin() {
+		return null;
+	}
 }
