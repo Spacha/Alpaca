@@ -63,11 +63,12 @@ class Database extends PDO
 	 * @param string string
 	 * @return void
 	 */
-	public function select($table, $where = '')
+	public function select($table, $columns = [], $where = '')
 	{
 		$whereClause = $where ? " WHERE {$where}" : "";
+		$columns = count($columns) ? implode(', ', $columns) : '*';
 
-		$this->query = $this->prepare("SELECT * FROM {$table}{$whereClause}");
+		$this->query = $this->prepare("SELECT {$columns} FROM {$table}{$whereClause}");
 		return $this;
 	}
 
@@ -77,7 +78,7 @@ class Database extends PDO
 	 * @param string $object Object to return
 	 * @return object
 	 */
-	public function first($object = 'stdClass')
+	public function first($object = 'stdClass') : object
 	{
 		$this->query->execute();
 		$this->query->setFetchMode(PDO::FETCH_CLASS, $object);
