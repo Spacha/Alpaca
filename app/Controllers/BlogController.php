@@ -21,11 +21,14 @@ class BlogController extends Controller
 	{
 		//$posts = $this->model->list('id', 'title', ['content', 'SELECT LEFT', 50]);
 		$posts = $this->model->list();
-		//dd($posts);
 
 		return new View('blog.home', [
 			'active' 	=> 'blog',
 			'posts' 	=> $posts
 		], ['header', 'footer']);
+	}
+	public function create()
+	{
+		return new View('blog.create', [], ['header', 'footer']);
 	}
 }
