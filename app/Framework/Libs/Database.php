@@ -28,6 +28,10 @@ class Database extends PDO
                 $config['password'],
                 $config['options']
 			);
+			
+			$this->exec('SET NAMES utf8');
+			$this->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+
 		} catch (\PDOException $e) {
 			throw new DatabaseException($e->getMessage());
 		}
