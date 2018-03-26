@@ -26,6 +26,11 @@ class Blog extends Model
 
 	public function view($postId)
 	{
-		return $this->db->select('posts', [], "id = {$postId}")->first();
+		dd(
+		$this->db->select('posts', ['title', 'content', 'category_id', 'created_at'], "id = {$postId}")
+			->join('posts.user_id', 'users.id')
+			->use('users.name as author')
+
+		);
 	}
 }

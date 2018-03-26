@@ -27,6 +27,14 @@ class BlogController extends Controller
 			'posts' 	=> $posts
 		], ['header', 'footer']);
 	}
+
+	public function view(Request $request, $postId)
+	{
+		$post = $this->model->view($postId);
+
+		return new View('blog.view', ['post' => $post], ['header', 'footer']);
+	}
+
 	public function create()
 	{
 		return new View('blog.create', [], ['header', 'footer']);
