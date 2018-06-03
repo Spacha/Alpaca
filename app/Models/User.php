@@ -9,22 +9,25 @@ class User extends Model
 {
 	public function add($data)
 	{
-		$this->db->insert('users', [
-			'name' => $data['name'],
-			'age' => $data['age'],
-			'phone' => $data['phone']
-		]);
+		// $this->db->into('users')->insert([
+		// 	'name' => $data['name'],
+		// 	'age' => $data['age'],
+		// 	'phone' => $data['phone']
+		// ]);
 
-		return $this->db->lastInsertId();
+		// return $this->db->lastInsertId();
 	}
 
 	public function list() : array
 	{
-		return $this->db->select('users')->get();
+		return $this->db->select()->from('users')->get();
 	}
 
 	public function view($userId)
 	{
-		return $this->db->select('users', "id = {$userId}")->first();
+		return $this->db->select()->from('users')
+			->where('id', $userId)
+			->limit(1)
+			->get()[0];
 	}
 }
