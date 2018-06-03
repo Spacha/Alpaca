@@ -1,0 +1,14 @@
+<?=$snippets['header']?>
+
+<article class="main">
+	<div class="wrapper">
+
+		<h1><span>Blog: </span><?=$post->title?></h1>
+		<p><span>by <?=$post->author?> <?=$post->created_at?></span></p>
+
+		<?=$post->content?>
+		
+	</div>
+</article>
+
+<?=$snippets['footer']?>

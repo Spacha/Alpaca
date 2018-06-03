@@ -2,7 +2,7 @@
 
 namespace App\Framework\Libs;
 
-use App\Framework\Libs\Database;
+use App\Framework\Libs\Database\QueryBuilder;
 
 abstract class Model
 {
@@ -15,6 +15,6 @@ abstract class Model
 
 	public function connect()
 	{
-		return new Database(dbConfig('test'));
+		return new QueryBuilder(dbConfig('test'));
 	}
 }

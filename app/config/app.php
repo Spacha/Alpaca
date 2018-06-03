@@ -18,5 +18,9 @@ return [
 	'timezone' => 'Helsinki/Europe',
 
 	// Default locale
-	'locale' => 'en'
+	'locale' => 'en',
+
+	// Date format in database
+	// @todo move to another config file
+	'date_format' => 'Y-m-d H:i:s',
 ];

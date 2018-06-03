@@ -71,7 +71,7 @@ class Database extends PDO
 	{
 		$whereClause = $where ? " WHERE {$where}" : "";
 		$columns = count($columns) ? implode(', ', $columns) : '*';
-
+		
 		$this->query = $this->prepare("SELECT {$columns} FROM {$table}{$whereClause}");
 		return $this;
 	}
@@ -84,10 +84,10 @@ class Database extends PDO
 	 */
 	public function first($object = 'stdClass') : object
 	{
-		$this->query->execute();
-		$this->query->setFetchMode(PDO::FETCH_CLASS, $object);
+		$sth = $this->prepare($this->query)->execute();
+		$sth->setFetchMode(PDO::FETCH_CLASS, $object);
 
-		return $this->query->fetch();
+		return $sth->fetch();
 	}
 
 	/**
@@ -97,8 +97,9 @@ class Database extends PDO
 	 */
 	public function get() : array
 	{
-		$this->query->execute();
+		$sth = $this->prepare($this->query);
+		$sth->execute();
 
-		return $this->query->fetchAll(PDO::FETCH_CLASS);
+		return $sth->fetchAll(PDO::FETCH_CLASS);
 	}
 }

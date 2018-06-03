@@ -1,0 +1,25 @@
+<?=$snippets['header']?>
+
+<article class="main">
+	<div class="wrapper">
+
+		<h1><span>Login to Alpaca</span></h1>
+		
+		<div class="center">	
+			<div class="auth-box">
+
+				<form action='/auth/login' method='POST'>
+					<input type='email' name='email' placeholder='Email' /><br/>
+					<input type='password' name='password' placeholder='Password' /><br/>
+					<button type='submit'>Login</button>
+				</form>
+
+				<p>Don't have an account yet? <a href="/login">Register now.</a></p>
+
+			</div>
+		</div>
+
+	</div>
+</article>
+
+<?=$snippets['footer']?>
