@@ -13,34 +13,6 @@
 
 return [
 
-	// Static
-
-	'&:'										=> 'HomeController@home',
-	'&: about'									=> 'HomeController@about',
-	
-	// Users
-
-	'&: users'									=> 'UserController@list',
-	'&: users/{userId}'							=> 'UserController@view',
-	'&: users/create'							=> 'UserController@create',
-	'$: users/add'								=> 'UserController@add',
-
-	// Blog
-
-	'&: blog'									=> 'BlogController@list',
-	'&: blog/{postId}'							=> 'BlogController@view',
-	'&: blog/create'							=> 'BlogController@create',
-	'$: blog/add'								=> 'BlogController@add',
-
-	// Authentication
-
-	'&: login'									=> 'UserController@login',
-	'$: login'									=> 'UserController@tryLogin',
-
-	'&: register'								=> 'UserController@register',
-	'$: register'								=> 'UserController@tryRegister',
-
-	'&: logout'									=> 'UserController@logout',
-
 	'&: test'									=> 'TestController@test',
+	
 ];
