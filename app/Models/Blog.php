@@ -10,8 +10,8 @@ class Blog extends Model
 	public function add($data)
 	{
 		$this->db->insert('posts', [
-			'name' 			=> $data['title'],
-			'age' 			=> $data['content'],
+			'title' 		=> $data['title'],
+			'content'		=> $data['content'],
 			'category_id' 	=> 1,
 			'created_at' 	=> date(config('app')['date_format'])
 		]);

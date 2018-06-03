@@ -30,7 +30,7 @@ class BlogController extends Controller
 
 	public function view(Request $request, $postId)
 	{
-		$post = $this->model->view($postId);
+		$post = $this->model->list($postId);
 
 		return new View('blog.view', ['post' => $post], ['header', 'footer']);
 	}
@@ -38,5 +38,15 @@ class BlogController extends Controller
 	public function create()
 	{
 		return new View('blog.create', [], ['header', 'footer']);
+	}
+
+	public function add(Request $request)
+	{
+		$id = $this->model->add([
+			'title' => $request->data('title'),
+			'content' => $request->data('content'),
+		]);
+
+		header("Location: /blog/{$id}");
 	}
 }

@@ -71,34 +71,9 @@ class Database extends PDO
 	{
 		$whereClause = $where ? " WHERE {$where}" : "";
 		$columns = count($columns) ? implode(', ', $columns) : '*';
-
-		$this->query .= " SELECT {$columns} FROM {$table}{$whereClause}";
+		
+		$this->query = $this->prepare("SELECT {$columns} FROM {$table}{$whereClause}");
 		return $this;
-	}
-
-	/**
-	 * Description
-	 * @todo Use DatabaseHelper or something to format the code.
-	 *
-	 * @param string string
-	 * @return void
-	 */
-	public function join(string $table1, string $table2)
-	{
-		$table1parts = explode('.', $table1);
-		$table2parts = explode('.', $table2);
-
-		// Set the tables and columns
-		$table1 = $table1parts[0];
-		$table2 = $table2parts[0];
-		$column1 = $table1parts[1];
-		$column2 = $table2parts[1];
-
-		$this->query .= " LEFT JOIN {$table2} ON {$table1}.{$column1} = {$table2}.{$column2}";
-
-		//dd($this->query);
-
-		return $this->query;
 	}
 
 	/**
@@ -109,7 +84,7 @@ class Database extends PDO
 	 */
 	public function first($object = 'stdClass') : object
 	{
-		$sth = prepare($this->query)->execute();
+		$sth = $this->prepare($this->query)->execute();
 		$sth->setFetchMode(PDO::FETCH_CLASS, $object);
 
 		return $sth->fetch();
@@ -122,7 +97,8 @@ class Database extends PDO
 	 */
 	public function get() : array
 	{
-		$sth = prepare($this->query)->execute();
+		$sth = $this->prepare($this->query);
+		$sth->execute();
 
 		return $sth->fetchAll(PDO::FETCH_CLASS);
 	}
