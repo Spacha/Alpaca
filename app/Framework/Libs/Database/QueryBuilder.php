@@ -123,7 +123,9 @@ class QueryBuilder
 	 */
 	public function insert(array $values) : QueryBuilder
 	{
-		$this->inserts[] = $values;
+		foreach($values as $column => $value) {
+			$this->inserts[$column] = $value;
+		}
 
 		return $this;
 	}
@@ -253,7 +255,7 @@ class QueryBuilder
 	}
 
 	/**
-	 * Make a limit clause.
+	 * Execute and return the result set.
 	 *
 	 * @param string $returnType 	What type of collection we want to return.
 	 * @return mixed 				stdClass/array depending on $returnType
@@ -270,6 +272,19 @@ class QueryBuilder
 		}
 
 		return $sth->fetchAll();
+	}
+
+	/**
+	 * Execute insert, update or delete action.
+	 *
+	 * @return bool
+	 */
+	public function execute()
+	{
+		$query = $this->buildQuery();
+		$sth = $this->connection->prepare($query);
+		
+		return $sth->execute();
 	}
 
 	public function toSql() : string

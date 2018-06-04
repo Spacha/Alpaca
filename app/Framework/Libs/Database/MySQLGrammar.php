@@ -77,6 +77,7 @@ class MySQLGrammar implements Grammar
 
 	/**
 	 * Build the operation clause.
+	 * @todo Clean up and separate this to smaller chunks!
 	 *
 	 * @return string
 	 */
@@ -91,14 +92,24 @@ class MySQLGrammar implements Grammar
 				break;
 
 			case 'insert':
-				return 'INSERT INTO '. $table .' ('. implode(', ', array_keys($operation['data'])) .') VALUES ('. implode(', ', $operation['data']) .')';
+				$values = '';
+				$prefix = '\'';
+
+				foreach($operation['data'] as $value) {
+					$values .= $prefix . $value . '\'';
+					$prefix = ', \'';
+				}
+
+				return 'INSERT INTO '. $table .' ('. implode(', ', array_keys($operation['data'])) .') VALUES ('. $values .')';
 				break;
 
 			case 'update':
 				$updates = '';
+				$prefix = ' ';
 
 				foreach($operation['data'] as $column => $value) {
-					$updates .= ' '. $column .' = '. $value;
+					$updates .= $prefix . $column .' = \''. $value .'\'';
+					$prefix = ', ';
 				}
 
 				return 'UPDATE '. $table .' SET'. $updates;
