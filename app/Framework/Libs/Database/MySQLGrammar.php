@@ -14,19 +14,19 @@ class MySQLGrammar implements Grammar
 	/**
 	 * The entry point for the builder. Calls all the sub builders.
 	 *
-	 * @param array $selects 		The columns to select.
-	 * @param string $from 			The table to select from.
+	 * @param array $operation		The columns to select.
+	 * @param string $table 		The table to select from.
 	 * @param array $whereClauses 	The where clauses.
 	 * @param array $orderBy 		The order by clause.
 	 * @param array $limit 			The limit clause.
 	 * @return string 				The complete SQL query.
 	 */
-	public function buildQuery(array $selects, string $from, array $whereClauses, array $orderBy, array $limit) : string
+	public function buildQuery(array $operation, string $table, array $whereClauses, array $orderBy, array $limit) : string
 	{
-		$this->vocalbulary = $this->validateVocalbulary($selects, $from, $whereClauses, $orderBy, $limit);
+		$this->vocalbulary = $this->validateVocalbulary($operation, $table, $whereClauses, $orderBy, $limit);
 
-		$query  = $this->buildSelect();
-		$query .= $this->buildFrom();
+		$query  = $this->buildOperation();
+
 		$query .= $this->buildWheres();
 		$query .= $this->buildOrderBy();
 		$query .= $this->buildLimit();
@@ -37,20 +37,38 @@ class MySQLGrammar implements Grammar
 	/**
 	 * Validate the vocalbulary and throw InvalidQueryException if data is not valid.
 	 *
-	 * @param array $selects 		The columns to select.
-	 * @param string $from 			The table to select from.
+	 * @param array $operation 		The columns to select.
+	 * @param string $table 		The table to select table.
 	 * @param array $whereClauses 	The where clauses.
 	 * @param array $orderBy 		The order by clause.
 	 * @param array $limit 			The limit clause.
 	 * @return string 				Array containing the vocalbulary.
 	 */
-	protected function validateVocalbulary(array $selects, string $from, array $whereClauses, array $orderBy, array $limit) : array
+	protected function validateVocalbulary(array $operation, string $table, array $whereClauses, array $orderBy, array $limit) : array
 	{
 		// @todo Validate vocalbulary!
+		$this->queryType = $operation['type'];
+
+		/**
+		* SELECT:
+		* SELECT [columns] FROM [table]
+		* type: 'select', columns: [], table: 'table'
+		*
+		* UPDATE:
+		* UPDATE [table] SET [data]
+		* type: 'update', data: [], table: 'table'
+		*
+		* INSERT:
+		* INSERT INTO [table] [columns] VALUES [values]
+		* type: 'isnert', columns: [], table: 'table'
+		*/
+
+		// recognize operation type
+		// delegate to corresponding handler (e.g. selectHandler)
 
 		return [
-			'selects' 		=> $selects, 
-			'from' 			=> $from, 
+			'operation' 	=> $operation,
+			'table' 		=> $table, 
 			'whereClauses' 	=> $whereClauses, 
 			'orderBy' 		=> $orderBy, 
 			'limit' 		=> $limit
@@ -58,24 +76,63 @@ class MySQLGrammar implements Grammar
 	}
 
 	/**
-	 * Build the select clause.
+	 * Build the operation clause.
 	 *
 	 * @return string
 	 */
-	protected function buildSelect() : string
+	protected function buildOperation() : string
 	{
-		return 'SELECT ' . implode(', ', $this->vocalbulary['selects']);
+		$operation = $this->vocalbulary['operation'];
+		$table = $this->vocalbulary['table'];
+
+		switch($operation['type']) {
+			case 'select':
+				return 'SELECT ' . implode(', ', $operation['data']) . ' FROM ' . $table;
+				break;
+
+			case 'insert':
+				return 'INSERT INTO '. $table .' ('. implode(', ', array_keys($operation['data'])) .') VALUES ('. implode(', ', $operation['data']) .')';
+				break;
+
+			case 'update':
+				$updates = '';
+
+				foreach($operation['data'] as $column => $value) {
+					$updates .= ' '. $column .' = '. $value;
+				}
+
+				return 'UPDATE '. $table .' SET'. $updates;
+				break;
+
+			case 'delete':
+				return 'DELETE FROM '. $table;
+				break;
+			default:
+				// throw new MySQLException();
+				dd('Virheellinen operaatio: '. $operation['type']);
+				break;
+		}
 	}
 
-	/**
-	 * Build the from clause.
-	 *
-	 * @return string
-	 */
-	protected function buildFrom() : string
-	{
-		return ' FROM ' . $this->vocalbulary['from'];
-	}
+	// /**
+	//  * Build the select clause.
+	//  *
+	//  * @return string
+	//  */
+	// protected function buildSelect() : string
+	// {
+	// 	return 'SELECT ' . implode(', ', $this->vocalbulary['selects']);
+	// }
+
+	// /**
+	//  * Build the from clause.
+	//  *
+	//  * @return string
+	//  */
+	// protected function buildFrom() : string
+	// {
+	// 	return ' FROM ' . $this->vocalbulary['from'];
+	// }
 
 	/**
 	 * Build the where clauses.
