@@ -23,6 +23,7 @@ return [
 	'&: users'									=> 'UserController@list',
 	'&: users/{userId}'							=> 'UserController@view',
 	'&: users/create'							=> 'UserController@create',
+	'&: users/{userId}/delete'					=> 'UserController@delete',
 	'$: users/add'								=> 'UserController@add',
 
 	// Blog

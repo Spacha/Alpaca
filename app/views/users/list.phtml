@@ -7,9 +7,12 @@
 
 		<p><a href='/users/create'>+ Add user</a></p>
 
-		<ul>
+		<ul class="user-list hover-list">
 			<?php foreach($users as $user): ?>
-				<li><a href='/users/<?=$user->id?>'><?=$user->name?></a></li>
+				<li>
+					<a href='/users/<?=$user->id?>'><?=$user->name?></a>
+					<a class="pull-right" href="/users/<?=$user->id?>/delete">X</a>
+				</li>
 			<?php endforeach; ?>
 		</ul>
 

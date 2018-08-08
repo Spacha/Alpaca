@@ -45,6 +45,12 @@ h1 {
 .center {
 	text-align: center;
 }
+.pull-left {
+	float: left;
+}
+.pull-right {
+	float: right;
+}
 
 input[type="text"],input[type="number"],input[type="email"],input[type="password"], textarea {
     padding: 0.6rem;
@@ -163,5 +169,26 @@ footer.main {
 	input, textarea {
 		width: 500px;
 		max-width: 100%;
+	}
+}
+
+ul.user-list {
+	border: 1px solid #ccc;
+	display: inline-block;
+	max-width: 100%;
+	width: 500px;
+	padding: 0;
+
+	li {
+		padding: 0.7rem 0.7rem;
+		list-style-type: none;
+	}
+}
+
+ul.hover-list {
+	li {
+		&:hover {
+			background: #f4f4f4;
+		}
 	}
 }

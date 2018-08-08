@@ -57,6 +57,13 @@ class UserController extends Controller
 		header("Location: /users/{$id}");
 	}
 
+	public function delete(Request $request, $userId)
+	{
+		$id = $this->model->delete($userId);
+
+		header("Location: /users");
+	}
+
 	// Authentication
 
 	public function login()
