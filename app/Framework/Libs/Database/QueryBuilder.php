@@ -275,6 +275,19 @@ class QueryBuilder
 	}
 
 	/**
+	 * Get the first result.
+	 *
+	 * @param string $returnType 	What type of collection we want to return.
+	 * @return mixed 				stdClass/array depending on $returnType
+	 */
+	public function first(string $returnType = 'stdClass')
+	{
+		$result = $this->limit(1)->get();
+
+		return array_key_exists(0, $result) ? $result[0] : $result;
+	}
+
+	/**
 	 * Execute insert, update or delete action.
 	 *
 	 * @return bool
