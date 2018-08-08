@@ -95,9 +95,113 @@ In the controller, you can use opt() helper function to prevent unwanted errors 
 
 
 
+# Query Builder
+
+Currently, Alpaca provides only one way to fetch data from database. That is the query builder which is capable of making all the basic SQL operations. Query builder currently supports only MySQL database but later it will have support for all the major databases.
+
+Query builder provides a consistent and more php-like interface no matter what database is in use.
+
+## Connecting to database
+
+Connecting to database is usually done automatically by the model of the resource. The model is initialized in the controller's constructor:
+```php
+use App\Framework\Libs\Controller;
+use App\Models\Blog;
+
+class BlogController extends Controller
+{
+  // initialize the model
+  public function __construct()
+  {
+  	parent::__construct(new Blog());
+  }
+  
+  // ...
+}
+```
+
+Before we can use the database, we should configure our database first. This is done in the *app/dbConfig.php* file:
+```php
+return [
+  'connection'    	=> 'mysql:host=127.0.0.1',
+	'name'          => 'alpaca',
+	'user'          => 'root',
+	'password' 		=> '',
+	'table_prefix' 	=> '',
+	'options'		=> []
+];
+```
+
+Now, finally, we are ready to connect to the database. Each controller that fetches or modifies data in a database, should have a model. If the connection is set up right and the model is initialized correctly, the controller should now have a database handle in use. It's initialized by the model and is available as *db* property.
+
+For example:
+```php
+public function list()
+{
+  return $this->db->select()->from('posts')->get();
+}
+```
+
+## Fetching data
+
+```php
+// Select all columns from 'posts' table
+$result = $this->db->select()->from('posts')->get();
+
+// Select specific columns
+$result = $this->db->select(['id', 'title'])->from('posts')->get();
+
+// Order results
+$result = $this->db->select()->from('posts')->orderBy('created_at')->get();
+$result = $this->db->select()->from('posts')->orderBy('created_at', 'DESC')->get();
+
+// Where clauses
+$result = $this->db->select()->from('posts')->where('id', $postId)->where('author_id', $userId)->get();
+$result = $this->db->select()->from('posts')->where('id', $postId)->orWhere('id', $anotherPostId)->get();
+
+// Limit results
+$result = $this->db->select()->from('posts')->where('id', $postId)->limit(1)->get();
+
+// This is exactly the same as previous example
+$result = $this->db->select()->from('posts')->where('id', $postId)->first();
+```
+
+## Inserting and updating data
+
+Unlike selects, inserts and updates and deletes always require the *execute()* method to be called. Otherwise nothing is done.
+
+```php
+// Insert a row to the 'posts' table
+$this->db->into('posts')->insert([
+	'title' => $title,
+	'content' => $content,
+	'created_at' => date(config('app')['date_format'])
+])->execute();
+
+// Update a certain post from 'posts' table
+$this->db->table('posts')->update([
+	'title' => $title
+])->where('id', $postId)->execute();
+
+// Delete a row
+$this->db->delete()->from('users')->where('id', $userId)->execute();
+```
+
+## Other database methods
+
+If you want to get the id of the row just inserted, it can be done via *lastInsertId()* method:
+```php
+$this->db->into('posts')->insert([ /* ... */ ])->execute();
+$id = $this->db->lastInsertId();
+```
+
+The order of the chained methods does not matter, except for *execute()*, *get()* and *first()* methods that fire the query. When referring to the table, it doesn't matter if you used *table()*, *from()*, or *into()* method, but ofo course it's recommended to use the one that best fits with the operation.
+
+
+
 # Helpers
 
-Alpaca provides pack of useful helper functions.
+Alpaca provides a pack of useful helper functions.
 
 ## Opt()
 ```php
