@@ -123,12 +123,12 @@ class BlogController extends Controller
 Before we can use the database, we should configure our database first. This is done in the *app/dbConfig.php* file:
 ```php
 return [
-  'connection'    	=> 'mysql:host=127.0.0.1',
-	'name'          => 'alpaca',
-	'user'          => 'root',
-	'password' 		=> '',
+	'connection'		=> 'mysql:host=127.0.0.1',
+	'name'        	=> 'alpaca',
+	'user'        	=> 'root',
+	'password' 			=> '',
 	'table_prefix' 	=> '',
-	'options'		=> []
+	'options'				=> []
 ];
 ```
 
