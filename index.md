@@ -197,6 +197,14 @@ $id = $this->db->lastInsertId();
 
 The order of the chained methods does not matter, except for *execute()*, *get()* and *first()* methods that fire the query. When referring to the table, it doesn't matter if you used *table()*, *from()*, or *into()* method, but ofo course it's recommended to use the one that best fits with the operation.
 
+When debugging your database queries, the *toSql()* helper method might be useful:
+```php
+
+// returns: string(46) "SELECT id, title FROM posts ORDER BY title ASC"
+dd($this->db->select(['id', 'title'])->from('posts')->orderBy('title')->toSql());
+```
+As you can see, this is very useful if you are not sure if you are using the query builder methods right.
+
 
 
 # Helpers
