@@ -212,6 +212,7 @@ ul.resource-list {
 ul.hover-list {
 	li {
 		transition: $main-transition;
+		
 		&:hover {
 			background: #f7f7f7;
 		}
