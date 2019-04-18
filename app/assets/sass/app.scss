@@ -1,0 +1,140 @@
+@import url('https://fonts.googleapis.com/css?family=Quicksand:400,700');
+
+// Variables
+$primary:			#337aaf;
+$secondary:			#000000;
+
+html, body {
+	font-family: 'Quicksand', sans-serif;
+	padding: 0;
+	margin: 0;
+	height: 100vh;
+	background-color: #fff;
+
+	color: #444;
+}
+
+a {
+	text-decoration: none;
+	color: $primary;
+}
+
+.primary-color {
+	color: $primary !important;
+}
+
+.wrapper {
+	margin:auto;
+	padding: 0 1rem;
+	width: 720px;
+	max-width: 90%
+}
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// 									GLOBAL
+////////////////////////////////////////////////////////////////////////////////
+
+
+//
+// Main Header
+//
+
+.main-header {
+	.wrapper {
+		border-bottom: 1px solid #d9d9d9;
+	}
+}
+
+.main-header--cols {
+	display: inline-flex;
+	flex-direction: row;
+	justify-content: space-between;
+
+	width: 100%;
+
+	.main-logo--container {
+		margin: auto;
+		flex-grow: 1;
+		font-weight: bold;
+
+		color: $primary;
+		font-size: 1.4rem;
+
+		&>span {
+			font-weight: normal;
+			color: #888;
+		}
+	}
+
+	.main-nav--container {
+		margin: auto;
+		flex-grow: 2;
+		text-align: center;
+	}
+}
+
+//
+// Main Navigation
+//
+
+ul.main-nav {
+	padding: 0;
+	width: 75%;
+
+	display: inline-flex;
+	flex-direction: row;
+	justify-content: space-between;
+
+	li {
+		list-style-type: none;
+		display: inline-block;
+
+		a {
+			color: $primary;
+			padding-bottom: 2px;
+
+			&.active {
+				border-bottom: 2px solid $primary;
+				padding-bottom: 0;
+			}
+		}
+	}
+}
+
+
+//
+// Footer
+//
+
+footer.main-footer {
+	text-align: center;
+	padding: 4rem 0;
+}
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// 									CONTENT
+////////////////////////////////////////////////////////////////////////////////
+
+.intro {
+	text-align: center;
+	padding: 2.5em 0;
+
+	h1 {
+		font-size: 1.6em;
+	}
+	h2 {
+		font-size: 1.3em;
+		color: #999;
+		font-style: italic;
+		font-weight: normal;
+	}
+	h3 {
+		font-size: 1.1em;
+		margin-top: 3rem;
+	}
+}
