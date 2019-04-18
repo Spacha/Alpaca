@@ -10,17 +10,18 @@ class User extends Model
 	public function add($data)
 	{
 		$this->db->into('users')->insert([
-			'name' => $data['name'],
-			'age' => $data['age'],
+			'name' 	=> $data['name'],
+			'age' 	=> $data['age'],
 			'phone' => $data['phone']
 		])->execute();
+
+		return $this->db->lastInserdId();
 	}
 
 	public function list() : array
 	{
 		return $this->db->select()->from('users')
 			->orderBy('id', 'DESC')
-			->limit(6)
 			->get();
 	}
 

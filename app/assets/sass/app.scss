@@ -63,12 +63,12 @@ h3 {
 	}
 }
 
-.pull-left {
-	float: left;
-}
-.pull-right {
-	float: right;
-}
+.pull-left  { float: left; }
+.pull-right { float: right; }
+
+.text-left   { text-align: left; }
+.text-center { text-align: center; }
+.text-right  { text-align: right; }
 
 
 
@@ -150,7 +150,8 @@ ul.main-nav {
 		}
 
 		&.active a {
-			font-weight: bold
+			font-weight: bold;
+			border-bottom: 3px solid #fff;
 		}
 	}
 }
@@ -195,16 +196,22 @@ footer.main-footer {
 	}
 }
 
+
 //
 // Lists
 //
 
 ul.resource-list {
+	box-shadow: 1px 1px 6px 0px rgba(0,0,0,0.05);
 	border: 1px solid #ccc;
 	display: inline-block;
 	max-width: 100%;
 	width: 500px;
 	padding: 0;
+
+	&.full-width {
+		width: 100%;
+	}
 
 	li {
 		padding: 0.7rem 0.7rem;
@@ -237,6 +244,7 @@ ul.hover-list {
 		width: 100%;
 	}
 }
+
 
 //
 // Personal Cols
@@ -282,10 +290,20 @@ ul.hover-list {
 	}
 }
 
+
+//
+// Buttons
+//
+
 .btn {
 	padding: 0.6rem 0.8rem;
 	font-size: 1em;
 	border-radius: 6px;
+
+	// prevent the button from looking stupidly narrow
+	&:not(.btn-fit) {
+		min-width: 105px;
+	}
 
 	&:hover {
 		cursor: pointer;
@@ -304,10 +322,14 @@ ul.hover-list {
 		outline: none;
 	}
 }
+.btn-block {
+	display: block;
+	width: 100%;
+}
 
 
 //
-// Table
+// Tables
 //
 
 table.table {
@@ -366,4 +388,46 @@ table.vertical-headings {
 	&.ite-40 { width: 40%; }
 	&.ite-30 { width: 30%; }
 	&.ite-20 { width: 20%; }
+}
+
+
+//
+// Forms
+//
+
+textarea,
+input[type="text"],
+input[type="email"],
+input[type="phone"],
+input[type="number"],
+input[type="password"] {
+	transition: $main-transition;
+	border: 1px solid #ccc;
+	padding: 0.6rem 0.8rem;
+	border-radius: 6px;
+	font-size: 1em;
+
+	&:focus {
+		outline: none;
+		box-shadow: 0px 0px 7px 1px rgba(0, 0, 0, 0.1);
+	}
+}
+
+input.full-width {
+	width: 100%;
+}
+
+.form-row {
+	label {
+		display: block;
+		padding: 0.4rem;
+		font-weight: bold;
+	}
+	input, textarea {
+		width: 100%;
+	}
+
+	&:not(:first-child) {
+		margin-top: 1rem;
+	}
 }

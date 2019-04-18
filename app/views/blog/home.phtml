@@ -15,12 +15,12 @@
 
 			<p>Without further ado, head right in and have fun.</p>
 
-			<ul class="resource-list hover-list">
+			<ul class="resource-list hover-list full-width">
 				<?php foreach ($posts as $post): ?>
 					<li>
 						<a href='/blog/<?=$post->id?>'><?=$post->title?></a>
 						<a class="pull-right" href="/blog/<?=$post->id?>/delete">
-							<!-- <i class="fas fa-trash"></i> -->
+							<i class="fas fa-trash"></i>
 						</a>
 					</li>
 				<?php endforeach; ?>

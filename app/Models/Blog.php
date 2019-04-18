@@ -9,19 +9,19 @@ class Blog extends Model
 {
 	public function add($data)
 	{
-		// $this->db->into('posts')->insert([
-		// 	'title' 		=> $data['title'],
-		// 	'content'		=> $data['content'],
-		// 	'category_id' 	=> 1,
-		// 	'created_at' 	=> date(config('app')['date_format'])
-		// ]);
+		$this->db->into('posts')->insert([
+			'title' 		=> $data['title'],
+			'content'		=> $data['content'],
+			'category_id' 	=> $data['category_id'],
+			'created_at' 	=> date(config('app')['date_format'])
+		])->execute();
 
-		// return $this->db->lastInsertId();
+		return $this->db->lastInsertId();
 	}
 
 	public function list() : array
 	{
-		return $this->db->select(['id', 'title', 'content', 'created_at'])->from('posts')->get();
+		return $this->db->select(['id', 'title', 'content', 'created_at'])->from('posts')->orderBy('created_at', 'desc')->get();
 	}
 
 	public function view($postId)
@@ -33,5 +33,10 @@ class Blog extends Model
 			->from('posts')
 			->where('id', $postId)
 			->first();
+	}
+
+	public function delete($postId)
+	{
+		return $this->db->delete()->from('posts')->where('id', $postId)->execute();
 	}
 }

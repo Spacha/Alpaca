@@ -31,6 +31,7 @@ return [
 	'&: blog'									=> 'BlogController@list',
 	'&: blog/{postId}'							=> 'BlogController@view',
 	'&: blog/create'							=> 'BlogController@create',
+	'&: blog/{postId}/delete'					=> 'BlogController@delete',
 	'$: blog/add'								=> 'BlogController@add',
 
 	// Authentication

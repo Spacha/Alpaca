@@ -10,19 +10,34 @@
 				</h1>
 			</heading>
 
-			<div class="center">	
-				<div class="auth-box">
 
-					<form action='/users/add' method='POST'>
-						<input type='text' name='name' placeholder='Name' /><br/>
-						<input type='number' name='age' placeholder='Age' /><br/>
-						<input type='text' name='phone' placeholder='Phone' /><br/>
-						<button type='submit'>Add</button>
-					</form>
+			<section class="form">
 
-				</div>
-			</div>
-
+				<form action='/users/add' method='POST'>
+					<table class="table" style="width: 80%;">
+						<tbody>
+							<tr>
+								<td><label for="name">Full name</label></td>
+								<td><input type="text" id="name" name="name" placeholder="Name" class="full-width" /></td>
+							</tr>
+							<tr>
+								<td><label for="phone">Phone</label></td>
+								<td><input type="text" id="phone" name="phone" placeholder="Phone" class="full-width" /></td>
+							</tr>
+							<tr>
+								<td><label for="age">Age</label></td>
+								<td><input type="number" id="age" name="age" placeholder="Age" min="0" max="200" style="width: 100px;" /></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td class="text-right">
+									<button class="btn btn-primary" type="submit">Add</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</form>
+			</section>
 		</div>
 	</article>
 </main>

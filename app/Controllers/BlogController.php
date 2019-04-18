@@ -32,7 +32,7 @@ class BlogController extends Controller
 	{
 		$post = $this->model->view($postId);
 
-		return new View('blog.view', ['post' => $post], ['header', 'footer']);
+		return new View('blog.view', ['active' => 'blog', 'post' => $post], ['header', 'footer']);
 	}
 
 	public function create()
@@ -43,10 +43,19 @@ class BlogController extends Controller
 	public function add(Request $request)
 	{
 		$id = $this->model->add([
-			'title' => $request->data('title'),
-			'content' => $request->data('content'),
+			'title' 		=> $request->data('title'),
+			'content' 		=> $request->data('content'),
+			'category_id' 	=> 1
 		]);
 
-		header("Location: /blog/{$id}");
+		// header("Location: /blog/{$id}");
+		header("Location: /blog");
+	}
+
+	public function delete(Request $request, $postId)
+	{
+		$this->model->delete($postId);
+
+		header("Location: /blog");
 	}
 }

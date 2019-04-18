@@ -59,7 +59,7 @@ class UserController extends Controller
 
 	public function delete(Request $request, $userId)
 	{
-		$id = $this->model->delete($userId);
+		$this->model->delete($userId);
 
 		header("Location: /users");
 	}
