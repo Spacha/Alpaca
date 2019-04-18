@@ -19,6 +19,22 @@ a {
 	color: $primary;
 }
 
+h1 {
+	font-size: 1.9em;
+	font-weight: normal;
+	margin: 1.8rem 0 1.6rem 1.2rem;
+}
+h2 {
+	font-weight: normal;
+	color: #777;
+	margin: 1.6rem 0 1.0rem 1.4rem;
+}
+h3 {
+	margin: 1rem 1.4rem;
+	font-weight: normal;
+	color: #777;
+}
+
 .primary-color {
 	color: $primary !important;
 }
@@ -30,6 +46,13 @@ a {
 	max-width: 90%
 }
 
+.pull-left {
+	float: left;
+}
+.pull-right {
+	float: right;
+}
+
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -38,12 +61,22 @@ a {
 
 
 //
+// Top Section
+//
+
+.top-section {
+	background-color: #47b3ff;
+    background-image: linear-gradient(120deg, #093a6b, #47b3ff);
+    color: #fff;
+}
+
+//
 // Main Header
 //
 
 .main-header {
 	.wrapper {
-		border-bottom: 1px solid #d9d9d9;
+		// border-bottom: 1px solid #d9d9d9;
 	}
 }
 
@@ -59,12 +92,12 @@ a {
 		flex-grow: 1;
 		font-weight: bold;
 
-		color: $primary;
+		color: #ff8a8a;
 		font-size: 1.4rem;
 
 		&>span {
 			font-weight: normal;
-			color: #888;
+			color: #fff;
 		}
 	}
 
@@ -92,13 +125,11 @@ ul.main-nav {
 		display: inline-block;
 
 		a {
-			color: $primary;
-			padding-bottom: 2px;
+			color: #fff;
+		}
 
-			&.active {
-				border-bottom: 2px solid $primary;
-				padding-bottom: 0;
-			}
+		&.active a {
+			font-weight: bold
 		}
 	}
 }
@@ -129,12 +160,45 @@ footer.main-footer {
 	}
 	h2 {
 		font-size: 1.3em;
-		color: #999;
 		font-style: italic;
 		font-weight: normal;
+		color: #d2d2d2;
 	}
 	h3 {
 		font-size: 1.1em;
 		margin-top: 3rem;
+
+		a {
+			color: #89c3ef;
+		}
+	}
+}
+
+//
+// Lists
+//
+
+ul.resource-list {
+	border: 1px solid #ccc;
+	display: inline-block;
+	max-width: 100%;
+	width: 500px;
+	padding: 0;
+
+	li {
+		padding: 0.7rem 0.7rem;
+		list-style-type: none;
+
+		&:not(:last-child) {
+			border-bottom: 1px solid #ccc;
+		}
+	}
+}
+
+ul.hover-list {
+	li {
+		&:hover {
+			background: #f7f7f7;
+		}
 	}
 }

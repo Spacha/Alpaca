@@ -14,7 +14,10 @@ class HomeController extends Controller
 {
 	public function home()
 	{
-		return new View('home.home', ['active' => 'home'], ['header', 'footer']);
+		return new View('home.home', [
+			'active' => 'home',
+			'topSection' => true
+		], ['header', 'footer']);
 	}
 
 	public function about()

@@ -1,17 +1,30 @@
 <?=$snippets['header']?>
 
-
+</section>
 <article class="main">
 	<div class="wrapper">
 		<h1><span>Users</span></h1>
 
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+		consequat.</p>
+
+		<h2>Recent users</h2>
+
+		<p>Duis aute irure dolor in reprehenderit in voluptate velit esse
+		cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+		proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
 		<p><a href='/users/create'>+ Add user</a></p>
 
-		<ul class="user-list hover-list">
+		<ul class="resource-list hover-list">
 			<?php foreach($users as $user): ?>
 				<li>
 					<a href='/users/<?=$user->id?>'><?=$user->name?></a>
-					<a class="pull-right" href="/users/<?=$user->id?>/delete">X</a>
+					<a class="pull-right" href="/users/<?=$user->id?>/delete">
+						<i class="fas fa-trash"></i>
+					</a>
 				</li>
 			<?php endforeach; ?>
 		</ul>

@@ -18,7 +18,10 @@ class User extends Model
 
 	public function list() : array
 	{
-		return $this->db->select()->from('users')->orderBy('id', 'DESC')->get();
+		return $this->db->select()->from('users')
+			->orderBy('id', 'DESC')
+			->limit(6)
+			->get();
 	}
 
 	public function view($userId)
