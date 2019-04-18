@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Alpaca Development</title>
+
+		<link rel="stylesheet" href="<?='/css/app.css'?>">
+		<script src="/js/app.min.js"></script>
+	</head>
+	<body>
+
+		<header class="main-header">
+			<div class="wrapper">
+				<div class="main-header--cols">
+					
+					<div class="main-logo--container">Dummy<span>app</span></div>
+
+					<nav class="main-nav--container">
+						<ul class="main-nav">
+							<li class="<?=(isset($active) && $active == 'home') ?'active':''?>"><a href="/">Home</a></li>
+							<li class="<?=(isset($active) && $active == 'users') ?'active':''?>"><a href="/users">Users</a></li>
+							<li class="<?=(isset($active) && $active == 'blog') ?'active':''?>"><a href="/blog">Blog</a></li>
+							<li class="<?=(isset($active) && $active == 'about') ?'active':''?>"><a href="/about">About</a></li>
+						</ul>
+					</nav>
+
+				</div>
+			</div>
+		</header>
