@@ -1,17 +1,25 @@
 <?=$snippets['header']?>
 
-<article class="main">
-	<div class="wrapper">
+<main class="page-content">
+	<article>
+		<div class="wrapper">
 
-		<a href="/users">&lsaquo; Return</a>
-		
-		<ul>
-			<li> ID: <?=$user->id?></li>
-			<li> Name: <?=$user->name?></li>
-			<li> Age: <?=$user->age?></li>
-		</ul>
+			<heading class="page-heading">
+				<h1 class="breadcrumb">
+					<a href="/users">Users</a> <span class="breadcrumb-separator">/</span> User details
+				</h1>
+			</heading>
+			
+			<table class="table bordered vertical-headings">
+				<tbody>
+					<tr><td>ID</td><td><?=$user->id?></td></tr>
+					<tr><td>Name</td><td><?=$user->name?></td></tr>
+					<tr><td>Age</td><td><?=$user->age?></td></tr>
+				</tbody>
+			</table>
 
-	</div>
-</article>
+		</div>
+	</article>
+</main>
 
 <?=$snippets['footer']?>

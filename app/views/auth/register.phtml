@@ -1,26 +1,28 @@
 <?=$snippets['header']?>
 
-<article class="main">
-	<div class="wrapper">
+<main class="page-content">
+	<article>
+		<div class="wrapper">
 
-		<h1><span>Register to Alpaca</span></h1>
-		
-		<div class="center">	
-			<div class="auth-box">
+			<h1><span>Register to Alpaca</span></h1>
+			
+			<div class="center">	
+				<div class="auth-box">
 
-				<form action='/auth/register' method='POST'>
-					<input type='email' name='email' placeholder='Email' /><br/>
-					<input type='password' name='password' placeholder='Password' /><br/>
-					<input type='password_repeat' name='password_repeat' placeholder='Repeat Password' /><br/>
-					<button type='submit'>Login</button>
-				</form>
+					<form action='/auth/register' method='POST'>
+						<input type='email' name='email' placeholder='Email' /><br/>
+						<input type='password' name='password' placeholder='Password' /><br/>
+						<input type='password_repeat' name='password_repeat' placeholder='Repeat Password' /><br/>
+						<button type='submit'>Login</button>
+					</form>
 
-				<p>Already have an account? <a href="/login">Login.</a></p>
+					<p>Already have an account? <a href="/login">Login.</a></p>
 
+				</div>
 			</div>
-		</div>
 
-	</div>
-</article>
+		</div>
+	</article>
+</main>
 
 <?=$snippets['footer']?>

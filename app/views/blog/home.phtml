@@ -1,23 +1,33 @@
 <?=$snippets['header']?>
 
-<article class="main">
-	<div class="wrapper">
+<main class="page-content">
+	<article>
+		<div class="wrapper">
 
-		<heading class="clearfix page-heading">
-			<h1>Blog</h1>
-			<div class="heading-right">
-				<a href="/blog/create" class="btn btn-primary"><i class="fas fa-edit"></i> New post</a>
-			</div>
-		</heading>
+			<heading class="clearfix page-heading">
+				<h1>Blog</h1>
+				<div class="heading-right">
+					<a href="/blog/create" class="btn btn-primary"><i class="fas fa-edit"></i> New post</a>
+				</div>
+			</heading>
 
-		<p>Here I write about things I find interesting. Head right in!</p>
-		<p>– Spacha</p>
+			<p>Here I write about things I find interesting. Mostly I write for myself. For some reason it's fun to write things down; how it's been and what I have been up to. Sometimes I tend to go too much into details, but I think it's fine! It's so fun to come back years later and read my old posts. It makes me feel like it happened yesterday, yet like I would be reading somebody else's blog!</p>
 
-		<?php foreach ($posts as $post): ?>
-		<li><a href="blog/<?=$post->id?>"><?=$post->title?></a>
-		<?php endforeach ?>
+			<p>Without further ado, head right in and have fun.</p>
 
-	</div>
-</article>
+			<ul class="resource-list hover-list">
+				<?php foreach ($posts as $post): ?>
+					<li>
+						<a href='/blog/<?=$post->id?>'><?=$post->title?></a>
+						<a class="pull-right" href="/blog/<?=$post->id?>/delete">
+							<!-- <i class="fas fa-trash"></i> -->
+						</a>
+					</li>
+				<?php endforeach; ?>
+			</ul>
+
+		</div>
+	</article>
+</main>
 
 <?=$snippets['footer']?>

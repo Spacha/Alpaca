@@ -21,7 +21,7 @@ class UserController extends Controller
 	{
 		$users = $this->model->list();
 
-		return new View('users.list', [
+		return new View('users.home', [
 			'active' => 'users',
 			'users' => $users
 		], ['header', 'footer']);
@@ -43,7 +43,7 @@ class UserController extends Controller
 
 	public function create()
 	{
-		return new View('users.add', ['active' => 'users'], ['header', 'footer']);
+		return new View('users.create', ['active' => 'users'], ['header', 'footer']);
 	}
 
 	public function add(Request $request)

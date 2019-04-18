@@ -1,0 +1,30 @@
+<?=$snippets['header']?>
+
+<main class="page-content">
+	<article>
+		<div class="wrapper">
+
+			<heading class="page-heading">
+				<h1 class="breadcrumb">
+					<a href="/users">Users</a> <span class="breadcrumb-separator">/</span> New user
+				</h1>
+			</heading>
+
+			<div class="center">	
+				<div class="auth-box">
+
+					<form action='/users/add' method='POST'>
+						<input type='text' name='name' placeholder='Name' /><br/>
+						<input type='number' name='age' placeholder='Age' /><br/>
+						<input type='text' name='phone' placeholder='Phone' /><br/>
+						<button type='submit'>Add</button>
+					</form>
+
+				</div>
+			</div>
+
+		</div>
+	</article>
+</main>
+
+<?=$snippets['footer']?>

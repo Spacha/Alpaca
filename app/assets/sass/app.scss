@@ -10,9 +10,12 @@ html, body {
 	font-family: $main-font;
 	padding: 0;
 	margin: 0;
-	height: 100vh;
-	background-color: #fff;
 
+	display: flex;
+	min-height: 100vh;
+	flex-direction: column;
+
+	background-color: #fff;
 	color: #444;
 }
 
@@ -73,6 +76,10 @@ h3 {
 // 									GLOBAL
 ////////////////////////////////////////////////////////////////////////////////
 
+
+.page-content {
+	flex: 1;
+}
 
 //
 // Top Section
@@ -155,7 +162,7 @@ ul.main-nav {
 
 footer.main-footer {
 	text-align: center;
-	padding: 4rem 0;
+	padding: 8rem 0 4rem 0;
 }
 
 
@@ -212,7 +219,7 @@ ul.resource-list {
 ul.hover-list {
 	li {
 		transition: $main-transition;
-		
+
 		&:hover {
 			background: #f7f7f7;
 		}
@@ -261,6 +268,7 @@ ul.hover-list {
 }
 
 .page-heading {
+	margin-top: 2rem;
 	display: flex;
 	width: 100%;
 
@@ -295,4 +303,67 @@ ul.hover-list {
 	&:focus {
 		outline: none;
 	}
+}
+
+
+//
+// Table
+//
+
+table.table {
+	border-collapse: collapse;
+	width: 100%;
+
+	tr td {
+		padding: 0.6rem;
+	}
+
+	&.bordered {
+		border: 1px solid #ccc;
+
+		tr {
+			&:not(:last-child) {
+				border-bottom: 1px solid #ccc;
+			}
+		}
+	}
+}
+
+table.vertical-headings {
+	tbody tr {
+		td:first-child {
+			font-weight: bold;
+		}
+	}
+}
+
+.breadcrumb {
+	.breadcrumb-separator {
+		color: #adadad;
+	}
+}
+
+
+
+//
+// Image - Text Embed (ITE)
+//
+
+.image-text-embed {
+	float: right;
+	margin: 1rem;
+
+	img {
+		width: 100%;
+	}
+
+	&.ite-left  { float: left; margin-left: 0; }
+	&.ite-right { float: right; margin-right: 0; }
+
+	&.ite-60 { width: 60%; }
+	&.ite-50 { width: 50%; }
+	&.ite-45 { width: 45%; }
+	&.ite-40 { width: 40%; }
+	&.ite-30 { width: 30%; }
+	&.ite-20 { width: 20%; }
 }

@@ -1,14 +1,20 @@
 <?=$snippets['header']?>
 
-<article class="main">
-	<div class="wrapper">
+<main class="page-content">
+	<article>
+		<div class="wrapper">
 
-		<h1><span>Blog: </span><?=$post->title?></h1>
-		<p><span>by <!--$post->author-->X <?=$post->created_at?></span></p>
+			<heading class="page-heading">
+				<h1 class="breadcrumb">
+					<a href="/blog">Blog</a> <span class="breadcrumb-separator">/</span> <?=$post->title?>
+				</h1>
+			</heading>
+			<p><span>by <!--$post->author-->X <?=$post->created_at?></span></p>
 
-		<?=$post->content?>
-		
-	</div>
-</article>
+			<?=$post->content?>
+			
+		</div>
+	</article>
+</main>
 
 <?=$snippets['footer']?>

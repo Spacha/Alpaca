@@ -37,7 +37,7 @@ class BlogController extends Controller
 
 	public function create()
 	{
-		return new View('blog.create', [], ['header', 'footer']);
+		return new View('blog.create', ['active' => 'blog'], ['header', 'footer']);
 	}
 
 	public function add(Request $request)

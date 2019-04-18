@@ -1,20 +1,26 @@
 <?=$snippets['header']?>
 
-<article class="main">
-	<div class="wrapper">
+<main class="page-content">
+	<article>
+		<div class="wrapper">
 
-		<h1><span>Write a post</span></h1>
+			<heading class="page-heading">
+				<h1 class="breadcrumb">
+					<a href="/blog">Blog</a> <span class="breadcrumb-separator">/</span> New post
+				</h1>
+			</heading>
 
-		<div class="wide-input">
+			<div class="wide-input">
 
-			<form action="/blog/add" method="POST">
-				<input type="text" name="title" placeholder="Title" /><br/>
-				<textarea name="content" placeholder="Write some content..." rows="8"></textarea><br/>
-				<button type="submit">Add</button>
-			</form>
+				<form action="/blog/add" method="POST">
+					<input type="text" name="title" placeholder="Title" /><br/>
+					<textarea name="content" placeholder="Write some content..." rows="8"></textarea><br/>
+					<button type="submit">Add</button>
+				</form>
 
+			</div>
 		</div>
-	</div>
-</article>
+	</article>
+</main>
 
 <?=$snippets['footer']?>
