@@ -46,6 +46,15 @@ h3 {
 	max-width: 90%
 }
 
+.clearfix {
+	&::after {
+		content: '';
+		height: 0;
+		clear: both;
+		display: block;
+	}
+}
+
 .pull-left {
 	float: left;
 }
@@ -199,6 +208,47 @@ ul.hover-list {
 	li {
 		&:hover {
 			background: #f7f7f7;
+		}
+	}
+}
+
+
+.image-circle {
+	width: 100px;
+	width: 170px;
+	border-radius: 50%;
+	overflow: hidden;
+
+	img {
+		width: 100%;
+	}
+}
+
+//
+// Personal Cols
+//
+
+.personal-cols {
+	display: flex;
+	margin-top: 4rem;
+	align-items: center;
+
+	.left-col, .right-col {
+		box-sizing: border-box;
+	}
+
+	.left-col {
+		flex-grow: 1;
+	}
+
+	.right-col {
+		flex-grow: 3;
+		padding-left: 2rem;
+
+		h3 {
+			color: #ff8a8a;
+			font-weight: bold;
+			margin-left: 0;
 		}
 	}
 }
