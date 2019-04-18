@@ -16,7 +16,11 @@ class QueryBuilder
 	protected $grammar;
 
 	protected $selects = [];
-	protected $from = '';
+	protected $inserts = [];
+	protected $updates = [];
+	protected $delete = false;
+
+	protected $table = '';
 	protected $whereClauses = [];
 	protected $orderBy = [];
 	protected $limit = [];
@@ -53,13 +57,32 @@ class QueryBuilder
 	 */
 	protected function buildQuery()
 	{
+		$operation = $this->getOperation();
+
 		return $this->grammar->buildQuery(
-			$this->selects,
-			$this->from, 
+			$operation,
+			$this->table, 
 			$this->whereClauses,
 			$this->orderBy,
 			$this->limit
 		);
+	}
+
+	protected function getOperation() : array
+	{
+		if (!empty($this->selects))
+			return ['type' => 'select', 'data' => $this->selects];
+
+		if (!empty($this->inserts))
+			return ['type' => 'insert', 'data' => $this->inserts];
+
+		if (!empty($this->updates))
+			return ['type' => 'update', 'data' => $this->updates];
+
+		if (!empty($this->delete))
+			return ['type' => 'delete', 'data' => $this->delete];
+
+		// throw new QueryBuilderException();
 	}
 
 
@@ -69,6 +92,8 @@ class QueryBuilder
 
 	/**
 	 * Make a select query.
+	 * type: 'select'
+	 * data: ['col1', 'col2']
 	 *
 	 * @param mixed $columns 	string or array
 	 * @return App\Framework\Libs\Database\QueryBuilder
@@ -89,14 +114,81 @@ class QueryBuilder
 	}
 
 	/**
-	 * Choose which table to query.
+	 * Make an insert.
+	 * type: 'insert'
+	 * data: ['col1' => 'value1', 'col2' => 'value2']
+	 *
+	 * @param array $values 	Key-value pairs to insert into the table.
+	 * @return App\Framework\Libs\Database\QueryBuilder
+	 */
+	public function insert(array $values) : QueryBuilder
+	{
+		foreach($values as $column => $value) {
+			$this->inserts[$column] = $value;
+		}
+
+		return $this;
+	}
+
+	/**
+	 * Make an update.
+	 * type: 'update'
+	 * data: ['col1' => 'value1', 'col2' => 'value2']
+	 *
+	 * @param array $values 	Key-value pairs to update into the table.
+	 * @return App\Framework\Libs\Database\QueryBuilder
+	 */
+	public function update(array $values) : QueryBuilder
+	{
+		foreach($values as $column => $value) {
+			$this->updates[$column] = $value;
+		}
+
+		return $this;
+	}
+
+	/**
+	 * Make a delete.
+	 *
+	 * @return App\Framework\Libs\Database\QueryBuilder
+	 */
+	public function delete() : QueryBuilder
+	{
+		$this->delete = true;
+		return $this;
+	}
+
+	/**
+	 * Choose which table to query (select). Alias of table().
 	 *
 	 * @param string $table
 	 * @return App\Framework\Libs\Database\QueryBuilder
 	 */
 	public function from(string $table) : QueryBuilder
 	{
-		$this->from = $table;
+		return $this->table($table);
+	}
+
+	/**
+	 * Choose which table to query (insert). Alias of table().
+	 *
+	 * @param string $table
+	 * @return App\Framework\Libs\Database\QueryBuilder
+	 */
+	public function into(string $table) : QueryBuilder
+	{
+		return $this->table($table);
+	}
+
+	/**
+	 * Choose which table to query (any).
+	 *
+	 * @param string $table
+	 * @return App\Framework\Libs\Database\QueryBuilder
+	 */
+	public function table(string $table) : QueryBuilder
+	{
+		$this->table = $table;
 		return $this;
 	}
 
@@ -163,7 +255,7 @@ class QueryBuilder
 	}
 
 	/**
-	 * Make a limit clause.
+	 * Execute and return the result set.
 	 *
 	 * @param string $returnType 	What type of collection we want to return.
 	 * @return mixed 				stdClass/array depending on $returnType
@@ -180,6 +272,32 @@ class QueryBuilder
 		}
 
 		return $sth->fetchAll();
+	}
+
+	/**
+	 * Get the first result.
+	 *
+	 * @param string $returnType 	What type of collection we want to return.
+	 * @return mixed 				stdClass/array depending on $returnType
+	 */
+	public function first(string $returnType = 'stdClass')
+	{
+		$result = $this->limit(1)->get();
+
+		return array_key_exists(0, $result) ? $result[0] : $result;
+	}
+
+	/**
+	 * Execute insert, update or delete action.
+	 *
+	 * @return bool
+	 */
+	public function execute()
+	{
+		$query = $this->buildQuery();
+		$sth = $this->connection->prepare($query);
+		
+		return $sth->execute();
 	}
 
 	public function toSql() : string
