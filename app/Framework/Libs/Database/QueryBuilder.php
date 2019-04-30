@@ -304,4 +304,21 @@ class QueryBuilder
 	{
 		return $this->buildQuery();
 	}
+
+	/**
+	 * Get last inserted id.
+	 *
+	 * @return int/false
+	 */
+	public function lastInsertId()
+	{
+		return $this->connection->lastInsertId();
+	}
+
+	/*
+	protected function sanitize(string $str) : string
+	{
+		//
+	}
+	*/
 }
