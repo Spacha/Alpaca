@@ -411,6 +411,14 @@ input[type="password"] {
 		outline: none;
 		box-shadow: 0px 0px 7px 1px rgba(0, 0, 0, 0.1);
 	}
+
+	&:disabled {
+		border-color: #ececec;
+
+		&::placeholder {
+			color: #cacaca;
+		}
+	}
 }
 
 input.full-width {

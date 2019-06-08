@@ -50,8 +50,8 @@ class UserController extends Controller
 	{
 		$id = $this->model->add([
 			'name' => $request->data('name'),
-			'age' => $request->data('age'),
-			'phone' => $request->data('phone')
+			'email' => $request->data('email'),
+			'active' => 1
 		]);
 
 		header("Location: /users/{$id}");

@@ -10,12 +10,12 @@ class User extends Model
 	public function add($data)
 	{
 		$this->db->into('users')->insert([
-			'name' 	=> $data['name'],
-			'age' 	=> $data['age'],
-			'phone' => $data['phone']
+			'name' 		=> $data['name'],
+			'email' 	=> $data['email'],
+			'active' 	=> $data['active']
 		])->execute();
 
-		return $this->db->lastInserdId();
+		return $this->db->lastInsertId();
 	}
 
 	public function list() : array
