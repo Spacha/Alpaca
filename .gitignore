@@ -50,7 +50,7 @@ Temporary Items
 # Alpaca
 # =========================
 
-/app/dbconfig.php
+/app/dbConfig.php
 /app/logs
 /vendor
 /docs
