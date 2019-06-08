@@ -53,19 +53,22 @@ class QueryBuilder
 	/**
 	 * Build the query using the grammar.
 	 *
-	 * @return string
+	 * @return array
 	 */
-	protected function buildQuery()
+	protected function buildQuery() : array
 	{
 		$operation = $this->getOperation();
 
-		return $this->grammar->buildQuery(
-			$operation,
-			$this->table, 
-			$this->whereClauses,
-			$this->orderBy,
-			$this->limit
-		);
+		return [
+			$this->grammar->buildQuery(
+				$operation,
+				$this->table, 
+				$this->whereClauses,
+				$this->orderBy,
+				$this->limit
+			),
+			$operation['data']
+		];
 	}
 
 	protected function getOperation() : array
@@ -262,10 +265,10 @@ class QueryBuilder
 	 */
 	public function get(string $returnType = 'stdClass')
 	{
-		$query = $this->buildQuery();
+		list($query, $params) = $this->buildQuery();
 
 		$sth = $this->connection->prepare($query);
-		$sth->execute();
+		$sth->execute($params);
 
 		if ($returnType == 'stdClass') {
 			return $sth->fetchAll($this->connection::FETCH_CLASS);
@@ -294,15 +297,16 @@ class QueryBuilder
 	 */
 	public function execute()
 	{
-		$query = $this->buildQuery();
+		list($query, $params) = $this->buildQuery();
+
 		$sth = $this->connection->prepare($query);
 		
-		return $sth->execute();
+		return $sth->execute(array_values($params));
 	}
 
 	public function toSql() : string
 	{
-		return $this->buildQuery();
+		return $this->buildQuery()[0];
 	}
 
 	/**

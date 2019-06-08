@@ -92,32 +92,33 @@ class MySQLGrammar implements Grammar
 				break;
 
 			case 'insert':
-				$values = '';
-				$prefix = '\'';
+				$placeholders = '';
+				$prefix = '';
 
-				foreach($operation['data'] as $value) {
-					$values .= $prefix . $value . '\'';
-					$prefix = ', \'';
+				foreach ($operation['data'] as $column => $value) {
+					$placeholders .=  $prefix . '?';
+					$prefix = ', ';
 				}
 
-				return 'INSERT INTO '. $table .' ('. implode(', ', array_keys($operation['data'])) .') VALUES ('. $values .')';
+				return "INSERT INTO {$table} (". implode(', ', array_keys($operation['data'])) .") VALUES ({$placeholders})";
 				break;
 
 			case 'update':
 				$updates = '';
-				$prefix = ' ';
+				$prefix = '';
 
 				foreach($operation['data'] as $column => $value) {
-					$updates .= $prefix . $column .' = \''. $value .'\'';
+					$updates .= $prefix . $column .'=?';
 					$prefix = ', ';
 				}
 
-				return 'UPDATE '. $table .' SET'. $updates;
+				return "UPDATE {$table} SET {$updates}";
 				break;
 
 			case 'delete':
-				return 'DELETE FROM '. $table;
+				return "DELETE FROM {$table}";
 				break;
+
 			default:
 				// throw new MySQLException();
 				dd('Virheellinen operaatio: '. $operation['type']);
