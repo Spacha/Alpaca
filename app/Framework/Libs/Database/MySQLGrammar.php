@@ -88,7 +88,11 @@ class MySQLGrammar implements Grammar
 
 		switch($operation['type']) {
 			case 'select':
-				return 'SELECT ' . implode(', ', $operation['data']) . ' FROM ' . $table;
+				$colsEscaped = array_map(function($col) {
+					return "`{$col}`";
+				}, $operation['data']);
+
+				return 'SELECT ' . implode(', ', $colsEscaped) . ' FROM ' . $table;
 				break;
 
 			case 'insert':
@@ -158,7 +162,7 @@ class MySQLGrammar implements Grammar
 
 		foreach ($this->vocalbulary['whereClauses'] as $clause) {
 			$keyword = $first ? 'WHERE' : $clause[3];
-			$result .=  " {$keyword} {$clause[0]} {$clause[1]} {$clause[2]}";
+			$result .=  " {$keyword} {$clause[0]} {$clause[1]} '{$clause[2]}'";
 			$first = false;
 		}
 
