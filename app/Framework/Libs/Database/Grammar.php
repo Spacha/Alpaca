@@ -7,5 +7,5 @@ namespace App\Framework\Libs\Database;
  */
 interface Grammar
 {
-	public function buildQuery(array $operation, string $table, array $whereClauses, array $orderBy, array $limit) : string;
+	public function buildQuery(array $operation, string $table, array $joins, array $whereClauses, array $orderBy, array $limit) : string;
 }

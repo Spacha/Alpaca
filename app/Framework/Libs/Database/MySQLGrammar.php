@@ -16,17 +16,19 @@ class MySQLGrammar implements Grammar
 	 *
 	 * @param array $operation		The columns to select.
 	 * @param string $table 		The table to select from.
+	 * @param array $joins 			Joined tables with join conditions.
 	 * @param array $whereClauses 	The where clauses.
 	 * @param array $orderBy 		The order by clause.
 	 * @param array $limit 			The limit clause.
 	 * @return string 				The complete SQL query.
 	 */
-	public function buildQuery(array $operation, string $table, array $whereClauses, array $orderBy, array $limit) : string
+	public function buildQuery(array $operation, string $table, array $joins, array $whereClauses, array $orderBy, array $limit) : string
 	{
-		$this->vocalbulary = $this->validateVocalbulary($operation, $table, $whereClauses, $orderBy, $limit);
+		$this->vocalbulary = $this->validateVocalbulary($operation, $table, $joins, $whereClauses, $orderBy, $limit);
 
 		$query  = $this->buildOperation();
 
+		$query .= $this->buildJoins();
 		$query .= $this->buildWheres();
 		$query .= $this->buildOrderBy();
 		$query .= $this->buildLimit();
@@ -39,12 +41,13 @@ class MySQLGrammar implements Grammar
 	 *
 	 * @param array $operation 		The columns to select.
 	 * @param string $table 		The table to select table.
+	 * @param array $joins 			Joined tables with join conditions.
 	 * @param array $whereClauses 	The where clauses.
 	 * @param array $orderBy 		The order by clause.
 	 * @param array $limit 			The limit clause.
 	 * @return string 				Array containing the vocalbulary.
 	 */
-	protected function validateVocalbulary(array $operation, string $table, array $whereClauses, array $orderBy, array $limit) : array
+	protected function validateVocalbulary(array $operation, string $table, array $joins, array $whereClauses, array $orderBy, array $limit) : array
 	{
 		// @todo Validate vocalbulary!
 		$this->queryType = $operation['type'];
@@ -68,9 +71,10 @@ class MySQLGrammar implements Grammar
 
 		return [
 			'operation' 	=> $operation,
-			'table' 		=> $table, 
-			'whereClauses' 	=> $whereClauses, 
-			'orderBy' 		=> $orderBy, 
+			'table' 		=> $table,
+			'joins' 		=> $joins,
+			'whereClauses' 	=> $whereClauses,
+			'orderBy' 		=> $orderBy,
 			'limit' 		=> $limit
 		];
 	}
@@ -149,6 +153,22 @@ class MySQLGrammar implements Grammar
 	// {
 	// 	return ' FROM ' . $this->vocalbulary['from'];
 	// }
+
+	/**
+	 * Build the join clauses.
+	 *
+	 * @return string
+	 */
+	protected function buildJoins() : string
+	{
+		$result = '';
+
+		foreach ($this->vocalbulary['joins'] as list($joinType, $table, $condition)) {
+			$result .= " $joinType JOIN $table ON $condition";
+		}
+
+		return $result;
+	}
 
 	/**
 	 * Build the where clauses.
