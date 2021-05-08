@@ -39,8 +39,8 @@ return [
 	'&: login'									=> 'UserController@login',
 	'$: login'									=> 'UserController@tryLogin',
 
-	'&: register'								=> 'UserController@register',
-	'$: register'								=> 'UserController@tryRegister',
+	//'&: register'								=> 'UserController@register',
+	//'$: register'								=> 'UserController@tryRegister',
 
 	'&: logout'									=> 'UserController@logout',
 

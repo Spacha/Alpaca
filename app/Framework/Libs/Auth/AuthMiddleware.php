@@ -34,9 +34,10 @@ class AuthMiddleware implements Middleware
 
 	protected function checkSession() : bool
 	{
-		if (!Authenticator::validSession())
+		if (!Authenticator::validSession()) {
 			header("Location: /{$this->loginPath}");
 			die();
+		}
 
 		return true;
 	}

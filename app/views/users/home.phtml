@@ -27,9 +27,11 @@
 				<?php foreach($users as $user): ?>
 					<li>
 						<a href='/users/<?=$user->id?>'><?=$user->name?></a>
+						<?php if($auth->loggedIn()): ?>
 						<a class="pull-right" href="/users/<?=$user->id?>/delete">
 							<i class="fas fa-trash"></i>
 						</a>
+						<?php endif; ?>
 					</li>
 				<?php endforeach; ?>
 			</ul>

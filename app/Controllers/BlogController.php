@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Framework\Libs\{
 	Auth\AuthMiddleware,
+	Auth\Authenticator,
 	Controller,
 	Request,
 	View
@@ -48,14 +49,18 @@ class BlogController extends Controller
 
 	public function add(Request $request)
 	{
+		$authUser = Authenticator::user();
+		if (!$authUser)
+			header("Location: /blog");
+
 		$id = $this->model->add([
 			'title' 		=> $request->data('title'),
 			'content' 		=> $request->data('content'),
+			'author_id' 	=> (int)$authUser['id'],
 			'category_id' 	=> 1
 		]);
 
-		// header("Location: /blog/{$id}");
-		header("Location: /blog");
+		header("Location: /blog/{$id}");
 	}
 
 	public function delete(Request $request, $postId)

@@ -92,11 +92,7 @@ class MySQLGrammar implements Grammar
 
 		switch($operation['type']) {
 			case 'select':
-				$colsEscaped = array_map(function($col) {
-					return "`{$col}`";
-				}, $operation['data']);
-
-				return 'SELECT ' . implode(', ', $colsEscaped) . ' FROM ' . $table;
+				return 'SELECT ' . implode(', ', $operation['data']) . ' FROM ' . $table;
 				break;
 
 			case 'insert':

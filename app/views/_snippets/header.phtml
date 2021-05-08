@@ -1,7 +1,9 @@
 <?php
 function makeTitle($active = "")
 {
-	$title = "Spacha" . " &ndash; " . ucfirst($active);
+	$title = "Spacha";
+	if (strlen($active))
+		$title .= " &ndash; " . ucfirst($active);
 	return $title;
 }
 ?>
