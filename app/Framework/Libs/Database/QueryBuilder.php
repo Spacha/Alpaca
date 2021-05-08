@@ -306,7 +306,9 @@ class QueryBuilder
 		list($query, $params) = $this->buildQuery();
 
 		$sth = $this->connection->prepare($query);
-		$sth->execute($params);
+		$sth->execute();
+		// TODO: Use parameter binding!
+		// $sth->execute($params);
 
 		if ($returnType == 'stdClass') {
 			return $sth->fetchAll($this->connection::FETCH_CLASS);
