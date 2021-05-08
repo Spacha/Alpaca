@@ -27,6 +27,11 @@ class AuthMiddleware implements Middleware
 		return true;
 	}
 
+	public function loggedIn() : bool
+	{
+		return Authenticator::loggedIn();
+	}
+
 	protected function checkSession() : bool
 	{
 		if (!Authenticator::validSession())
@@ -34,10 +39,5 @@ class AuthMiddleware implements Middleware
 			return false;
 
 		return true;
-	}
-
-	protected function failed()
-	{
-
 	}
 }

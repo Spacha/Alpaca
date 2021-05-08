@@ -2,6 +2,8 @@
 
 namespace App\Framework\Libs;
 
+use App\Framework\Libs\Auth\Authenticator;
+
 /**
  * @todo 	This class should be rethought from the first line to the last.
  * 			Templating engine, layouts...
@@ -17,7 +19,7 @@ class View
 	public function __construct($template, $data = [], $snippets = [])
 	{
 		$this->template = $this->templatePath($template);
-		$this->data = $data;
+		$this->data = $data + $this->middlewares();
 		$this->setSnippets($snippets);
 
 		$this->render();
@@ -49,6 +51,13 @@ class View
 		}
 
 		return $result;
+	}
+
+	protected function middlewares() : array
+	{
+		return [
+			'auth' => new Authenticator()
+		];
 	}
 
 	protected function layoutPath(string $layout) : string

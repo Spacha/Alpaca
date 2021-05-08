@@ -52,9 +52,19 @@ class Authenticator
 		);
 	}
 
+	public static function loggedIn() : bool
+	{
+		return Authenticator::validSession();
+	}
+
+	public static function user()
+	{
+		return $_SESSION['user'] ?? [];
+	}
+
 	private static function destroySession()
 	{
-		unset($_SESSION['loggedin']);
+		unset($_SESSION['authenticated_at']);
 		unset($_SESSION['user']);
 	}
 

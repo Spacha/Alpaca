@@ -80,7 +80,7 @@ class UserController extends Controller
 	public function logout()
 	{
 		Authenticator::logout();
-		
+
 		header("Location: /");
 	}
 

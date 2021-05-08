@@ -156,6 +156,21 @@ ul.main-nav {
 	}
 }
 
+//
+// Logged in box
+//
+.loggedin-box {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+
+	margin: 0.6rem 0;
+	padding: 1rem;
+	border: 1px solid #e0e0e0;
+	background: #f9f9f9;
+	box-shadow: 1px 1px 6px 0px rgb(0 0 0 / 5%);
+}
+
 
 //
 // Footer

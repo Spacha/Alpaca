@@ -31,6 +31,16 @@
 
 			<?=(isset($topSection) && $topSection == true) ? '' : '</section>'?>
 
-			<div class="loggedin-box">
-				Signed in as <?=$_SESSION['user']['name']?> Sign Out
+			<?php if($auth->loggedIn()): ?>
+			<div class="wrapper">
+				<div class="loggedin-box">
+					<span>
+						<i class="fa fa-shield-alt" style="color: #2fb934;"></i>
+						Signed in as <?=$auth->user()['name']?>
+					</span>
+					<span class="logout-link">
+						<a href="/logout">Sign Out</a>
+					</span>
+				</div>
 			</div>
+			<?php endif; ?>
