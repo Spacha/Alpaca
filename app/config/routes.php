@@ -43,4 +43,8 @@ return [
 	'$: register'								=> 'UserController@tryRegister',
 
 	'&: logout'									=> 'UserController@logout',
+
+	// Secret
+	
+	'&: secret'									=> 'SecretController@home',
 ];

@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Framework\Libs\{
+	Auth\Authenticator,
 	Controller,
 	Request,
 	View
@@ -71,7 +72,28 @@ class UserController extends Controller
 		return new View('auth.login', [], ['header', 'footer']);
 	}
 
-	public function tryLogin() {
-		return null;
+	public function register()
+	{
+		return new View('auth.register', [], ['header', 'footer']);
+	}
+
+	public function logout()
+	{
+		Authenticator::logout();
+		
+		header("Location: /");
+	}
+
+	public function tryLogin(Request $request)
+	{
+		$success = Authenticator::authenticate(
+			$request->data('email'),
+			$request->data('password')
+		);
+
+		if ($success)
+			header("Location: /secret");
+		else
+			header("Location: /login");
 	}
 }

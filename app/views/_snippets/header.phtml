@@ -28,4 +28,9 @@
 					</div>
 				</div>
 			</header>
+
 			<?=(isset($topSection) && $topSection == true) ? '' : '</section>'?>
+
+			<div class="loggedin-box">
+				Signed in as <?=$_SESSION['user']['name']?> Sign Out
+			</div>

@@ -4,22 +4,38 @@
 	<article>
 		<div class="wrapper">
 
-			<h1><span>Login to Alpaca</span></h1>
-			
-			<div class="center">	
-				<div class="auth-box">
+			<heading class="page-heading">
+				<h1 class="breadcrumb">
+					<a href="/">Alpaca</a> <span class="breadcrumb-separator">/</span> Login
+				</h1>
+			</heading>
 
-					<form action='/auth/login' method='POST'>
-						<input type='email' name='email' placeholder='Email' /><br/>
-						<input type='password' name='password' placeholder='Password' /><br/>
-						<button type='submit'>Login</button>
-					</form>
 
-					<p>Don't have an account yet? <a href="/login">Register now.</a></p>
+			<section class="form">
 
-				</div>
-			</div>
-
+				<form action='/login' method='POST'>
+					<table class="table" style="width: 80%;">
+						<tbody>
+							<tr>
+								<td><label for="email">Email</label></td>
+								<td><input type="email" id="email" name="email" placeholder="Email" class="full-width" /></td>
+							</tr>
+							<tr>
+								<td><label for="password">Password</label></td>
+								<td><input type="password" id="password" name="password" placeholder="Password" class="full-width" /></td>
+							</tr>
+							<tr>
+								<td>
+									<p class="text-muted">Don't have an account yet? <a href="/register">Register now.</a></p>
+								</td>
+								<td class="text-right">
+									<button class="btn btn-primary" type="submit">Login</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</form>
+			</section>
 		</div>
 	</article>
 </main>
