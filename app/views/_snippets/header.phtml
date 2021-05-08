@@ -1,7 +1,16 @@
+<?php
+function makeTitle($active = "")
+{
+	$title = "Spacha" . " &ndash; " . ucfirst($active);
+	return $title;
+}
+?>
+
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Alpaca Development</title>
+		<meta name="viewport" content= "width=device-width, initial-scale=1.0">
+		<title><?=makeTitle($active ?? "")?></title>
 
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 		<link rel="stylesheet" href="<?='/css/app.css'?>">
@@ -14,7 +23,9 @@
 				<div class="wrapper">
 					<div class="main-header--cols">
 						
-						<div class="main-logo--container">Dummy<span>app</span></div>
+						<div class="main-logo--container">
+							<a href="/">Spacha<span>.dev</span></a>
+						</div>
 
 						<nav class="main-nav--container">
 							<ul class="main-nav">
@@ -38,7 +49,8 @@
 						<i class="fa fa-shield-alt" style="color: #2fb934;"></i>
 						Signed in as <?=$auth->user()['name']?>
 					</span>
-					<span class="logout-link">
+					<span class="loggedin-links">
+						<a href="/secret">Secret area</a>
 						<a href="/logout">Sign Out</a>
 					</span>
 				</div>

@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Framework\Libs\{
+	Auth\AuthMiddleware,
 	Controller,
 	Request,
 	View
@@ -12,9 +13,14 @@ use App\Models\Blog;
 
 class BlogController extends Controller
 {
+	protected $requiresAuth = ['create', 'add', 'delete'];
+
 	public function __construct()
 	{
-		parent::__construct(new Blog());
+		parent::__construct(
+			new Blog(),
+			new AuthMiddleware($this->requiresAuth)
+		);
 	}
 
 	public function list()

@@ -5,9 +5,11 @@
 		<div class="wrapper">
 			<heading class="clearfix page-heading">
 				<h1>Users</h1>
+				<?php if($auth->loggedIn()): ?>
 				<div class="heading-right">
 					<a href="/users/create" class="btn btn-primary"><i class="fas fa-user-plus"></i> New user</a>
 				</div>
+				<?php endif; ?>
 			</heading>
 
 			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod

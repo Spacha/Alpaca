@@ -6,9 +6,11 @@
 
 			<heading class="clearfix page-heading">
 				<h1>Blog</h1>
+				<?php if($auth->loggedIn()): ?>
 				<div class="heading-right">
 					<a href="/blog/create" class="btn btn-primary"><i class="fas fa-edit"></i> New post</a>
 				</div>
+				<?php endif; ?>
 			</heading>
 
 			<p>Here I write about things I find interesting. Mostly I write for myself. For some reason it's fun to write things down; how it's been and what I have been up to. Sometimes I tend to go too much into details, but I think it's fine! It's so fun to come back years later and read my old posts. It makes me feel like it happened yesterday, yet like I would be reading somebody else's blog!</p>

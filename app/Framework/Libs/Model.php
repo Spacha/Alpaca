@@ -15,6 +15,6 @@ abstract class Model
 
 	public function connect()
 	{
-		return new QueryBuilder(dbConfig('test'));
+		return new QueryBuilder();
 	}
 }

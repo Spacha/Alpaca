@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Framework\Libs\{
+	Auth\AuthMiddleware,
 	Auth\Authenticator,
 	Controller,
 	Request,
@@ -13,9 +14,14 @@ use App\Models\User;
 
 class UserController extends Controller
 {
+	protected $requiresAuth = ['create', 'add', 'delete', 'logout'];
+
 	public function __construct()
 	{
-		parent::__construct(new User());
+		parent::__construct(
+			new User(),
+			new AuthMiddleware($this->requiresAuth)
+		);
 	}
 
 	public function list()
@@ -59,7 +65,7 @@ class UserController extends Controller
 	}
 
 	public function delete(Request $request, $userId)
-	{
+	{	
 		$this->model->delete($userId);
 
 		header("Location: /users");

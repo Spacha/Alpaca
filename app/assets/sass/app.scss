@@ -113,12 +113,22 @@ h3 {
 		flex-grow: 1;
 		font-weight: bold;
 
-		color: #ff8a8a;
-		font-size: 1.4rem;
+		&, a {
+			color: #ff8a8a;
+			font-size: 1.4rem;
+		}
 
-		&>span {
+		&>span, a>span {
 			font-weight: normal;
 			color: #fff;
+		}
+
+		a:hover {
+			color: #fff;
+
+			span {
+				color: #ff8a8a;
+			}
 		}
 	}
 
@@ -164,11 +174,18 @@ ul.main-nav {
 	flex-direction: row;
 	justify-content: space-between;
 
+	color: #333;
 	margin: 0.6rem 0;
 	padding: 1rem;
 	border: 1px solid #e0e0e0;
 	background: #f9f9f9;
 	box-shadow: 1px 1px 6px 0px rgb(0 0 0 / 5%);
+
+	.loggedin-links {
+		a:not(:last-child)  {
+			margin-right: 0.5rem;
+		}
+	}
 }
 
 
