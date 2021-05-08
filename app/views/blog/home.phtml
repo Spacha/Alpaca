@@ -18,6 +18,9 @@
 			<p>Without further ado, head right in and have fun.</p>
 
 			<ul class="resource-list hover-list full-width">
+				<?php if (count($posts) == 0): ?>
+				<li class="non-interactable text-center">No posts at the moment.</li>
+				<?php endif; ?>
 				<?php foreach ($posts as $post): ?>
 					<li>
 						<a href='/blog/<?=$post->id?>'><?=$post->title?></a>

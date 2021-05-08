@@ -259,7 +259,7 @@ ul.hover-list {
 	li {
 		transition: $main-transition;
 
-		&:hover {
+		&:not(.non-interactable):hover {
 			background: #f7f7f7;
 		}
 	}
