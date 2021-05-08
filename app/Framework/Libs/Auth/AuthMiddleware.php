@@ -36,7 +36,7 @@ class AuthMiddleware implements Middleware
 	{
 		if (!Authenticator::validSession())
 			header("Location: /{$this->loginPath}");
-			return false;
+			die();
 
 		return true;
 	}
