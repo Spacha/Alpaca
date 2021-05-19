@@ -8,6 +8,9 @@ QueryBuilder
 - Request validation
 	- e.g. spacha.test/users/kikkeli results in "valid" query...
 
+- Spacha website
+	- add toasters (use temporary session or sth)
+
 
 Commit:
 Querybuilder changes separately

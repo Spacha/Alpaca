@@ -32,7 +32,13 @@
 
 						<a href='/users/<?=$user->id?>'><?=$user->name?></a>
 						<?php if($auth->loggedIn()): ?>
-						<a class="pull-right" href="/users/<?=$user->id?>/delete">
+						<a
+							class="pull-right"
+							href="/users/<?=$user->id?>/delete"
+							onClick="confirmDelete(event, <?=$user->id?>, '<?=$user->name?>')"
+							data-post-id="<?$post->id?>"
+							data-post-title="<?$post->title?>"
+						>
 							<i class="fas fa-trash"></i>
 						</a>
 						<?php endif; ?>
@@ -45,3 +51,19 @@
 </main>
 
 <?=$snippets['footer']?>
+
+<?php if($auth->loggedIn()): ?>
+<script>
+	function confirmDelete(evt, id, name)
+	{
+		evt.preventDefault();
+		let sure = confirm(`Are you sure you want to delete user: "${name}"?`);
+
+		if (sure) {
+			window.location.href=`/users/${id}/delete`;
+		}
+
+		return false;
+	}
+</script>
+<?php endif; ?>
