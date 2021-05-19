@@ -55,10 +55,6 @@ Temporary Items
 /vendor
 /docs
 .sass-cache/
-
-/public/css/
-/public/js/
-
 /node_modules/
 
 /planning.php
