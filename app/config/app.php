@@ -15,7 +15,7 @@ return [
 	'env' => 'production',
 
 	// Default timezone
-	'timezone' => 'Helsinki/Europe',
+	'timezone' => 'Europe/Helsinki',
 
 	// Default locale
 	'locale' => 'en',
