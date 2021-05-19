@@ -17,8 +17,8 @@ class ExceptionHandler
 	 * Set exception handler
 	 */
 	public function __construct()
-	{	
-		set_exception_handler([$this, 'handler']);
+	{
+		@set_exception_handler([$this, 'handler']);
 
 		if (Core::inProduction())
 			ini_set('display_errors', 'Off');

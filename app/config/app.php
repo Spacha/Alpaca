@@ -10,7 +10,7 @@
 return [
 	// Application name
 	'name' => 'Spacha',
-	
+
 	// Application environment (development / production)
 	'env' => 'production',
 
