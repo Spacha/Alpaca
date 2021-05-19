@@ -107,7 +107,7 @@ class QueryBuilder
 			return ['type' => 'update', 'data' => $this->updates];
 
 		if (!empty($this->delete))
-			return ['type' => 'delete', 'data' => $this->delete];
+			return ['type' => 'delete', 'data' => []];
 
 		// throw new QueryBuilderException();
 	}
@@ -344,9 +344,29 @@ class QueryBuilder
 		return $sth->execute(array_values($params));
 	}
 
+	/**
+	 * Return the SQL query without actually executing it.
+	 *
+	 * @return string
+	 */
 	public function toSql() : string
 	{
 		return $this->buildQuery()[0];
+	}
+
+	/**
+	 * Return the SQL query and the data values without actually executing it.
+	 *
+	 * @return array
+	 */
+	public function toSqlWithData() : array
+	{
+		$query = $this->buildQuery();
+
+		return [
+			'query' => $query[0],
+			'data' 	=> $query[1]
+		];
 	}
 
 	/**
