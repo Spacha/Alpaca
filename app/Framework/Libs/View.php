@@ -65,8 +65,19 @@ class View
 		return app_path('views', "_layouts/{$layout}.phtml");
 	}
 
-	protected function templatePath(string $template) : string
+	protected static function templatePath(string $template) : string
 	{
 		return app_path('views', str_replace('.', DIRECTORY_SEPARATOR, $template).'.phtml');
+	}
+
+	/**
+	 * Tell if given template exists in the folder.
+	 *
+	 * @param  string $template
+	 * @return bool
+	 */
+	public static function exists(string $template) : bool
+	{
+		return file_exists(self::templatePath($template));
 	}
 }

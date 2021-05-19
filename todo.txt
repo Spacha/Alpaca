@@ -1,0 +1,10 @@
+Alpaca TODO:
+- Use parameter binding!
+	- using '...where id = some_string' --> error, and it's dangerous
+- Pick the changes from telemetryweb (joins)
+- Request validation
+	- e.g. spacha.test/users/kikkeli results in "valid" query...
+
+
+Commit:
+Querybuilder changes separately

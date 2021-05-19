@@ -199,6 +199,22 @@ footer.main-footer {
 }
 
 
+//
+// Error Pages
+//
+
+.error-heading {
+	.error-icon {
+		color: #ef4c27;
+		margin-right: 0.5rem;
+	}
+}
+
+.error-description {
+	font-size: 110%;
+	font-style: italic;
+}
+
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -476,3 +492,4 @@ input.full-width {
 	display: flex;
     justify-content: space-between;
 }
+
