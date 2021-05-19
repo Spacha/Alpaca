@@ -12,6 +12,7 @@ class User extends Model
 		$this->db->into('users')->insert([
 			'name' 		=> $data['name'],
 			'email' 	=> $data['email'],
+			'password' 	=> $data['password'],
 			'active' 	=> $data['active']
 		])->execute();
 

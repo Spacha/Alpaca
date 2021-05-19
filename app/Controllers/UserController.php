@@ -59,7 +59,8 @@ class UserController extends Controller
 		$id = $this->model->add([
 			'name' => $request->data('name'),
 			'email' => $request->data('email'),
-			'active' => 1
+			'password' => 'thisissuperrandom' . rand(1,10000),
+			'active' => 0
 		]);
 
 		redirect("/users/{$id}");
