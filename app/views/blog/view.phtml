@@ -11,7 +11,7 @@
 			</heading>
 			<p><span>by <?=$post->author?> <?=$post->created_at?></span></p>
 
-			<?=$post->content?>
+			<?=nl2br($post->content)?>
 			
 		</div>
 	</article>
