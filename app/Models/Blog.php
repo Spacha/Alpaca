@@ -21,7 +21,7 @@ class Blog extends Model
 		return $this->db->lastInsertId();
 	}
 
-	public function update($postId, $data)
+	public function update(int $postId, $data)
 	{
 		return $this->db->table('posts')
 			->update($data)
@@ -40,19 +40,16 @@ class Blog extends Model
 		return $query->orderBy('created_at', 'desc')->get();
 	}
 
-	public function view($postId)
+	public function view(int $postId)
 	{
-		// $this->db->select('posts', ['title', 'content', 'category_id', 'created_at'], "id = {$postId}")
-		// 	->join('posts.user_id', 'users.id')
-		// 	->use('users.name as author')
-		return $this->db->select(['title', 'content', 'category_id', 'is_public', 'posts.created_at as created_at', 'users.name as author'])
+		return $this->db->select(['posts.id', 'title', 'content', 'category_id', 'is_public', 'posts.created_at as created_at', 'users.name as author'])
 			->from('posts')
 			->leftJoin('users', 'author_id = users.id')
 			->where('posts.id', $postId)
 			->first();
 	}
 
-	public function isPublic($postId)
+	public function isPublic(int $postId)
 	{
 		$post = $this->db->select(['is_public'])
 			->from('posts')
@@ -66,7 +63,7 @@ class Blog extends Model
 		}
 	}
 
-	public function delete($postId)
+	public function delete(int $postId)
 	{
 		return $this->db->delete()->from('posts')->where('id', $postId)->execute();
 	}

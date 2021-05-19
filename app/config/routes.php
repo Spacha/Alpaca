@@ -31,6 +31,8 @@ return [
 	'&: blog'									=> 'BlogController@list',
 	'&: blog/{postId}'							=> 'BlogController@view',
 	'&: blog/create'							=> 'BlogController@create',
+	'&: blog/{postId}/edit'						=> 'BlogController@edit',
+	'$: blog/{postId}/update'					=> 'BlogController@update',
 	'&: blog/{postId}/delete'					=> 'BlogController@delete',
 	'&: blog/{postId}/update-publicity'			=> 'BlogController@updatePublicity',
 	'$: blog/add'								=> 'BlogController@add',

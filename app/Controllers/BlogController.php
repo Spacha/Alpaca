@@ -45,12 +45,26 @@ class BlogController extends Controller
 		if (!$post)
 			throw new NotFound("Blog post id '{$postId}' not found");
 
-		return new View('blog.view', ['active' => 'blog', 'post' => $post], ['header', 'footer']);
+		return new View('blog.view', ['active' => 'blog', 'post' => $post, 'categories' => []], ['header', 'footer']);
 	}
 
 	public function create()
 	{
 		return new View('blog.create', ['active' => 'blog'], ['header', 'footer']);
+	}
+
+	public function edit(Request $request, $postId)
+	{
+		$post = $this->model->view($postId);
+
+		if (!$post)
+			throw new NotFound("Blog post id '{$postId}' not found");
+
+		return new View('blog.edit', [
+			'active' 		=> 'blog',
+			'post' 			=> $post,
+			'categories' 	=> []
+		], ['header', 'footer']);
 	}
 
 	public function add(Request $request)
@@ -69,6 +83,18 @@ class BlogController extends Controller
 			redirect("/blog/{$id}");
 
 		redirect("/blog/create");
+	}
+
+	public function update(Request $request, $postId)
+	{
+		$this->model->update($postId, [
+			'title' 		=> $request->data('title'),
+			'content' 		=> $request->data('content'),
+			'is_public' 	=> ($request->data('is_public') == '1') ? '1' : '0',
+			'category_id' 	=> $request->data('category_id')
+		]);
+
+		redirect("/blog/{$postId}");
 	}
 
 	public function updatePublicity(Request $request, $postId)

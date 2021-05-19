@@ -25,12 +25,12 @@ class User extends Model
 			->get();
 	}
 
-	public function view($userId)
+	public function view(int $userId)
 	{
 		return $this->db->select()->from('users')->where('id', $userId)->first();
 	}
 
-	public function delete($userId)
+	public function delete(int $userId)
 	{
 		return $this->db->delete()->from('users')->where('id', $userId)->execute();
 	}
