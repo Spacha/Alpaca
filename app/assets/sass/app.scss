@@ -70,6 +70,8 @@ h3 {
 .text-center { text-align: center; }
 .text-right  { text-align: right; }
 
+.mb-1 { margin-bottom: 1em; }
+
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -344,9 +346,11 @@ ul.hover-list {
 //
 
 .btn {
+	display: inline-block;
 	padding: 0.6rem 0.8rem;
 	font-size: 1em;
 	border-radius: 6px;
+	text-align: center;
 
 	// prevent the button from looking stupidly narrow
 	&:not(.btn-fit) {
@@ -355,7 +359,6 @@ ul.hover-list {
 
 	&:hover {
 		cursor: pointer;
-
 		background: darken(#2b78b6, 4%);
 	}
 }
@@ -368,6 +371,17 @@ ul.hover-list {
 
 	&:focus {
 		outline: none;
+	}
+}
+.btn-secondary {
+	color: $primary;
+	background: #fff;
+	border: 1px solid #2b78b6;
+
+	&:hover {
+		cursor: pointer;
+		color: darken($primary, 15%);
+		background: #dbebf7;
 	}
 }
 .btn-block {
@@ -493,3 +507,56 @@ input.full-width {
     justify-content: space-between;
 }
 
+////////////////////////////////////////////////////////////////////////////////
+// 								SECRET AREA
+////////////////////////////////////////////////////////////////////////////////
+
+.secret-toolbar {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+
+	.toolbar-tool {
+		flex: 1 1 0px;
+		//width: 160px;
+		text-align: center;
+		margin: 0.6rem 0;
+		padding: 1rem 0;
+		border: 1px solid #e0e0e0;
+		background: #fff;
+		box-shadow: 1px 1px 6px 0px rgb(0 0 0 / 5%);
+
+		&:not(:last-child) {
+			margin-right: 1rem;
+		}
+
+		.tool-icon {
+			font-size: 1.6rem;
+			margin-bottom: 0.75rem;
+		}
+
+		&:hover {
+			box-shadow: 1px 1px 6px 0px rgb(0 0 0 / 15%);
+			border-color: #ccc;
+			color: darken($primary, 15%);
+		}
+	}
+}
+
+.log-textarea-container.expanded {
+	height: 45rem;
+
+	// Apply only to the 'immediate' child
+	&>* {
+		position: absolute;
+		left: 75px;
+		right: 75px;
+	}
+}
+.log-textarea {
+	width: 100%;
+	height: 45rem;
+	color: #4a2a2a;
+	background: #efefef;
+	white-space: nowrap;
+}

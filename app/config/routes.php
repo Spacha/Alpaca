@@ -47,4 +47,7 @@ return [
 	// Secret
 	
 	'&: secret'									=> 'SecretController@home',
+	'&: secret/error-log'						=> 'SecretController@errorLog',
+	'&: secret/todo-list'						=> 'SecretController@todoList',
+	'&: secret/settings'						=> 'SecretController@settings',
 ];
