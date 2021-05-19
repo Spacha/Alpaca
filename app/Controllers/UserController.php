@@ -62,14 +62,14 @@ class UserController extends Controller
 			'active' => 1
 		]);
 
-		header("Location: /users/{$id}");
+		redirect("/users/{$id}");
 	}
 
 	public function delete(Request $request, $userId)
 	{	
 		$this->model->delete($userId);
 
-		header("Location: /users");
+		redirect("/users");
 	}
 
 	// Authentication
@@ -88,7 +88,7 @@ class UserController extends Controller
 	{
 		Authenticator::logout();
 
-		header("Location: /");
+		redirect("/");
 	}
 
 	public function tryLogin(Request $request)
@@ -99,8 +99,8 @@ class UserController extends Controller
 		);
 
 		if ($success)
-			header("Location: /secret");
+			redirect("/secret");
 		else
-			header("Location: /login");
+			redirect("/login");
 	}
 }

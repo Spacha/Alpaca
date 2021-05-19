@@ -15,7 +15,9 @@ use App\Models\Blog;
 
 class BlogController extends Controller
 {
-	protected $requiresAuth = ['create', 'add', 'delete'];
+	protected $requiresAuth = [
+		'create', 'edit', 'add', 'update', 'updatePublicity', 'delete'
+	];
 
 	public function __construct()
 	{
@@ -28,7 +30,7 @@ class BlogController extends Controller
 	public function list()
 	{
 		//$posts = $this->model->list('id', 'title', ['content', 'SELECT LEFT', 50]);
-		$posts = $this->model->list();
+		$posts = $this->model->list(Authenticator::loggedIn());
 
 		return new View('blog.home', [
 			'active' 	=> 'blog',
@@ -59,16 +61,31 @@ class BlogController extends Controller
 			'title' 		=> $request->data('title'),
 			'content' 		=> $request->data('content'),
 			'author_id' 	=> (int)$authUser['id'],
+			'is_public' 	=> ($request->data('is_public') == '1') ? '1' : '0',
 			'category_id' 	=> 1
 		]);
 
-		header("Location: /blog/{$id}");
+		if ($id > 0)
+			redirect("/blog/{$id}");
+
+		redirect("/blog/create");
+	}
+
+	public function updatePublicity(Request $request, $postId)
+	{
+		$isPublic = $this->model->isPublic($postId);
+
+		$this->model->update($postId, [
+			'is_public' => ($isPublic == '1') ? '0' : '1'
+		]);
+
+		redirect("/blog");
 	}
 
 	public function delete(Request $request, $postId)
 	{
 		$this->model->delete($postId);
 
-		header("Location: /blog");
+		redirect("/blog");
 	}
 }

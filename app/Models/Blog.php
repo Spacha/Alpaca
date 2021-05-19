@@ -13,6 +13,7 @@ class Blog extends Model
 			'title' 		=> $data['title'],
 			'content'		=> $data['content'],
 			'author_id' 	=> $data['author_id'],
+			'is_public'		=> $data['is_public'],
 			'category_id' 	=> $data['category_id'],
 			'created_at' 	=> date(config('app')['date_format'])
 		])->execute();
@@ -20,12 +21,23 @@ class Blog extends Model
 		return $this->db->lastInsertId();
 	}
 
-	public function list() : array
+	public function update($postId, $data)
 	{
-		return $this->db->select(['id', 'title', 'content', 'created_at'])
-			->from('posts')
-			->orderBy('created_at', 'desc')
-			->get();
+		return $this->db->table('posts')
+			->update($data)
+			->where('id', $postId)
+			->execute();
+	}
+
+	public function list(bool $includeHidden = false) : array
+	{
+		$query = $this->db->select(['id', 'title', 'content', 'is_public', 'created_at'])->from('posts');
+
+		if (!$includeHidden) {
+			$query->where('is_public', '1');
+		}
+
+		return $query->orderBy('created_at', 'desc')->get();
 	}
 
 	public function view($postId)
@@ -33,11 +45,25 @@ class Blog extends Model
 		// $this->db->select('posts', ['title', 'content', 'category_id', 'created_at'], "id = {$postId}")
 		// 	->join('posts.user_id', 'users.id')
 		// 	->use('users.name as author')
-		return $this->db->select(['title', 'content', 'category_id', 'posts.created_at as created_at', 'users.name as author'])
+		return $this->db->select(['title', 'content', 'category_id', 'is_public', 'posts.created_at as created_at', 'users.name as author'])
 			->from('posts')
 			->leftJoin('users', 'author_id = users.id')
 			->where('posts.id', $postId)
 			->first();
+	}
+
+	public function isPublic($postId)
+	{
+		$post = $this->db->select(['is_public'])
+			->from('posts')
+			->where('posts.id', $postId)
+			->first();
+
+		if ($post) {
+			return $post->is_public;
+		} else {
+			return false;
+		}
 	}
 
 	public function delete($postId)

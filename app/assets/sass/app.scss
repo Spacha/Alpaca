@@ -270,6 +270,11 @@ ul.resource-list {
 		&:not(:last-child) {
 			border-bottom: 1px solid #ccc;
 		}
+
+		.resource-list-leftie {
+			display: inline-block;
+			margin-right: 1rem;
+		}
 	}
 }
 
@@ -492,6 +497,7 @@ input.full-width {
 		display: block;
 		padding: 0.4rem;
 		font-weight: bold;
+
 	}
 	input, textarea {
 		width: 100%;
@@ -499,6 +505,16 @@ input.full-width {
 
 	&:not(:first-child) {
 		margin-top: 1rem;
+	}
+
+	&.form-row-inline {
+		label {
+			display: inline-block;
+		}
+
+		input, textarea {
+			width: auto;
+		}
 	}
 }
 

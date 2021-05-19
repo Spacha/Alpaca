@@ -23,14 +23,22 @@
 				<?php endif; ?>
 				<?php foreach ($posts as $post): ?>
 					<li>
+						<?php if($auth->loggedIn()): ?>
+							<div class="resource-list-leftie">
+								<input
+									type="checkbox"
+									name="is_public"
+									value="1"
+									onChange="updatePublicity(event, <?=$post->id?>, '<?=$post->title?>', <?=$post->is_public?>)"
+									<?=($post->is_public ? "checked" : "")?>/>
+							</div>
+						<?php endif; ?>
 						<a href='/blog/<?=$post->id?>'><?=$post->title?></a>
 						<?php if($auth->loggedIn()): ?>
 						<a
 							class="pull-right"
 							href="/blog/<?=$post->id?>/delete"
 							onClick="confirmDelete(event, <?=$post->id?>, '<?=$post->title?>')"
-							data-post-id="<?$post->id?>"
-							data-post-title="<?$post->title?>"
 						>
 							<i class="fas fa-trash"></i>
 						</a>
@@ -53,10 +61,25 @@
 		let sure = confirm(`Are you sure you want to delete post: "${title}"?`);
 
 		if (sure) {
-			window.location.href=`/blog/${id}/delete`;
+			window.location.href = `/blog/${id}/delete`;
 		}
 
 		return false;
+	}
+
+	// TODO: Maybe start using axios?
+	function updatePublicity(evt, id, title, is_public)
+	{
+		evt.preventDefault();
+
+		var sure = true;
+		if (!is_public) {
+			sure = confirm(`Are you sure you want to publish post: "${title}"?`);
+		}
+
+		if (sure) {
+			window.location.href = `/blog/${id}/update-publicity`;
+		}
 	}
 </script>
 <?php endif; ?>
