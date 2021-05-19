@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Framework\Exceptions\RoutingException as NotFound;
 use App\Framework\Libs\{
 	Auth\AuthMiddleware,
 	Auth\Authenticator,
@@ -40,7 +41,7 @@ class UserController extends Controller
 
 		// user not found
 		if (!$user)
-			die('User not found.');
+			throw new NotFound("User id '{$userId}' not found");
 		
 		return new View('users.view', [
 			'active' => 'users',

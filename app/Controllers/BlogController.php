@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Framework\Exceptions\RoutingException as NotFound;
 use App\Framework\Libs\{
 	Auth\AuthMiddleware,
 	Auth\Authenticator,
@@ -39,6 +40,9 @@ class BlogController extends Controller
 	{
 		$post = $this->model->view($postId);
 
+		if (!$post)
+			throw new NotFound("Blog post id '{$postId}' not found");
+
 		return new View('blog.view', ['active' => 'blog', 'post' => $post], ['header', 'footer']);
 	}
 
@@ -50,8 +54,6 @@ class BlogController extends Controller
 	public function add(Request $request)
 	{
 		$authUser = Authenticator::user();
-		if (!$authUser)
-			header("Location: /blog");
 
 		$id = $this->model->add([
 			'title' 		=> $request->data('title'),
