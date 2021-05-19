@@ -12,7 +12,7 @@ class Log
 	 * @param string $line String want to be appended to the log
 	 * @param string $log Name of the log file we want to write to
 	 */
-	public static function writeLog($line, $log)
+	public static function writeLog(string $line, string $log)
 	{
 		$logPath = self::filePath($log);
 
@@ -25,6 +25,29 @@ class Log
 			fwrite($file, "\r\n\r\n[". date(config('app')['date_format']) ."] ". $line);
 			fclose($file);
 		}
+	}
+
+	/**
+	 * Read and return the contents of the file as a string. If the log file is
+	 * not found or is not readable, return false.
+	 *
+	 * @param  string  $log
+	 * @return string/false
+	 */
+	public static function readLog(string $log)
+	{
+		$logPath = self::filePath($log);
+
+		$file = @fopen($logPath, 'r');
+
+		if (!$file) {
+			return false;
+		} else {
+			$contents = fread($file, filesize($logPath));
+			fclose($file);
+		}
+
+		return $contents;
 	}
 	
 	/**

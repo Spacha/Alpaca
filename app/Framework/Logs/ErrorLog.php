@@ -14,4 +14,8 @@ class ErrorLog extends Log
 	public static function write($line) {
 		parent::writeLog($line, 'error');
 	}
+
+	public static function read() {
+		return parent::readLog('error');
+	}
 }
