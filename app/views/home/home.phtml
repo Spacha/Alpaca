@@ -1,9 +1,19 @@
 <?=$snippets['header']?>
 
+<?php
+function calcAge()
+{
+	$years = date('Y')-1996;
+	$notYet = date('m') < 5 || date('d') < 19;
+
+	return $years - (int)$notYet;
+}
+?>
+
 	<section class="intro">
 		<div class="wrapper">
 			
-			<h1>Welcome to my Life!</h1>
+			<h1><?=$slogan?></h1>
 			<h2>Alpaca is light but scalable PHP framework for those who like Rapid and Eloquent Web Development.</h2>
 			<h3>
 				<a href="https://spacha.github.io/Alpaca" target="blank">https://spacha.github.io/Alpaca</a>
@@ -24,10 +34,30 @@
 						</div>
 					</div>
 					<div class="right-col">
-						<h3>Miika Sikala, 22</h3>
-						<p>I'm a finnish guy who likes rockets, programming, electonics and so many other things. Currently I'm studying in Oulu University and work as a freelance web developer.</p>
+						<h3>Miika Sikala, <?=calcAge()?></h3>
+						<p>I'm a Finnish guy who likes rockets, programming, electonics and so many other things. Currently I'm studying in Oulu University and work as a freelance web developer.</p>
 						<p><a href="/about">Still interested?</a></p>
 					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="social-links-section">
+			<div class="wrapper">
+				<h2 class="text-center">My Social Media</h2>
+
+				<div class="social-links">
+					<a href="https://github.com/Spacha" target="_blank" class="social-github">
+						<i class="fab fa-github"></i> Github
+					</a>
+
+					<a href="https://linkedin.com/in/miika-sikala" target="_blank" class="social-linkedin">
+						<i class="fab fa-linkedin"></i> Linkedin
+					</a>
+
+					<a href="https://steamcommunity.com/id/spacha" target="_blank" class="social-steam">
+						<i class="fab fa-steam"></i> Steam
+					</a>
 				</div>
 			</div>
 		</section>

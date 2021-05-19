@@ -351,6 +351,62 @@ ul.hover-list {
 	}
 }
 
+//
+// Social Links
+//
+
+.social-links-section {
+	margin-top: 6rem;
+}
+.social-links {
+	font-size: 110%;
+
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+
+	a {
+		flex: 1 1 0px;
+		//width: 160px;
+		text-align: center;
+		margin: 0.6rem 0;
+		padding: 1rem 0;
+		border: 1px solid #e0e0e0;
+		background: #fff;
+		box-shadow: 1px 1px 6px 0px rgb(0 0 0 / 5%);
+
+		&:not(:last-child) {
+			margin-right: 1rem;
+		}
+
+		&.social-github {
+			background: #1e2327;
+			color: #eee;
+			&:hover {
+				color: #fff;
+				background: darken(#1e2327, 5%);
+				box-shadow: 1px 1px 6px 0px rgb(0 0 0 / 15%);
+			}
+		}
+		&.social-linkedin {
+			background: #0077B5;
+			color: #fff;
+			&:hover {
+				background: darken(#0077B5, 5%);
+				box-shadow: 1px 1px 6px 0px rgb(0 0 0 / 15%);
+			}
+		}
+		&.social-steam {
+			background: #171a21;
+			color: #eee;
+			&:hover {
+				color: #fff;
+				background: darken(#171a21, 5%);
+				box-shadow: 1px 1px 6px 0px rgb(0 0 0 / 15%);
+			}
+		}
+	}
+}
 
 //
 // Buttons
