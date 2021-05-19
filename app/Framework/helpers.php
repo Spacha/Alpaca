@@ -62,6 +62,18 @@ function mix(string $file)
 	return $manifests[$file];
 }
 
+/**
+ * Redirect the user to new location.
+ *
+ * @param  string $to The path to redirect to
+ * @return void
+ */
+function redirect(string $to)
+{
+	header("Location: ". $to);
+	die();
+}
+
 
 /*---------------------------------------------------------
  * 		PATH HELPERS
