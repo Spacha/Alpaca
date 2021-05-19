@@ -11,5 +11,6 @@
 
 return [
 	'public'	=> 'public',
-	'views'		=> 'views'
+	'views'		=> 'views',
+	'logs' 		=> 'logs'
 ];

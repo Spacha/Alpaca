@@ -23,4 +23,7 @@ return [
 	// Date format in database
 	// @todo move to another config file
 	'date_format' => 'Y-m-d H:i:s',
+
+	// Whether or not to log errors to a log file
+	'log_errors' => true
 ];

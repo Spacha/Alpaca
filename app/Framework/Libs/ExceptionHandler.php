@@ -56,7 +56,8 @@ class ExceptionHandler
 			echo "{$trace}<hr>";
 		}
 
-		ErrorLog::write($e);
+		if (config('app')['log_errors'])
+			ErrorLog::write($e);
 
 		if ($env == 'production') {
 
