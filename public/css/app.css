@@ -179,6 +179,13 @@ footer.main-footer {
   padding: 8rem 0 4rem 0;
 }
 
+footer .footer-subtext {
+  display: block;
+  font-size: 75%;
+  color: #777;
+  margin: 1rem;
+}
+
 .error-heading .error-icon {
   color: #ef4c27;
   margin-right: 0.5rem;
