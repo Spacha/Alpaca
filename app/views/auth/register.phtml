@@ -4,23 +4,35 @@
 	<article>
 		<div class="wrapper">
 
-			<h1><span>Register to Alpaca</span></h1>
-			
-			<div class="center">	
-				<div class="auth-box">
+			<heading class="page-heading">
+				<h1 class="breadcrumb">
+					<a href="/">Alpaca</a> <span class="breadcrumb-separator">/</span> Register
+				</h1>
+			</heading>
 
-					<form action='/auth/register' method='POST'>
-						<input type='email' name='email' placeholder='Email' /><br/>
-						<input type='password' name='password' placeholder='Password' /><br/>
-						<input type='password_repeat' name='password_repeat' placeholder='Repeat Password' /><br/>
-						<button type='submit'>Login</button>
-					</form>
 
-					<p>Already have an account? <a href="/login">Login.</a></p>
+			<section class="form">
+				<form action='/auth/register' method='POST'>
+					<div class="form-inline form-narrow">
 
-				</div>
-			</div>
+						<div class="form-left"><label for="email">Email</label></div>
+						<div class="form-right"><input type="email" id="email" name="email" placeholder="Email" class="full-width" /></div>
 
+						<div class="form-left"><label for="password">Password</label></div>
+						<div class="form-right"><input type="password" id="password" name="password" placeholder="Password" class="full-width" /></div>
+
+						<div class="form-left"><label for="password">Repeat Password</label></div>
+						<div class="form-right"><input type="password" id="password_repeat" name="password_repeat" placeholder="Repeat password" class="full-width" /></div>
+
+						<div class="form-bottom">
+							<!--<p class="text-muted">Don't have an account yet? <a href="/register">Register now.</a></p>-->
+							<p>Don't have en account yet? Boohoo.</p>
+							<button class="btn btn-primary" type="submit">Register</button>
+						</div>
+
+					</div>
+				</form>
+			</section>
 		</div>
 	</article>
 </main>

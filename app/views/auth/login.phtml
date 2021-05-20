@@ -13,30 +13,21 @@
 
 			<section class="form">
 				<form action='/login' method='POST'>
-					<table class="table" style="width: 80%;">
-						<tbody>
-							<tr>
-								<td style="width: 50%;"><label for="email">Email</label></td>
-								<td><input type="email" id="email" name="email" placeholder="Email" class="full-width" /></td>
-							</tr>
-							<tr>
-								<td><label for="password">Password</label></td>
-								<td><input type="password" id="password" name="password" placeholder="Password" class="full-width" /></td>
-							</tr>
-							<tr>
-								<td colspan="2">
-									<div class="form-bottom">
-										<!--<p class="text-muted">Don't have an account yet? <a href="/register">Register now.</a></p>-->
-										<p>Don't have en account yet? Boohoo.</p>
+					<div class="form-inline form-narrow">
 
-										<div class="text-right">
-											<button class="btn btn-primary" type="submit">Login</button>
-										</div>
-									</div>
-								</td>
-							</tr>
-						</tbody>
-					</table>
+						<div class="form-left"><label for="email">Email</label></div>
+						<div class="form-right"><input type="email" id="email" name="email" placeholder="Email" class="full-width" /></div>
+
+						<div class="form-left"><label for="password">Password</label></div>
+						<div class="form-right"><input type="password" id="password" name="password" placeholder="Password" class="full-width" /></div>
+
+						<div class="form-bottom">
+							<!--<p class="text-muted">Don't have an account yet? <a href="/register">Register now.</a></p>-->
+							<p>Don't have en account yet? Boohoo.</p>
+							<button class="btn btn-primary" type="submit">Login</button>
+						</div>
+
+					</div>
 				</form>
 			</section>
 		</div>

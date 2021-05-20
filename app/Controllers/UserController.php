@@ -77,11 +77,17 @@ class UserController extends Controller
 
 	public function login()
 	{
+		if (Authenticator::loggedIn())
+			redirect("/secret");
+
 		return new View('auth.login', [], ['header', 'footer']);
 	}
 
 	public function register()
 	{
+		if (Authenticator::loggedIn())
+			redirect("/secret");
+
 		return new View('auth.register', [], ['header', 'footer']);
 	}
 

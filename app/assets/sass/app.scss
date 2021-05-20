@@ -619,7 +619,6 @@ input.full-width {
 		display: block;
 		padding: 0.4rem;
 		font-weight: bold;
-
 	}
 	input, textarea {
 		width: 100%;
@@ -640,8 +639,33 @@ input.full-width {
 	}
 }
 
+.form-inline {
+	label {
+		display: block;
+		padding: 0.4rem;
+		font-weight: bold;
+	}
+}
+@media(min-width: 390px) {
+	.form-inline {
+		display: grid;
+		align-items: center;
+		grid-template-columns: 25% 1fr;
+		grid-gap: 16px;
+
+		label { font-weight: normal; }
+	}
+	.form-narrow {
+		max-width: 500px;
+	}
+}
+
+
 .form-bottom {
+    grid-column: 1/-1;
+
 	display: flex;
+	align-items: center;
     justify-content: space-between;
 }
 
