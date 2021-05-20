@@ -13,7 +13,8 @@
 
 /**
  * Toggle hamburger menu.
- *
+ * @todo add event listeners for the menu links to close the menu!
+ * 
  * @param  {[MouseEvent]} evt
  * @return {void}
  */

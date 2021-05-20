@@ -9,10 +9,13 @@
 					<a href="/blog">Blog</a> <span class="breadcrumb-separator">/</span> <?=$post->title?>
 				</h1>
 			</heading>
-			<p><span>by <?=$post->author?> <?=$post->created_at?></span></p>
+			<p class="blog--author"><span>by <?=$post->author?> <?=$post->created_at?></span></p>
 
-			<?=nl2br($post->content)?>
-			
+			<div class="blog--post">
+				<?=nl2br($post->content)?>
+
+				<p class="text-center mt-2"><a href="/blog"><i class="far fa-hand-point-left"></i> Return</a></p>
+			</div>
 		</div>
 	</article>
 </main>

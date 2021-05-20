@@ -32,7 +32,7 @@ a, button, input[type="button"], .hover {
 h1 {
 	font-size: 1.9em;
 	font-weight: normal;
-	margin: 1.8rem 0 1.6rem 1.2rem;
+	margin: 1.8rem 0 1.6rem 0;
 }
 h2 {
 	font-weight: normal;
@@ -71,6 +71,10 @@ h3 {
 .text-left   { text-align: left; }
 .text-center { text-align: center; }
 .text-right  { text-align: right; }
+
+.mt-1 { margin-top: 1em; }
+.mt-2 { margin-top: 2em; }
+.mt-3 { margin-top: 3em; }
 
 .mb-05 { margin-bottom: 0.5em; }
 .mb-1 { margin-bottom: 1em; }
@@ -202,9 +206,10 @@ ul.main-nav {
 
 				}
 			}
-		}
-		&.ham-menu.ham-expanded {
-			display: block;
+
+			&.ham-expanded {
+				display: block;
+			}
 		}
 	}
 }
@@ -242,8 +247,9 @@ ul.main-nav {
 	box-shadow: 1px 1px 6px 0px rgb(0 0 0 / 5%);
 
 	.loggedin-links {
-		a:not(:last-child)  {
-			margin-right: 0.5rem;
+		a  {
+			display: inline-block;
+			margin-left: 0.5rem;
 		}
 	}
 }
@@ -467,6 +473,21 @@ ul.hover-list {
 			}
 		}
 	}
+}
+
+// 
+// Blog
+// 
+
+.blog--author {
+	border-bottom: 1px solid #e6e6e6;
+	padding-bottom: 0.5rem;
+	color: #636363;
+	font-size: 90%;
+}
+
+.blog--post {
+	//
 }
 
 //
