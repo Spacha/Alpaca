@@ -4,7 +4,7 @@
 function calcAge()
 {
 	$years = date('Y')-1996;
-	$notYet = date('m') < 5 || date('d') < 19;
+	$notYet = date('m') < 12 || date('d') < 10;
 
 	return $years - (int)$notYet;
 }
