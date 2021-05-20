@@ -13,6 +13,44 @@
 
 return [
 
-	//
+	// Static
 
+	'&:'										=> 'HomeController@home',
+	'&: about'									=> 'HomeController@about',
+	
+	// Users
+
+	'&: users'									=> 'UserController@list',
+	'&: users/{userId}'							=> 'UserController@view',
+	'&: users/create'							=> 'UserController@create',
+	'&: users/{userId}/delete'					=> 'UserController@delete',
+	'$: users/add'								=> 'UserController@add',
+
+	// Blog
+
+	'&: blog'									=> 'BlogController@list',
+	'&: blog/{postId}'							=> 'BlogController@view',
+	'&: blog/create'							=> 'BlogController@create',
+	'&: blog/{postId}/edit'						=> 'BlogController@edit',
+	'$: blog/{postId}/update'					=> 'BlogController@update',
+	'&: blog/{postId}/delete'					=> 'BlogController@delete',
+	'&: blog/{postId}/update-publicity'			=> 'BlogController@updatePublicity',
+	'$: blog/add'								=> 'BlogController@add',
+
+	// Authentication
+
+	'&: login'									=> 'UserController@login',
+	'$: login'									=> 'UserController@tryLogin',
+
+	//'&: register'								=> 'UserController@register',
+	//'$: register'								=> 'UserController@tryRegister',
+
+	'&: logout'									=> 'UserController@logout',
+
+	// Secret
+	
+	'&: secret'									=> 'SecretController@home',
+	'&: secret/error-log'						=> 'SecretController@errorLog',
+	'&: secret/todo-list'						=> 'SecretController@todoList',
+	'&: secret/settings'						=> 'SecretController@settings',
 ];

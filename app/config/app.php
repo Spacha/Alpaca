@@ -9,7 +9,7 @@
 
 return [
 	// Application name
-	'name' => 'Alpaca',
+	'name' => 'Spacha',
 
 	// Application environment (development / production)
 	'env' => 'production',

@@ -1,0 +1,63 @@
+<?php
+function makeTitle($active = "")
+{
+	$title = config('app')['name'];
+	if (strlen($active))
+		$title .= " &ndash; " . ucfirst($active);
+	return $title;
+}
+?>
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content= "width=device-width, initial-scale=1.0">
+		<meta name="theme-color" content="#337aaf">
+
+		<title><?=$title ?? makeTitle($active ?? "")?></title>
+
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+		<link rel="stylesheet" href="<?=mix("/css/app.css")?>">
+		<link rel="icon" href="/favicon.svg">
+		<script src="/js/app.js"></script>
+	</head>
+	<body>
+
+		<section class="top-section">
+			<header class="main-header">
+				<div class="wrapper">
+					<div class="main-header--cols">
+						
+						<div class="main-logo--container">
+							<a href="/">Spacha<span>.dev</span></a>
+						</div>
+
+						<nav class="main-nav--container">
+							<ul class="main-nav">
+								<li class="<?=(isset($active) && $active == 'home') ?'active':''?>"><a href="/">Home</a></li>
+								<li class="<?=(isset($active) && $active == 'users') ?'active':''?>"><a href="/users">Users</a></li>
+								<li class="<?=(isset($active) && $active == 'blog') ?'active':''?>"><a href="/blog">Blog</a></li>
+								<li class="<?=(isset($active) && $active == 'about') ?'active':''?>"><a href="/about">About</a></li>
+							</ul>
+						</nav>
+
+					</div>
+				</div>
+			</header>
+
+			<?=(isset($topSection) && $topSection == true) ? '' : '</section>'?>
+
+			<?php if($auth->loggedIn()): ?>
+			<div class="wrapper">
+				<div class="loggedin-box">
+					<span>
+						<i class="fa fa-shield-alt" style="color: #2fb934;"></i>
+						Signed in as <?=$auth->user()['name']?>
+					</span>
+					<span class="loggedin-links">
+						<a href="/secret">Secret area</a>
+						<a href="/logout">Sign Out</a>
+					</span>
+				</div>
+			</div>
+			<?php endif; ?>

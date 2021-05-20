@@ -1,0 +1,52 @@
+<?=$snippets['header']?>
+
+<main class="page-content">
+	<article>
+		<div class="wrapper">
+
+			<heading class="page-heading">
+				<h1 class="breadcrumb">
+					<a href="/blog">Blog</a> <span class="breadcrumb-separator">/</span> Edit post
+				</h1>
+			</heading>
+
+			<section class="form">
+
+				<form action='/blog/<?=$post->id?>/update' method='POST'>
+					<div class="form-row">
+						<label for="title">Title</label>
+						<input type="text" id="title" name="title" placeholder="Title" class="" value="<?=$post->title?>" />
+					</div>
+					<div class="form-row">
+						<label for="content">Content</label>
+						<textarea id="content" name="content" placeholder="Write some content..." rows="8"><?=$post->content?></textarea><br/>
+					</div>
+					<div class="form-row form-row-inline">
+						<label for="category_id">Category</label>
+						<select id="category_id">
+							<?php if(count($categories) > 0): ?>
+							<?php foreach ($categories as $category): ?>
+							<option value="<?=$category->id?>">
+								<?=$category->title?>
+							</option>
+							<?php endforeach; ?>
+							<?php else: ?>
+								<option value="0" disabled selected>No categories...</option>
+							<?php endif; ?>
+						</select>
+					</div>
+					<div class="form-row form-row-inline">
+						<label for="is_public">Set public</label>
+						<input type="checkbox" id="is_public" name="is_public" value="1" class="" <?=($post->is_public ? "checked" : "")?> />
+					</div>
+					<div class="form-row text-right">
+						<button class="btn btn-primary" type="submit">Save</button>
+					</div>
+				</form>
+
+			</section>
+		</div>
+	</article>
+</main>
+
+<?=$snippets['footer']?>
