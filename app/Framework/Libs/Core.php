@@ -28,4 +28,24 @@ Class Core
 	{
 		return sprintf('App\Controllers\%s', $controller);
 	}
+
+	/**
+	 * Tells if the app is currently set to run in production environment.
+	 *
+	 * @return bool
+	 */
+	public static function inProduction() : bool
+	{
+		return config('app')['env'] == 'production';
+	}
+
+	/**
+	 * Tells if the app is currently set to run in development environment.
+	 *
+	 * @return bool
+	 */
+	public static function inDevelopment() : bool
+	{
+		return config('app')['env'] == 'development';
+	}
 }

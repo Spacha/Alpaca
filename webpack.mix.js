@@ -15,6 +15,13 @@ let sourcePath = 'app/assets';
 let publicPath = 'public';
 
 mix
+<<<<<<< HEAD
 	.js(sourcePath + '/js/app.js', 'js')
 	.sass(sourcePath + '/sass/app.scss', 'css')
 	.setPublicPath(publicPath);
+=======
+	.js(sourcePath + '/js/app.js', '/js/')
+	.sass(sourcePath + '/sass/app.scss', '/css/')
+	.setPublicPath(publicPath)
+	.version();
+>>>>>>> testing

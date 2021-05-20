@@ -41,6 +41,9 @@ class Bootstrap
 	 */
 	public function run()
 	{
+		// TODO: Maybe this is not the place?
+		date_default_timezone_set(config('app')['timezone']);
+
 		$this->router = new Router(
 			Request::uri(),
 			Request::method()

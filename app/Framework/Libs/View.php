@@ -2,6 +2,8 @@
 
 namespace App\Framework\Libs;
 
+use App\Framework\Libs\Auth\Authenticator;
+
 /**
  * @todo 	This class should be rethought from the first line to the last.
  * 			Templating engine, layouts...
@@ -17,7 +19,7 @@ class View
 	public function __construct($template, $data = [], $snippets = [])
 	{
 		$this->template = $this->templatePath($template);
-		$this->data = $data;
+		$this->data = $data + $this->middlewares();
 		$this->setSnippets($snippets);
 
 		$this->render();
@@ -51,13 +53,31 @@ class View
 		return $result;
 	}
 
+	protected function middlewares() : array
+	{
+		return [
+			'auth' => new Authenticator()
+		];
+	}
+
 	protected function layoutPath(string $layout) : string
 	{
 		return app_path('views', "_layouts/{$layout}.phtml");
 	}
 
-	protected function templatePath(string $template) : string
+	protected static function templatePath(string $template) : string
 	{
 		return app_path('views', str_replace('.', DIRECTORY_SEPARATOR, $template).'.phtml');
+	}
+
+	/**
+	 * Tell if given template exists in the folder.
+	 *
+	 * @param  string $template
+	 * @return bool
+	 */
+	public static function exists(string $template) : bool
+	{
+		return file_exists(self::templatePath($template));
 	}
 }

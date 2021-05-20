@@ -3,17 +3,22 @@
 namespace App\Framework\Exceptions;
 
 use Exception;
-use App\Framework\Libs\HttpResponse;
 
 class RoutingException extends Exception
 {
+	public $name;
+	public $description;
+
     public function __construct(string $message, $code = 404, Exception $previous = null)
     {
-    	HttpResponse::setStatus($code);
-
 		parent::__construct($message, $code, $previous);
 
-		echo "Error ".$code;
-		// return view('errors.404', ['message' => $message]);
+		if ($code == 404) {
+			$this->name = "Not Found";
+			$this->description = "The page you are looking for doesn't exist.";
+		} else {
+			$this->name = "";
+			$this->description = "";
+		}
 	}
 }

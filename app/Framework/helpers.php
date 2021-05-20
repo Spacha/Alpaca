@@ -10,7 +10,7 @@
  */
 
 /**
- * @todo Not permanent! Is this even ok ciz we load this every time from drive??
+ * @todo Not permanent! Is this even ok cuz we load this every time from drive??
  * @todo config('app.locale'), config('paths.templates') etc...
  * @param string $config Config file's name matching one in app/config
  * @return array Config file as array if found
@@ -37,6 +37,41 @@ function config(string $config = '', bool $anywhere = false) : array
 function dbConfig($name = '')
 {
 	return config(PATH_ROOT . '/dbConfig.php', true);
+}
+
+/**
+ * Laravel Mix helper to make cache busting easy
+ * @link https://laravel-mix.com/docs/6.0/versioning
+ *
+ * @param  string $file Path to the asset file (use leading '/')
+ * @return string 		Versioned file of the asset (if versioning used)
+ */
+function mix(string $file)
+{
+	static $manifests;
+	$manifestPath = public_root('mix-manifest.json');
+
+	if (!is_file($manifestPath))
+		return $file;
+
+	$manifests = json_decode(file_get_contents($manifestPath), true);
+
+	if (!isset($manifests[$file]))
+		return $file;
+
+	return $manifests[$file];
+}
+
+/**
+ * Redirect the user to new location.
+ *
+ * @param  string $to The path to redirect to
+ * @return void
+ */
+function redirect(string $to)
+{
+	header("Location: ". $to);
+	die();
 }
 
 

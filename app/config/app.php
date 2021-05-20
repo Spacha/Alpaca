@@ -10,12 +10,12 @@
 return [
 	// Application name
 	'name' => 'Alpaca',
-	
-	// Application environment
+
+	// Application environment (development / production)
 	'env' => 'production',
 
 	// Default timezone
-	'timezone' => 'Helsinki/Europe',
+	'timezone' => 'Europe/Helsinki',
 
 	// Default locale
 	'locale' => 'en',
@@ -23,4 +23,7 @@ return [
 	// Date format in database
 	// @todo move to another config file
 	'date_format' => 'Y-m-d H:i:s',
+
+	// Whether or not to log errors to a log file
+	'log_errors' => true
 ];

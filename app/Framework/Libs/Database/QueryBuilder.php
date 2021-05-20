@@ -21,6 +21,7 @@ class QueryBuilder
 	protected $delete = false;
 
 	protected $table = '';
+	protected $joins = [];
 	protected $whereClauses = [];
 	protected $orderBy = [];
 	protected $limit = [];
@@ -28,10 +29,10 @@ class QueryBuilder
 	/**
 	 * Creates the connection to the database specified in given config set.
 	 *
-	 * @param array  $config 	The database config set.
+	 * @param  string $config 	The database config file.
 	 * @return void
 	 */
-	public function __construct(array $config = [])
+	public function __construct(string $config = 'dbConfig')
 	{
 		$this->connect($config);
 	}
@@ -41,10 +42,10 @@ class QueryBuilder
 	 * grammar specified in the config set.
 	 * @todo Support other types of databases too.
 	 *
-	 * @param array $config 	The database config set.
+	 * @param string $config 	The database config file.
 	 * @return void
 	 */
-	protected function connect(array $config)
+	protected function connect(string $config)
 	{
 		$this->connection = new DatabaseConnection(dbConfig($config));
 		$this->grammar = new MySQLGrammar();
@@ -59,16 +60,39 @@ class QueryBuilder
 	{
 		$operation = $this->getOperation();
 
-		return [
+		$result = [
 			$this->grammar->buildQuery(
 				$operation,
 				$this->table, 
+				$this->joins,
 				$this->whereClauses,
 				$this->orderBy,
 				$this->limit
 			),
 			$operation['data']
 		];
+
+		$this->resetState();
+
+		return $result;
+	}
+
+	/**
+	 * Resets the query builder.
+	 * 
+	 * @return void
+	 */
+	protected function resetState()
+	{
+		$this->selects = [];
+		$this->inserts = [];
+		$this->updates = [];
+		$this->delete = false;
+
+		$this->table = '';
+		$this->whereClauses = [];
+		$this->orderBy = [];
+		$this->limit = [];
 	}
 
 	protected function getOperation() : array
@@ -83,7 +107,7 @@ class QueryBuilder
 			return ['type' => 'update', 'data' => $this->updates];
 
 		if (!empty($this->delete))
-			return ['type' => 'delete', 'data' => $this->delete];
+			return ['type' => 'delete', 'data' => []];
 
 		// throw new QueryBuilderException();
 	}
@@ -196,6 +220,20 @@ class QueryBuilder
 	}
 
 	/**
+	 * Make a left join clause.
+	 * @author Miika Sikala <miikasikala96@gmail.com>
+	 *
+	 * @param  string $table
+	 * @param  string $condition
+	 * @return App\Framework\Libs\Database\QueryBuilder
+	 */
+	public function leftJoin(string $table, string $condition) : QueryBuilder
+	{
+		$this->joins[] = ['LEFT', $table, $condition];
+		return $this;
+	}
+
+	/**
 	 * Make a where clause.
 	 * @example $query->where('id', 1)
 	 * @example $query->where(['id', '=', 1])
@@ -268,7 +306,9 @@ class QueryBuilder
 		list($query, $params) = $this->buildQuery();
 
 		$sth = $this->connection->prepare($query);
-		$sth->execute($params);
+		$sth->execute();
+		// TODO: Use parameter binding!
+		// $sth->execute($params);
 
 		if ($returnType == 'stdClass') {
 			return $sth->fetchAll($this->connection::FETCH_CLASS);
@@ -304,9 +344,29 @@ class QueryBuilder
 		return $sth->execute(array_values($params));
 	}
 
+	/**
+	 * Return the SQL query without actually executing it.
+	 *
+	 * @return string
+	 */
 	public function toSql() : string
 	{
 		return $this->buildQuery()[0];
+	}
+
+	/**
+	 * Return the SQL query and the data values without actually executing it.
+	 *
+	 * @return array
+	 */
+	public function toSqlWithData() : array
+	{
+		$query = $this->buildQuery();
+
+		return [
+			'query' => $query[0],
+			'data' 	=> $query[1]
+		];
 	}
 
 	/**

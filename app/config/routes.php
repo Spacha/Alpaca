@@ -13,6 +13,6 @@
 
 return [
 
-	'&: test'									=> 'TestController@test',
-	
+	//
+
 ];
