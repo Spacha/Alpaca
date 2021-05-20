@@ -139,6 +139,11 @@ h3 {
   flex-grow: 2;
   text-align: center;
 }
+@media (max-width: 576px) {
+  .main-header--cols.hamburgerize {
+    display: block;
+  }
+}
 
 ul.main-nav {
   padding: 0;
@@ -157,6 +162,46 @@ ul.main-nav li a {
 ul.main-nav li.active a {
   font-weight: bold;
   border-bottom: 3px solid #fff;
+}
+@media (max-width: 576px) {
+  ul.main-nav.ham-menu {
+    display: none;
+    width: 100%;
+    box-shadow: 0 6px 6px rgba(0, 0, 0, 0.25);
+  }
+  ul.main-nav.ham-menu li {
+    display: block;
+    text-align: center;
+  }
+  ul.main-nav.ham-menu li.active {
+    border-bottom: none;
+    background: #0c3d6e;
+  }
+  ul.main-nav.ham-menu li a {
+    display: block;
+    border-bottom: none;
+    padding: 1rem 0;
+  }
+  ul.main-nav.ham-menu.ham-expanded {
+    display: block;
+  }
+}
+
+.ham-header {
+  display: flex;
+}
+
+.hamburger-container {
+  display: none;
+  margin: 1em;
+}
+@media (max-width: 576px) {
+  .hamburger-container {
+    display: block;
+  }
+}
+.hamburger-container a.hamburger {
+  color: #fff;
 }
 
 .loggedin-box {
