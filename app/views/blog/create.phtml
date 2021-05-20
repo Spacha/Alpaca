@@ -22,6 +22,20 @@
 						<textarea id="content" name="content" placeholder="Write some content..." rows="8"></textarea><br/>
 					</div>
 					<div class="form-row form-row-inline">
+						<label for="category_id">Category</label>
+						<select id="category_id">
+							<?php if(count($categories) > 0): ?>
+							<?php foreach ($categories as $category): ?>
+							<option value="<?=$category->id?>">
+								<?=$category->title?>
+							</option>
+							<?php endforeach; ?>
+							<?php else: ?>
+								<option value="0" disabled selected>No categories...</option>
+							<?php endif; ?>
+						</select>
+					</div>
+					<div class="form-row form-row-inline">
 						<label for="is_public">Set public</label>
 						<input type="checkbox" id="is_public" name="is_public" value="1" class="" />
 					</div>

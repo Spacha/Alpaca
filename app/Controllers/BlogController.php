@@ -76,7 +76,7 @@ class BlogController extends Controller
 			'content' 		=> $request->data('content'),
 			'author_id' 	=> (int)$authUser['id'],
 			'is_public' 	=> ($request->data('is_public') == '1') ? '1' : '0',
-			'category_id' 	=> 1
+			'category_id' 	=> $request->data('category_id')
 		]);
 
 		if ($id > 0)
