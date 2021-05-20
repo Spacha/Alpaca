@@ -6,6 +6,8 @@ $secondary:			#000000;
 $main-font: 		'Quicksand', sans-serif;
 $main-transition: 	all ease-in-out 0.2s;
 
+$clr-red: 			#d44848; // #ff8a8a
+
 html, body {
 	font-family: $main-font;
 	padding: 0;
@@ -122,7 +124,7 @@ h3 {
 		font-weight: bold;
 
 		&, a {
-			color: #ff8a8a;
+			color: $clr-red;
 			font-size: 1.4rem;
 		}
 
@@ -135,7 +137,7 @@ h3 {
 			color: #fff;
 
 			span {
-				color: #ff8a8a;
+				color: $clr-red;
 			}
 		}
 	}
@@ -388,7 +390,7 @@ ul.hover-list {
 		padding-left: 2rem;
 
 		h3 {
-			color: #ff8a8a;
+			color: $clr-red;
 			font-weight: bold;
 			margin-left: 0;
 		}

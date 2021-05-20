@@ -121,7 +121,7 @@ h3 {
   font-weight: bold;
 }
 .main-header--cols .main-logo--container, .main-header--cols .main-logo--container a {
-  color: #ff8a8a;
+  color: #d44848;
   font-size: 1.4rem;
 }
 .main-header--cols .main-logo--container > span, .main-header--cols .main-logo--container a > span {
@@ -132,7 +132,7 @@ h3 {
   color: #fff;
 }
 .main-header--cols .main-logo--container a:hover span {
-  color: #ff8a8a;
+  color: #d44848;
 }
 .main-header--cols .main-nav--container {
   margin: auto;
@@ -318,7 +318,7 @@ ul.hover-list li:not(.non-interactable):hover {
   padding-left: 2rem;
 }
 .personal-cols .right-col h3 {
-  color: #ff8a8a;
+  color: #d44848;
   font-weight: bold;
   margin-left: 0;
 }
