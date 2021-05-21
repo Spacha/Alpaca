@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Quicksand:400,700');
+@import "@fortawesome/fontawesome-free/scss/fontawesome.scss";
 
 // Variables
 $primary:			#337aaf;
@@ -6,7 +7,7 @@ $secondary:			#000000;
 $main-font: 		'Quicksand', sans-serif;
 $main-transition: 	all ease-in-out 0.2s;
 
-$clr-red: 			#d44848; // #ff8a8a
+$clr-red: 			#d44848;	// #ff8a8a
 
 html, body {
 	font-family: $main-font;

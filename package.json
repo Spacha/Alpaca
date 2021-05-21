@@ -23,6 +23,7 @@
   },
   "homepage": "https://spacha.github.io/Alpaca",
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.3",
     "laravel-mix": "^6.0.19"
   },
   "devDependencies": {
