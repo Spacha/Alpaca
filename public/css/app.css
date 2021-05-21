@@ -27,8 +27,8 @@ h1 {
 
 h2 {
   font-weight: normal;
-  color: #777;
-  margin: 1.6rem 0 1rem 1.4rem;
+  color: #444;
+  margin: 1.6rem 0 1rem 0;
 }
 
 h3 {
@@ -171,6 +171,9 @@ ul.main-nav li {
 ul.main-nav li a {
   color: #fff;
 }
+ul.main-nav li a:hover {
+  border-bottom: 1px solid #fff;
+}
 ul.main-nav li.active a {
   font-weight: bold;
   border-bottom: 3px solid #fff;
@@ -258,6 +261,16 @@ footer .footer-subtext {
   text-align: center;
   padding: 2.5em 0;
 }
+.intro .slogan {
+  opacity: 1;
+  transition-property: opacity, transform;
+  transition-duration: 0.1s;
+  transition-timing-function: ease-in-out;
+}
+.intro .slogan.before-fading {
+  opacity: 0;
+  transform: translateX(-100vw);
+}
 .intro h1 {
   font-size: 1.6em;
 }
@@ -310,9 +323,13 @@ ul.hover-list li:not(.non-interactable):hover {
   width: 170px;
   border-radius: 50%;
   overflow: hidden;
+  transition: transform 0.25s ease-in-out;
 }
 .image-circle img {
   width: 100%;
+}
+.image-circle:hover {
+  transform: rotate(180deg);
 }
 
 .personal-cols {
@@ -371,6 +388,12 @@ ul.hover-list li:not(.non-interactable):hover {
 }
 .social-links a:not(:last-child) {
   margin-right: 1rem;
+}
+.social-links a i {
+  transition: transform 0.25s ease-in-out;
+}
+.social-links a:hover i {
+  transform: rotate(360deg);
 }
 .social-links a.social-github {
   background: #1e2327;

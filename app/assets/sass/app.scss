@@ -36,8 +36,8 @@ h1 {
 }
 h2 {
 	font-weight: normal;
-	color: #777;
-	margin: 1.6rem 0 1.0rem 1.4rem;
+	color: #444;
+	margin: 1.6rem 0 1.0rem 0;
 }
 h3 {
 	margin: 1rem 1.4rem;
@@ -174,6 +174,10 @@ ul.main-nav {
 
 		a {
 			color: #fff;
+
+			&:hover {
+				border-bottom: 1px solid #fff;
+			}
 		}
 
 		&.active a {
@@ -300,6 +304,18 @@ footer {
 	text-align: center;
 	padding: 2.5em 0;
 
+	.slogan {
+		opacity: 1;
+		transition-property: opacity, transform;
+		transition-duration: 0.1s;
+		transition-timing-function: ease-in-out;
+
+		&.before-fading {
+			opacity: 0;
+			transform: translateX(-100vw);
+		}
+	}
+
 	h1 {
 		font-size: 1.6em;
 	}
@@ -370,6 +386,11 @@ ul.hover-list {
 
 	img {
 		width: 100%;
+	}
+
+	transition: transform 0.25s ease-in-out;
+	&:hover {
+		transform: rotate(180deg);
 	}
 }
 
@@ -444,6 +465,13 @@ ul.hover-list {
 
 		&:not(:last-child) {
 			margin-right: 1rem;
+		}
+
+		i { transition: transform 0.25s ease-in-out; }
+		&:hover {
+			i {
+				transform: rotate(360deg);
+			}
 		}
 
 		&.social-github {
