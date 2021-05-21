@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Quicksand:400,700');
-@import "@fortawesome/fontawesome-free/scss/fontawesome.scss";
+@import '~@fortawesome/fontawesome-free/scss/fontawesome.scss';
+@import '~@fortawesome/fontawesome-free/scss/solid.scss';
+@import '~@fortawesome/fontawesome-free/scss/regular.scss';
+@import '~@fortawesome/fontawesome-free/scss/brands.scss';
+
+// TODO: Bundle only the icons that are being used!
 
 // Variables
 $primary:			#337aaf;
