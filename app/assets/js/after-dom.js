@@ -1,7 +1,10 @@
 function fadeInSlogan()
 {
 	var elem = document.querySelector('.slogan');
-	elem.classList.remove('before-fading');
+
+	if (!!elem && 'classList' in elem) {
+		elem.classList.remove('before-fading');
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////
