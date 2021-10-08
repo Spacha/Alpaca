@@ -50,7 +50,9 @@ return [
 	// Secret
 	
 	'&: secret'									=> 'SecretController@home',
-	'&: secret/error-log'						=> 'SecretController@errorLog',
+	'&: secret/logs'							=> 'SecretController@logs',
+	'&: secret/logs/error-log'					=> 'SecretController@errorLog',
+	'&: secret/logs/activity-log'				=> 'SecretController@activityLog',
 	'&: secret/todo-list'						=> 'SecretController@todoList',
 	'&: secret/settings'						=> 'SecretController@settings',
 ];

@@ -36,11 +36,26 @@ class SecretController extends Controller
 	// Sub-pages
 	//
 
+	public function logs()
+	{
+		return new View('secret.logs.logs', [
+			'title' => 'Spacha — Logs',
+		], ['header', 'footer', 'secret-toolbar']);
+	}
+
+	public function activityLog()
+	{
+		return new View('secret.logs.activity-log', [
+			'title' 		=> 'Spacha — Activity Log',
+			'activityLog' 	=> $this->model->getLog('activity')
+		], ['header', 'footer', 'secret-toolbar']);
+	}
+
 	public function errorLog()
 	{
-		return new View('secret.error-log', [
+		return new View('secret.logs.error-log', [
 			'title' 	=> 'Spacha — Error Log',
-			'errorLog' 	=> $this->model->getErrorLog()
+			'errorLog' 	=> $this->model->getLog('error')
 		], ['header', 'footer', 'secret-toolbar']);
 	}
 
