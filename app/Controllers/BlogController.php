@@ -42,7 +42,8 @@ class BlogController extends Controller
 	{
 		$post = $this->model->view($postId);
 
-		if (!$post)
+		// post does not exist or is not public
+		if (!$post || (!$post->is_public && !Authenticator::loggedIn()))
 			throw new NotFound("Blog post id '{$postId}' not found");
 
 		return new View('blog.view', ['active' => 'blog', 'post' => $post, 'categories' => []], ['header', 'footer']);
