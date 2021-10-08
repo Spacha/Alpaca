@@ -15,15 +15,18 @@ class Log
 	public static function writeLog(string $line, string $log)
 	{
 		$logPath = self::filePath($log);
-
 		$file = @fopen($logPath, 'a');
 
 		// failed to open/create file, notify
 		if (!$file) {
 			echo "<b>Warning:</b> Log file '{$log}' is unwritable, check permissions of the log folder.";
 		} else {
-			fwrite($file, "\r\n\r\n[". date(config('app')['date_format']) ."] ". $line);
-			fclose($file);
+
+			// if the file is full, do not write
+			if (@filesize($logPath) < config('app')['log_max_size']) {
+				fwrite($file, "\r\n[". date(config('app')['date_format']) ."] ". $line);
+				fclose($file);
+			}
 		}
 	}
 
