@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Framework\Exceptions\RoutingException as NotFound;
+use App\Framework\Logs\ActivityLog;
 use App\Framework\Libs\{
 	Auth\AuthMiddleware,
 	Auth\Authenticator,
@@ -104,6 +105,12 @@ class UserController extends Controller
 			$request->data('email'),
 			$request->data('password')
 		);
+
+		// write to access log
+		$email = $request->data('email');
+		$ip = $_SERVER['REMOTE_ADDR'];
+		$successStr = $success ? "yes" : "no";
+		ActivityLog::write("Login attempt: email: ${email}, ip: ${ip}, success: ${successStr}");
 
 		if ($success)
 			redirect("/secret");
