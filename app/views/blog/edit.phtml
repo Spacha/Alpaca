@@ -19,10 +19,10 @@
 					</div>
 					<div class="form-row">
 						<label for="content">Content</label>
-						<textarea id="content" name="content" placeholder="Write some content..." rows="8"><?=$post->content?></textarea><br/>
+						<textarea id="content" name="content" placeholder="Write some content..." style="min-height: 20rem;"><?=$post->content?></textarea>
 					</div>
 					<div class="form-row form-row-inline">
-						<label for="category_id">Category</label>
+						<label for="category_id" style="width: 7.5rem;">Category</label>
 						<select id="category_id">
 							<?php if(count($categories) > 0): ?>
 							<?php foreach ($categories as $category): ?>
@@ -36,10 +36,10 @@
 						</select>
 					</div>
 					<div class="form-row form-row-inline">
-						<label for="is_public">Set public</label>
+						<label for="is_public" style="width: 7.5rem;">Set public</label>
 						<input type="checkbox" id="is_public" name="is_public" value="1" class="" <?=($post->is_public ? "checked" : "")?> />
 					</div>
-					<div class="form-row text-right">
+					<div class="form-row-inline text-right">
 						<button class="btn btn-primary" type="submit">Save</button>
 					</div>
 				</form>
