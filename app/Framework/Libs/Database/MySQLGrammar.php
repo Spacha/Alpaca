@@ -178,7 +178,8 @@ class MySQLGrammar implements Grammar
 
 		foreach ($this->vocalbulary['whereClauses'] as $clause) {
 			$keyword = $first ? 'WHERE' : $clause[3];
-			$result .=  " {$keyword} {$clause[0]} {$clause[1]} '{$clause[2]}'";
+			$compVal = strlen($clause[2]) > 0 ? "'{$clause[2]}'" : $clause[2];
+			$result .=  " {$keyword} {$clause[0]} {$clause[1]} {$compVal}";
 			$first = false;
 		}
 
