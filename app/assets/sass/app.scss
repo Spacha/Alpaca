@@ -602,6 +602,7 @@ ul.hover-list {
 		color: #3b4850;
 		display: inline;
 		padding: 0 0.25rem;
+		overflow-x: auto;
 
 		&.multi {
 			padding: 1rem;
