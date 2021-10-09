@@ -594,6 +594,20 @@ ul.hover-list {
 		color: #333;
 		margin: 0;
 	}
+
+	pre {
+		line-height: 0.7rem;
+		border-radius: 0.4rem;
+		background: #f4fbff;
+		color: #3b4850;
+		display: inline;
+		padding: 0 0.25rem;
+
+		&.multi {
+			padding: 1rem;
+			display: block;
+		}
+	}
 }
 
 //
