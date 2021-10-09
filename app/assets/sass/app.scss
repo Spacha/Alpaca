@@ -11,6 +11,7 @@ $primary:			#337aaf;
 $secondary:			#000000;
 $main-font: 		'Quicksand', sans-serif;
 $main-transition: 	all ease-in-out 0.2s;
+$wrapper-padding: 	1rem;
 
 $clr-red: 			#d44848;	// #ff8a8a
 
@@ -57,7 +58,7 @@ h3 {
 
 .wrapper {
 	margin:auto;
-	padding: 0 1rem;
+	padding: 0 $wrapper-padding;
 	width: 720px;
 	max-width: 90%
 }
@@ -194,31 +195,41 @@ ul.main-nav {
 
 	// Collapse the menu on mobile
 	@media(max-width: 576px) {
+		margin: 0;
+		max-height: 0;
+		transition: max-height 0.15s ease-out;
+		overflow: hidden;
+	    
 		&.ham-menu {
-			display: none;
-
+			display: block;
 			width: 100%;
-			box-shadow: 0 6px 6px rgb(0 0 0 / 25%);
 
 			li {
 				display: block;
 				text-align: center;
+				border-bottom: 1px solid rgb(255 255 255 / 18%);
+
+				&:first-child {
+					border-top: 1px solid rgb(255 255 255 / 18%);
+				}
 
 				&.active {
-					border-bottom: none;
-					background: #0c3d6e;
+					background: rgb(0 0 0 / 28%);
 				}
 
 				a {
 					display: block;
 					border-bottom: none;
 					padding: 1rem 0;
-
 				}
 			}
 
+			visibility: hidden;
 			&.ham-expanded {
-				display: block;
+				// for animation...
+				visibility: visible;
+				max-height: 800px;
+				transition: max-height 0.25s ease-in;
 			}
 		}
 	}
