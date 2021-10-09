@@ -54,9 +54,10 @@ class QueryBuilder
 	/**
 	 * Build the query using the grammar.
 	 *
+	 * @param string $resetState 	Whether to reset the query builder's state.
 	 * @return array
 	 */
-	protected function buildQuery() : array
+	protected function buildQuery($resetState = false) : array
 	{
 		$operation = $this->getOperation();
 
@@ -72,7 +73,8 @@ class QueryBuilder
 			$operation['data']
 		];
 
-		$this->resetState();
+		if ($resetState)
+			$this->resetState();
 
 		return $result;
 	}
@@ -299,11 +301,12 @@ class QueryBuilder
 	 * Execute and return the result set.
 	 *
 	 * @param string $returnType 	What type of collection we want to return.
+	 * @param string $resetState 	Whether to reset the query builder's state.
 	 * @return mixed 				stdClass/array depending on $returnType
 	 */
-	public function get(string $returnType = 'stdClass')
+	public function get(string $returnType = 'stdClass', $resetState = true)
 	{
-		list($query, $params) = $this->buildQuery();
+		list($query, $params) = $this->buildQuery($resetState);
 
 		$sth = $this->connection->prepare($query);
 		$sth->execute();
@@ -385,4 +388,12 @@ class QueryBuilder
 		//
 	}
 	*/
+
+	/**
+	 * Flushes all where clauses from the buffer.
+	 */
+	public function flushWheres()
+	{
+		$this->whereClauses = [];
+	}
 }
