@@ -54,5 +54,9 @@ return [
 	'&: secret/logs/error-log'					=> 'SecretController@errorLog',
 	'&: secret/logs/activity-log'				=> 'SecretController@activityLog',
 	'&: secret/todo-list'						=> 'SecretController@todoList',
+	'&: secret/todo-list/create'				=> 'SecretController@createTodo',
+	'$: secret/todo-list/add'					=> 'SecretController@addTodo',
+	'&: secret/todo-list/{id}/update-status'	=> 'SecretController@updateTodoStatus',
+	'&: secret/todo-list/{id}/delete'			=> 'SecretController@deleteTodo',
 	'&: secret/settings'						=> 'SecretController@settings',
 ];

@@ -393,6 +393,12 @@ ul.resource-list {
 			display: inline-block;
 			margin-right: 1rem;
 		}
+
+		h3 {
+			margin: 0;
+			font-size: 110%;
+			color: #000;
+		}
 	}
 }
 
@@ -810,6 +816,12 @@ input.full-width {
 			border-color: #ccc;
 			color: darken($primary, 15%);
 		}
+
+		&.active {
+			border-color: #333;
+			color: #444;
+			font-weight: bold;
+		}
 	}
 }
 
@@ -829,4 +841,11 @@ input.full-width {
 	color: #4a2a2a;
 	background: #efefef;
 	white-space: nowrap;
+}
+
+.todo-list {
+	li.todo--done {
+		text-decoration: line-through;
+		color: #bbb;
+    }
 }
