@@ -7,6 +7,15 @@ use App\Framework\Libs\Database;
 
 class Blog extends Model
 {
+	public function recentTitles(int $max = 4) : array
+	{
+		$query = $this->db->select(['id', 'title', 'created_at'])->from('posts')
+			->where('is_public', '1')
+			->limit($max);
+
+		return $query->orderBy('created_at', 'desc')->get();
+	}
+
 	public function add($data)
 	{
 		$this->db->into('posts')->insert([

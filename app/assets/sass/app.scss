@@ -102,6 +102,18 @@ h3 {
 	flex: 1;
 }
 
+h2.bottom-border {
+	border-bottom: 1px solid #eee;
+	padding-bottom: 0.4em;
+}
+
+.empty-list {
+	text-align: center;
+	padding: 2em 0;
+	font-size: 120%;
+	color: #999;
+}
+
 //
 // Top Section
 //
@@ -453,6 +465,30 @@ ul.hover-list {
 		flex-grow: 1;
 		display: flex;
 		align-items: center;
+	}
+}
+
+//
+// Recent Blog Posts
+//
+.blog-highlights {
+	margin-top: 4rem;
+
+	h3 {
+		display: grid;
+		grid-template-columns: 7.5rem auto;
+	}
+
+	ul {
+		padding: 0;
+		li {
+			list-style-type: none;
+		}
+	}
+
+	.blog-highlights--date {
+		display: block;
+		color: #888;
 	}
 }
 

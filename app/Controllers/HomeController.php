@@ -8,7 +8,7 @@ use App\Framework\Libs\{
 	View
 };
 
-use App\Models\Test;
+use App\Models\Blog;
 
 class HomeController extends Controller
 {
@@ -23,10 +23,13 @@ class HomeController extends Controller
 
 	public function home()
 	{
+		$blogModel = new Blog();
+
 		return new View('home.home', [
 			'title' 		=> 'Spacha — A nerd with attitude',
 			'active' 		=> 'home',
 			'slogan' 		=> self::SLOGANS[array_rand(self::SLOGANS)],
+			'recentPosts' 	=> $blogModel->recentTitles(),
 			'topSection' 	=> true
 		], ['header', 'footer']);
 	}

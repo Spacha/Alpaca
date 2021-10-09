@@ -8,6 +8,10 @@ function calcAge()
 
 	return $years - (int)$notYet;
 }
+function dateToDay($date)
+{
+	return date_format(date_create($date), 'd.m.Y');
+}
 ?>
 
 	<section class="intro">
@@ -38,6 +42,36 @@ function calcAge()
 						<p>I'm a Finnish guy who likes rockets, programming, electonics and so many other things. Currently I'm studying in Oulu University and work as a freelance web developer.</p>
 						<p><a href="/about">Still interested?</a></p>
 					</div>
+				</div>
+			</div>
+		</section>
+
+		<section>
+			<div class="wrapper">
+				<div class="blog-highlights">
+					<h2 class="bottom-border">Fresh from my blog</h2>
+					<ul>
+						<?php if(!isset($recentPosts) || count($recentPosts) == 0): ?>
+						<div class="empty-list">
+							Looks pretty empty to me <i class="far fa-grin-beam"></i>
+						</div>
+						<?php else: ?>
+						<?php foreach($recentPosts as $post): ?>
+						<li>
+							<h3>
+								<div class="blog-highlights--date">
+									<?=dateToDay($post->created_at)?>
+								</div>
+								<div>
+									<a href="/blog/<?=$post->id?>"><?=$post->title?></a>
+									<!--<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+									tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>-->
+								</div>
+							</h3>
+						</li>
+						<?php endforeach; ?>
+						<?php endif ?>
+					</ul>
 				</div>
 			</div>
 		</section>
