@@ -10,7 +10,9 @@
  */
 
 return [
-	'public'	=> 'public',
-	'views'		=> 'views',
-	'logs' 		=> 'logs'
+	'public'	=> '../public',
+	'logs' 		=> '../logs',
+    'cache'     => '../cache',
+    'vendor'    => '../vendor',
+	'views'		=> 'views'
 ];

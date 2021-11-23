@@ -11,6 +11,9 @@ class Autoloader
 	 */
 	public function __construct()
 	{
+		if (config('app')['use_vendors'])
+			require app_path('vendor', 'autoload.php');
+
 		spl_autoload_register([$this, 'loader']);
 	}
 
