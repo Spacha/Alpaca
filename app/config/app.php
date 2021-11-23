@@ -12,7 +12,7 @@ return [
 	'name' => 'Alpaca',
 
 	// Application environment (development / production)
-	'env' => 'production',
+	'env' => 'development',
 
 	// Default timezone
 	'timezone' => 'Europe/Helsinki',
@@ -29,5 +29,8 @@ return [
 
 	// Maximum size of any single log file in bytes
 	// If a log is full, it's not written to
-	'log_max_size' => 50*1024
+	'log_max_size' => 50*1024,
+
+	// If true, composer vendor files are autoloaded
+	'use_vendors' => true,
 ];
