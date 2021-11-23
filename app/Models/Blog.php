@@ -4,9 +4,15 @@ namespace App\Models;
 
 use App\Framework\Libs\Model;
 use App\Framework\Libs\Database;
+use App\Framework\Traits\CachesMarkdown;
 
 class Blog extends Model
 {
+	use CachesMarkdown;
+
+	/**
+	 * List the recent (public) blog post titles to be shown on the front page.
+	 */
 	public function recentTitles(int $max = 4) : array
 	{
 		$query = $this->db->select(['id', 'title', 'created_at'])->from('posts')
@@ -16,8 +22,13 @@ class Blog extends Model
 		return $query->orderBy('created_at', 'desc')->get();
 	}
 
-	public function add($data)
+	/**
+	 * Store a new post.
+	 */
+	public function add($data) : int
 	{
+		$this->updateMarkdownCache(69, $data['content']);
+		die();
 		$this->db->into('posts')->insert([
 			'title' 		=> $data['title'],
 			'content'		=> $data['content'],
@@ -26,18 +37,31 @@ class Blog extends Model
 			'category_id' 	=> $data['category_id'],
 			'created_at' 	=> date(config('app')['date_format'])
 		])->execute();
+		$postId = $this->db->lastInsertId();
 
-		return $this->db->lastInsertId();
+		//$this->updateMarkdownCache($postId, $data['content']);
+		return $postId;
 	}
 
-	public function update(int $postId, $data)
+	/**
+	 * Save updates to a post.
+	 */
+	public function update(int $postId, $data) : bool
 	{
-		return $this->db->table('posts')
+		$success = $this->db->table('posts')
 			->update($data)
 			->where('id', $postId)
 			->execute();
+
+		$this->updateMarkdownCache($postId, $data['content']);
+		return $success;
 	}
 
+	/**
+	 * Show a listing of the posts.
+	 * 
+	 * @param bool $includeHidden If true, also non-public posts are included.
+	 */
 	public function list(bool $includeHidden = false) : array
 	{
 		$query = $this->db->select(['id', 'title', 'content', 'is_public', 'created_at'])->from('posts');
@@ -49,15 +73,24 @@ class Blog extends Model
 		return $query->orderBy('created_at', 'desc')->get();
 	}
 
+	/**
+	 * Show details of a post.
+	 */
 	public function view(int $postId)
 	{
-		return $this->db->select(['posts.id', 'title', 'content', 'category_id', 'is_public', 'posts.created_at as created_at', 'users.name as author'])
+		$post = $this->db->select(['posts.id', 'title', 'content', 'category_id', 'is_public', 'posts.created_at as created_at', 'users.name as author'])
 			->from('posts')
 			->leftJoin('users', 'author_id = users.id')
 			->where('posts.id', $postId)
 			->first();
+
+		$post->contentHtml = $this->getMarkdownCache($postId);
+		return $post;
 	}
 
+	/**
+	 * Return a boolean telling if a post is public or not.
+	 */
 	public function isPublic(int $postId)
 	{
 		$post = $this->db->select(['is_public'])
@@ -72,6 +105,9 @@ class Blog extends Model
 		}
 	}
 
+	/**
+	 * Delete a post.
+	 */
 	public function delete(int $postId)
 	{
 		return $this->db->delete()->from('posts')->where('id', $postId)->execute();
