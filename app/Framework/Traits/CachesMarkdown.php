@@ -28,6 +28,20 @@ trait CachesMarkdown
 	}
 
 	/**
+	 * Delete specified cache.
+	 */
+	protected static function deleteMarkdownCache(int $id) : bool
+	{
+		$cachePath = $this->cachePath($id);
+
+		// check if the cache subfolder exists - if not, everything's fine
+		if (!file_exists(dirname($cachePath)))
+			return true;
+
+		return unlink($cachePath);
+	}
+
+	/**
 	 * Write a cache to the file system.
 	 *
 	 * @param string $cachePath Cache file name relative to cache folder.
