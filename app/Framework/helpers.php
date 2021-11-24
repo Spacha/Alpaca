@@ -74,6 +74,14 @@ function redirect(string $to)
 	die();
 }
 
+/**
+ * Get the current timestamp in specified format.
+ * @return string
+ */
+function now()
+{
+    return date(config('app')['date_format']);
+}
 
 /*---------------------------------------------------------
  * 		PATH HELPERS
