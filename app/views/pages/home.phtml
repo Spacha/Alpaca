@@ -1,0 +1,92 @@
+<?=$snippets['header']?>
+
+<main class="page-content">
+	<article>
+		<div class="wrapper">
+			<?=$snippets['secret-toolbar']?>
+
+			<heading class="page-heading">
+				<h1 class="breadcrumb">
+					<a href="/secret">Secret area</a> <span class="breadcrumb-separator">/</span> Pages
+				</h1>
+				<div class="heading-right">
+					<a href="/secret/pages/create" class="btn btn-primary"><i class="fas fa-edit"></i> New page</a>
+				</div>
+			</heading>
+
+			<!-- TODO: Add a table with stats or something? -->
+
+			<ul class="resource-list hover-list full-width">
+				<?php if (count($pages) == 0): ?>
+				<li class="non-interactable text-center">No posts at the moment.</li>
+				<?php endif; ?>
+				<?php foreach ($pages as $page): ?>
+					<li>
+						<!-- Administrate -->
+						<div class="resource-list-leftie">
+							<input
+								type="checkbox"
+								name="is_public"
+								value="1"
+								onChange="updatePublicity(event, <?=$page->id?>, '<?=addslashes($page->title)?>', <?=$page->is_public?>)"
+								<?=($page->is_public ? "checked" : "")?>/>
+						</div>
+
+						<a href='/secret/pages/<?=$page->id?>'><?=$page->title?></a>
+						
+						<!-- Administrate -->
+						<span class="pull-right">
+							<a
+								class="mr-05"
+								href="/secret/pages/<?=$page->id?>/edit"
+							>
+								<i class="fas fa-pen"></i>
+							</a>
+
+							<a
+								href="/blog/<?=$page->id?>/delete"
+								onClick="confirmDelete(event, <?=$page->id?>, '<?=$page->title?>')"
+							>
+								<i class="fas fa-trash"></i>
+							</a>
+						</span>
+					</li>
+				<?php endforeach; ?>
+			</ul>
+
+		</div>
+	</article>
+</main>
+
+<?=$snippets['footer']?>
+
+<?php if($auth->loggedIn()): ?>
+<script>
+	function confirmDelete(evt, id, title)
+	{
+		evt.preventDefault();
+		let sure = confirm(`Are you sure you want to delete post: "${title}"?`);
+
+		if (sure) {
+			window.location.href = `/blog/${id}/delete`;
+		}
+
+		return false;
+	}
+
+	// TODO: Maybe start using axios?
+	function updatePublicity(evt, id, title, is_public)
+	{
+		evt.preventDefault();
+
+		var sure = true;
+		if (!is_public) {
+			sure = confirm(`Are you sure you want to publish post: "${title}"?`);
+		}
+
+		if (sure) {
+			window.location.href = `/blog/${id}/update-publicity`;
+		}
+	}
+</script>
+<?php endif; ?>

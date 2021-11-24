@@ -11,61 +11,58 @@ use App\Framework\Libs\{
 	View
 };
 
-use App\Models\Blog;
+use App\Models\Page;
 
-class BlogController extends Controller
+class PageController extends Controller
 {
 	protected $requiresAuth = [
-		'create', 'edit', 'add', 'update', 'updatePublicity', 'delete'
+		'create', 'edit', 'add', 'update', 'updatePublicity', 'delete', 'list'
 	];
 
-	const SNIPPETS = ['header', 'footer'];
+	const SNIPPETS = ['header', 'footer', 'secret-toolbar'];
 
 	public function __construct()
 	{
 		parent::__construct(
-			new Blog(),
+			new Page(),
 			new AuthMiddleware($this->requiresAuth)
 		);
 	}
 
 	public function list()
 	{
-		//$posts = $this->model->list('id', 'title', ['content', 'SELECT LEFT', 50]);
-		$posts = $this->model->list(Authenticator::loggedIn());
+		$pages = $this->model->list();
 
-		return new View('blog.home', [
-			'active' 	=> 'blog',
-			'posts' 	=> $posts
+		return new View('pages.home', [
+			'pages' => $pages
 		], self::SNIPPETS);
 	}
 
-	public function view(Request $request, $postId)
+	public function view(Request $request, $pageId)
 	{
-		$post = $this->model->view($postId);
+		$page = $this->model->view($pageId);
 
-		// post does not exist or is not public
-		if (!$post || (!$post->is_public && !Authenticator::loggedIn()))
-			throw new NotFound("Blog post id '{$postId}' not found");
+		// page does not exist or is not public
+		if (!$page || (!$page->is_public && !Authenticator::loggedIn()))
+			throw new NotFound("Page id '{$pageId}' not found");
 
-		return new View('blog.view', ['active' => 'blog', 'post' => $post, 'categories' => []], self::SNIPPETS);
+		return new View('pages.view', ['page' => $page], self::SNIPPETS);
 	}
 
 	public function create()
 	{
-		return new View('blog.create', ['active' => 'blog', 'categories' => []], self::SNIPPETS);
+		return new View('pages.create', [], self::SNIPPETS);
 	}
 
-	public function edit(Request $request, $postId)
+	public function edit(Request $request, $pageId)
 	{
-		$post = $this->model->view($postId);
+		$page = $this->model->view($pageId);
 
-		if (!$post)
-			throw new NotFound("Blog post id '{$postId}' not found");
+		if (!$page)
+			throw new NotFound("Page id '{$pageId}' not found");
 
-		return new View('blog.edit', [
-			'active' 		=> 'blog',
-			'post' 			=> $post,
+		return new View('pages.edit', [
+			'page' 			=> $page,
 			'categories' 	=> []
 		], self::SNIPPETS);
 	}
@@ -83,9 +80,9 @@ class BlogController extends Controller
 		]);
 
 		if ($id > 0)
-			redirect("/blog/{$id}");
+			redirect("/pages/{$id}");
 
-		redirect("/blog/create");
+		redirect("/pages/create");
 	}
 
 	public function update(Request $request, $postId)

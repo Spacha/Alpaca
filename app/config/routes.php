@@ -47,6 +47,17 @@ return [
 
 	'&: logout'									=> 'UserController@logout',
 
+	// Pages
+
+	'&: secret/pages'							=> 'PageController@list',
+	'&: secret/pages/{pageId}'					=> 'PageController@view',
+	'&: secret/pages/create'					=> 'PageController@create',
+	'&: secret/pages/{pageId}/edit'				=> 'PageController@edit',
+	'$: secret/pages/{pageId}/update'			=> 'PageController@update',
+	'&: secret/pages/{pageId}/delete'			=> 'PageController@delete',
+	'&: secret/pages/{pageId}/update-publicity'	=> 'PageController@updatePublicity',
+	'$: secret/pages/add'						=> 'PageController@add',
+
 	// Secret
 	
 	'&: secret'									=> 'SecretController@home',

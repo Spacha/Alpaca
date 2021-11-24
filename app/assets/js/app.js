@@ -9,8 +9,7 @@
  * @param  {[MouseEvent]} evt
  * @return {void}
  */
-window.toggleHamMenu = function(evt)
-{
+window.toggleHamMenu = evt => {
 	evt.preventDefault();
 	var menu = document.querySelector('.ham-menu');
 
@@ -18,5 +17,19 @@ window.toggleHamMenu = function(evt)
 		menu.classList.remove('ham-expanded');
 	} else {
 		menu.classList.add('ham-expanded');
+	}
+}
+
+/**
+ * Highlight a checkbox's parent element when the value is true.
+ * 
+ * @param  {[MouseEvent]} evt
+ * @return {void}
+ */
+window.highlightWarning = (e) => {
+	if (e.srcElement.checked) {
+		e.srcElement.parentNode.classList.add("form-warning")
+	} else {
+		e.srcElement.parentNode.classList.remove("form-warning")
 	}
 }

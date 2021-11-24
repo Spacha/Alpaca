@@ -6140,6 +6140,9 @@ a {
   text-decoration: none;
   color: #337aaf;
 }
+a.disabled {
+  color: #777;
+}
 
 a, button, input[type=button], .hover {
   transition: all ease-in-out 0.2s;
@@ -6828,6 +6831,12 @@ input.full-width {
   display: flex;
 }
 
+.form-warning {
+  border-radius: 6px;
+  background: #efe58b;
+  color: #5c540a;
+}
+
 .form-inline label {
   display: block;
   padding: 0.4rem;
@@ -6854,6 +6863,12 @@ input.full-width {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.form-bottom-buttom {
+  border-top: 1px dashed #ccc;
+  margin-top: 0.4em;
+  padding-top: 0.4em;
 }
 
 .secret-toolbar {

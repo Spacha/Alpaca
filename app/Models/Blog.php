@@ -29,14 +29,13 @@ class Blog extends Model
 	 */
 	public function add($data) : int
 	{
-		$this->updateMarkdownCache(69, $data['content']);
 		$this->db->into('posts')->insert([
 			'title' 		=> $data['title'],
 			'content'		=> $data['content'],
 			'author_id' 	=> $data['author_id'],
 			'is_public'		=> $data['is_public'],
 			'category_id' 	=> $data['category_id'],
-			'created_at' 	=> date(config('app')['date_format'])
+			'created_at' 	=> now()
 		])->execute();
 		$postId = $this->db->lastInsertId();
 
@@ -111,6 +110,8 @@ class Blog extends Model
 	 */
 	public function delete(int $postId)
 	{
-		return $this->db->delete()->from('posts')->where('id', $postId)->execute();
+		$success = $this->db->delete()->from('posts')->where('id', $postId)->execute();
+		$this->deleteMarkdownCache($postId);
+		return $success;
 	}
 }

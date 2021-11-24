@@ -1,10 +1,17 @@
 <?php
-function makeTitle($active = "")
+function makeTitle($active = "") : string
 {
 	$title = config('app')['name'];
 	if (strlen($active))
 		$title .= " &ndash; " . ucfirst($active);
 	return $title;
+}
+
+// Returns ' active' if 
+$active = $active ?? null;
+$activeClass = function(string $page, $prefix = '') use ($active) : string
+{
+	return (isset($active) && $active == $page) ? "{$prefix}active" : '';
 }
 ?>
 <!DOCTYPE html>
@@ -42,10 +49,11 @@ function makeTitle($active = "")
 
 						<nav class="main-nav--container">
 							<ul class="main-nav ham-menu">
-								<li class="<?=(isset($active) && $active == 'home') ?'active':''?>"><a href="/">Home</a></li>
-								<li class="<?=(isset($active) && $active == 'users') ?'active':''?>"><a href="/users">Users</a></li>
-								<li class="<?=(isset($active) && $active == 'blog') ?'active':''?>"><a href="/blog">Blog</a></li>
-								<li class="<?=(isset($active) && $active == 'about') ?'active':''?>"><a href="/about">About</a></li>
+
+								<li class="<?=$activeClass('home')?>"><a href="/">Home</a></li>
+								<li class="<?=$activeClass('users')?>"><a href="/users">Users</a></li>
+								<li class="<?=$activeClass('blog')?>"><a href="/blog">Blog</a></li>
+								<li class="<?=$activeClass('about')?>"><a href="/about">About</a></li>
 							</ul>
 						</nav>
 

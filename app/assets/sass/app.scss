@@ -13,6 +13,10 @@ $main-font: 		'Quicksand', sans-serif;
 $main-transition: 	all ease-in-out 0.2s;
 $wrapper-padding: 	1rem;
 
+// Colors
+$warning-bg: 		#efe58b;
+$warning-fg:  		#5c540a;
+
 $clr-red: 			#d44848;	// #ff8a8a
 
 html, body {
@@ -31,6 +35,10 @@ html, body {
 a {
 	text-decoration: none;
 	color: $primary;
+
+	&.disabled {
+		color: #777;
+	}
 }
 a, button, input[type="button"], .hover {
 	transition: $main-transition;
@@ -807,6 +815,14 @@ input.full-width {
 	display: flex;
 }
 
+// Used to indicate if a field is in a dangerous state
+// and requires attention (e.g. post is public)
+.form-warning {
+	border-radius: 6px;
+	background: $warning-bg;
+	color: $warning-fg;
+}
+
 .form-inline {
 	label {
 		display: block;
@@ -835,6 +851,12 @@ input.full-width {
 	display: flex;
 	align-items: center;
     justify-content: space-between;
+}
+
+.form-bottom-buttom {
+	border-top: 1px dashed #ccc;
+	margin-top: 0.4em;
+	padding-top: 0.4em;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

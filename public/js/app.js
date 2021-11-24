@@ -28,6 +28,21 @@ window.toggleHamMenu = function (evt) {
     menu.classList.add('ham-expanded');
   }
 };
+/**
+ * Highlight a checkbox's parent element when the value is true.
+ * 
+ * @param  {[MouseEvent]} evt
+ * @return {void}
+ */
+
+
+window.highlightWarning = function (e) {
+  if (e.srcElement.checked) {
+    e.srcElement.parentNode.classList.add("form-warning");
+  } else {
+    e.srcElement.parentNode.classList.remove("form-warning");
+  }
+};
 
 /***/ }),
 
