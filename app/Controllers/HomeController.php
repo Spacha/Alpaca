@@ -29,7 +29,7 @@ class HomeController extends Controller
 			'title' 		=> 'Spacha — A nerd with attitude',
 			'active' 		=> 'home',
 			'slogan' 		=> self::SLOGANS[array_rand(self::SLOGANS)],
-			'recentPosts' 	=> $blogModel->recentTitles(),
+			'recentPosts' 	=> $blogModel->titles(5),
 			'topSection' 	=> true
 		], ['header', 'footer']);
 	}

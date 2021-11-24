@@ -10,16 +10,18 @@ class Blog extends Model
 {
 	use CachesMarkdown;
 
+	private $cacheName = "posts";
+
 	/**
 	 * List the recent (public) blog post titles to be shown on the front page.
 	 */
-	public function recentTitles(int $max = 4) : array
+	public function titles(int $max = 4, string $order = 'desc') : array
 	{
 		$query = $this->db->select(['id', 'title', 'created_at'])->from('posts')
 			->where('is_public', '1')
 			->limit($max);
 
-		return $query->orderBy('created_at', 'desc')->get();
+		return $query->orderBy('created_at', $order)->get();
 	}
 
 	/**
@@ -28,7 +30,6 @@ class Blog extends Model
 	public function add($data) : int
 	{
 		$this->updateMarkdownCache(69, $data['content']);
-		die();
 		$this->db->into('posts')->insert([
 			'title' 		=> $data['title'],
 			'content'		=> $data['content'],
@@ -39,7 +40,7 @@ class Blog extends Model
 		])->execute();
 		$postId = $this->db->lastInsertId();
 
-		//$this->updateMarkdownCache($postId, $data['content']);
+		$this->updateMarkdownCache($postId, $data['content']);
 		return $postId;
 	}
 

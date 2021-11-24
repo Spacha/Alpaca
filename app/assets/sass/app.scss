@@ -52,6 +52,13 @@ h3 {
 	color: #777;
 }
 
+blockquote {
+	background: #f0f1f4;
+	padding: 0.1em 1em;
+	border-left: 4px solid #e1e3eb;
+	color: #5b647c;
+}
+
 .primary-color {
 	color: $primary !important;
 }
@@ -595,7 +602,9 @@ ul.hover-list {
 		margin: 0;
 	}
 
-	pre {
+	/* General code style, inline code */
+	/*
+	code {
 		line-height: 0.7rem;
 		border-radius: 0.4rem;
 		background: #f4fbff;
@@ -603,12 +612,15 @@ ul.hover-list {
 		display: inline;
 		padding: 0 0.25rem;
 		overflow-x: auto;
-
-		&.multi {
-			padding: 1rem;
-			display: block;
-		}
 	}
+	*/
+
+	/* Code blocks */
+	pre>code, code.multi {
+			// padding: 1rem;
+			// display: block;
+	}
+
 }
 
 //
@@ -891,4 +903,11 @@ input.full-width {
 		text-decoration: line-through;
 		color: #bbb;
     }
+}
+
+pre[class*="language-"],code[class*="language-"] {
+	border-radius: 0.25em !important;
+}
+code[class*="language-"] {
+	font-size: 0.85em;
 }
