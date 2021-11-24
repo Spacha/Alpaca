@@ -61,6 +61,6 @@ class Log
 	 */
 	public static function filePath(string $log) : string
 	{
-		return dirname(PATH_ROOT).'/'.config('paths')['logs'].'/'.$log.'.log';
+		return app_path('logs', "{$log}.log");
 	}
 }
