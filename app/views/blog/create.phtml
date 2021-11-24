@@ -19,7 +19,8 @@
 					</div>
 					<div class="form-row">
 						<label for="content">Content</label>
-						<textarea id="content" name="content" placeholder="Write some content..." style="min-height: 20rem;"></textarea><br/>
+						<textarea id="content" name="content" placeholder="Write some content..." style="min-height: 20rem;" onKeyDown="captureTab(event)"></textarea>
+						<span class="form-note">Markdown help: <a href="https://daringfireball.net/projects/markdown/syntax" target="_blank">https://daringfireball.net/projects/markdown/syntax</a></span>
 					</div>
 					<div class="form-row form-row-inline">
 						<label for="category_id" style="width: 7.5rem;">Category</label>
@@ -37,7 +38,7 @@
 					</div>
 					<div class="form-row form-row-inline">
 						<label for="is_public" style="width: 7.5rem;">Set public</label>
-						<input type="checkbox" id="is_public" name="is_public" value="1" class="" />
+						<input type="checkbox" id="is_public" name="is_public" value="1" class="" onChange="highlightWarning(event)"/>
 					</div>
 					<div class="form-row-inline text-right form-bottom-buttom">
 						<button class="btn btn-primary" type="submit">Save</button>

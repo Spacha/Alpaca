@@ -1,9 +1,13 @@
 <?php
+function titlePrefix() : string
+{
+	return config('app')['name'] . " &ndash; "; 
+}
 function makeTitle($active = "") : string
 {
 	$title = config('app')['name'];
 	if (strlen($active))
-		$title .= " &ndash; " . ucfirst($active);
+		$title = titlePrefix() . ucfirst($active);
 	return $title;
 }
 

@@ -811,8 +811,55 @@ input.full-width {
 	}
 }
 
+.form-note {
+	font-size: 0.8em;
+	padding: 0.4em;
+}
+
 .form-right {
 	display: flex;
+}
+
+.input-group {
+	display: flex;
+	align-items: stretch;
+	width: 100%;
+
+	/*
+	Example pf use:
+		<div class="input-group input-group-prepend">
+			<div class="input-group-prepend">
+				<input type="checkbox" id="use-url-prefix"  />
+				<label for="use-url-prefix"><?=titlePrefix()?></label>
+			</div>
+			<input type="text" id="title" name="title" placeholder="Title" class="" />
+		</div>
+	 */
+	&.input-group-prepend {
+		input,select,textarea {
+			border-top-left-radius: 0;
+			border-bottom-left-radius: 0;
+			flex-grow: 1;
+		}
+
+		div.input-group-prepend {
+			border-radius: 6px;
+			padding: 0.6rem 0.8rem;
+			border: 1px solid #ccc;
+			border-top-right-radius: 0;
+			border-bottom-right-radius: 0;
+			margin-right: -2px;
+
+			background: #efefef;
+			color: #777;
+
+			label {
+				display: inline-block;
+				font-weight: normal;
+				padding: 0;
+			}
+		}
+	}
 }
 
 // Used to indicate if a field is in a dangerous state
@@ -854,7 +901,7 @@ input.full-width {
 }
 
 .form-bottom-buttom {
-	border-top: 1px dashed #ccc;
+	border-top: 1px solid #eee;
 	margin-top: 0.4em;
 	padding-top: 0.4em;
 }

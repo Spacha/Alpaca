@@ -26,10 +26,28 @@ window.toggleHamMenu = evt => {
  * @param  {[MouseEvent]} evt
  * @return {void}
  */
-window.highlightWarning = (e) => {
-	if (e.srcElement.checked) {
-		e.srcElement.parentNode.classList.add("form-warning")
+window.highlightWarning = evt => {
+	if (evt.srcElement.checked) {
+		evt.srcElement.parentNode.classList.add("form-warning");
 	} else {
-		e.srcElement.parentNode.classList.remove("form-warning")
+		evt.srcElement.parentNode.classList.remove("form-warning");
+	}
+}
+
+/**
+ * Highlight a checkbox's parent element when the value is true.
+ * @see https://stackoverflow.com/a/32523641
+ * @param  {[MouseEvent]} evt
+ * @return {void}
+ */
+window.captureTab = evt => {
+	// handle tab press
+	if(evt.keyCode === 9){
+		evt.preventDefault();
+		let el = evt.srcElement;
+		let v = el.value, s = el.selectionStart, e = el.selectionEnd;
+		el.value = v.substring(0, s)+'\t'+v.substring(e);
+		el.selectionStart = el.selectionEnd = s + 1;
+		return false;
 	}
 }

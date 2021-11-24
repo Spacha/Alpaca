@@ -16,7 +16,7 @@ return [
 	// Static
 
 	'&:'										=> 'HomeController@home',
-	'&: about'									=> 'HomeController@about',
+	//'&: about'									=> 'HomeController@about',
 	
 	// Users
 
@@ -29,13 +29,13 @@ return [
 	// Blog
 
 	'&: blog'									=> 'BlogController@list',
-	'&: blog/{postId}'							=> 'BlogController@view',
 	'&: blog/create'							=> 'BlogController@create',
+	'$: blog/add'								=> 'BlogController@add',
+	'&: blog/{postId}'							=> 'BlogController@view',
 	'&: blog/{postId}/edit'						=> 'BlogController@edit',
 	'$: blog/{postId}/update'					=> 'BlogController@update',
 	'&: blog/{postId}/delete'					=> 'BlogController@delete',
 	'&: blog/{postId}/update-publicity'			=> 'BlogController@updatePublicity',
-	'$: blog/add'								=> 'BlogController@add',
 
 	// Authentication
 
@@ -50,13 +50,13 @@ return [
 	// Pages
 
 	'&: secret/pages'							=> 'PageController@list',
-	'&: secret/pages/{pageId}'					=> 'PageController@view',
 	'&: secret/pages/create'					=> 'PageController@create',
+	'$: secret/pages/add'						=> 'PageController@add',
+	'&: secret/pages/{pageId}'					=> 'PageController@view',
 	'&: secret/pages/{pageId}/edit'				=> 'PageController@edit',
 	'$: secret/pages/{pageId}/update'			=> 'PageController@update',
 	'&: secret/pages/{pageId}/delete'			=> 'PageController@delete',
 	'&: secret/pages/{pageId}/update-publicity'	=> 'PageController@updatePublicity',
-	'$: secret/pages/add'						=> 'PageController@add',
 
 	// Secret
 	
@@ -72,4 +72,7 @@ return [
 	'&: secret/todo-list/{todoId}/update-status'=> 'SecretController@updateTodoStatus',
 	'&: secret/todo-list/{todoId}/delete'		=> 'SecretController@deleteTodo',
 	'&: secret/settings'						=> 'SecretController@settings',
+
+	// Wildcard for pages
+	'&: {url}' 									=> 'PageController@viewLive',
 ];

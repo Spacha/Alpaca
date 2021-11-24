@@ -29,7 +29,7 @@ class Blog extends Model
 	 */
 	public function add($data) : int
 	{
-		$this->db->into('posts')->insert([
+		$success = $this->db->into('posts')->insert([
 			'title' 		=> $data['title'],
 			'content'		=> $data['content'],
 			'author_id' 	=> $data['author_id'],
@@ -39,7 +39,8 @@ class Blog extends Model
 		])->execute();
 		$postId = $this->db->lastInsertId();
 
-		$this->updateMarkdownCache($postId, $data['content']);
+		if ($success)
+			$this->updateMarkdownCache($postId, $data['content']);
 		return $postId;
 	}
 
@@ -53,7 +54,8 @@ class Blog extends Model
 			->where('id', $postId)
 			->execute();
 
-		$this->updateMarkdownCache($postId, $data['content']);
+		if ($success && array_key_exists('content', $data))
+			$this->updateMarkdownCache($postId, $data['content']);
 		return $success;
 	}
 
@@ -84,7 +86,8 @@ class Blog extends Model
 			->where('posts.id', $postId)
 			->first();
 
-		$post->contentHtml = $this->getMarkdownCache($postId);
+		if (!empty($post))
+			$post->contentHtml = $this->getMarkdownCache($postId);
 		return $post;
 	}
 

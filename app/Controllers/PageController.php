@@ -49,6 +49,21 @@ class PageController extends Controller
 		return new View('pages.view', ['page' => $page], self::SNIPPETS);
 	}
 
+	public function viewLive(Request $request, $url)
+	{
+		$page = $this->model->view($url, true);
+
+		// page does not exist or is not public
+		if (strlen($url) == 0 || !$page || (!$page->is_public && !Authenticator::loggedIn()))
+			throw new NotFound("Page id not found");
+
+		return new View('pages.view-live', [
+			'title' => $page->title,
+			'active' => $page->url,
+			'page' => $page
+		], ['header', 'footer']);
+	}
+
 	public function create()
 	{
 		return new View('pages.create', [], self::SNIPPETS);
@@ -69,48 +84,47 @@ class PageController extends Controller
 
 	public function add(Request $request)
 	{
-		$authUser = Authenticator::user();
-
 		$id = $this->model->add([
+			'header' 		=> $request->data('header'),
 			'title' 		=> $request->data('title'),
 			'content' 		=> $request->data('content'),
-			'author_id' 	=> (int)$authUser['id'],
 			'is_public' 	=> ($request->data('is_public') == '1') ? '1' : '0',
-			'category_id' 	=> $request->data('category_id')
+			'url' 			=> $request->data('url')
 		]);
 
 		if ($id > 0)
-			redirect("/pages/{$id}");
+			redirect("/secret/pages/{$id}");
 
-		redirect("/pages/create");
+		redirect("/secret/pages/create");
 	}
 
-	public function update(Request $request, $postId)
+	public function update(Request $request, $pageId)
 	{
-		$this->model->update($postId, [
+		$this->model->update($pageId, [
+			'header' 		=> $request->data('header'),
 			'title' 		=> $request->data('title'),
 			'content' 		=> $request->data('content'),
 			'is_public' 	=> ($request->data('is_public') == '1') ? '1' : '0',
-			'category_id' 	=> $request->data('category_id')
+			'url' 			=> $request->data('url')
 		]);
 
-		redirect("/blog/{$postId}");
+		redirect("/secret/pages/{$pageId}");
 	}
 
-	public function updatePublicity(Request $request, $postId)
+	public function updatePublicity(Request $request, $pageId)
 	{
-		$isPublic = $this->model->isPublic($postId);
+		$isPublic = $this->model->isPublic($pageId);
 
-		$this->model->update($postId, [
+		$this->model->update($pageId, [
 			'is_public' => ($isPublic == '1') ? '0' : '1'
 		]);
 
-		redirect("/blog");
+		redirect("/secret/pages");
 	}
 
-	public function delete(Request $request, $postId)
+	public function delete(Request $request, $pageId)
 	{
-		$this->model->delete($postId);
+		$this->model->delete($pageId);
 
 		redirect("/blog");
 	}

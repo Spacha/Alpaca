@@ -13,7 +13,7 @@
 			<section class="form">
 				<form action='/secret/pages/<?=$page->id?>/update' method='POST'>
 					<div class="form-row">
-						<label for="title">Header</label>
+						<label for="header">Header</label>
 						<input type="text" id="header" name="header" placeholder="Header" class="" value="<?=$page->header?>" />
 					</div>
 					<div class="form-row">
@@ -21,14 +21,15 @@
 						<input type="text" id="title" name="title" placeholder="Title" class="" value="<?=$page->title?>" />
 					</div>
 					<div class="form-row">
-						<label for="title">Url</label>
-						<input type="text" id="title" name="title" placeholder="Title" class="" value="<?=$page->url?>" />
+						<label for="url">Url</label>
+						<input type="text" id="url" name="url" placeholder="Url" class="" value="<?=$page->url?>" />
 					</div>
 					<div class="form-row">
 						<label for="content">Content</label>
-						<textarea id="content" name="content" placeholder="Write some content..." style="min-height: 20rem;"><?=$page->content?></textarea>
+						<textarea id="content" name="content" placeholder="Write some content..." style="min-height: 20rem;" onKeyDown="captureTab(event)"><?=$page->content?></textarea>
+						<span class="form-note">Markdown help: <a href="https://daringfireball.net/projects/markdown/syntax" target="_blank">https://daringfireball.net/projects/markdown/syntax</a></span>
 					</div>
-					<div class="form-row form-row-inline">
+					<div class="form-row form-row-inline<?=($page->is_public ? ' form-warning' : '')?>">
 						<label for="is_public" style="width: 7.5rem;">Set public</label>
 						<input type="checkbox" id="is_public" name="is_public" value="1" class="" <?=($page->is_public ? "checked" : "")?> onChange="highlightWarning(event)"/>
 					</div>

@@ -152,7 +152,9 @@ class RouteMatcher
 					$param = $param[0];
 				}
 
+				// the first matching route is always taken as an action
 				$result = $this->buildAction($action, $params ?? []);
+				break;
 			}
 		}
 

@@ -17,7 +17,7 @@ class Page extends Model
 	 */
 	public function add($data) : int
 	{
-		$this->db->into('posts')->insert([
+		$success = $this->db->into('pages')->insert([
 			'header'		=> $data['header'],
 			'url'			=> $data['url'],
 			'title' 		=> $data['title'],
@@ -27,7 +27,8 @@ class Page extends Model
 		])->execute();
 		$pageId = $this->db->lastInsertId();
 
-		$this->updateMarkdownCache($pageId, $data['content']);
+		if ($success)
+			$this->updateMarkdownCache($pageId, $data['content']);
 		return $pageId;
 	}
 
@@ -43,7 +44,8 @@ class Page extends Model
 			->where('id', $pageId)
 			->execute();
 
-		$this->updateMarkdownCache($pageId, $data['content']);
+		if ($success && array_key_exists('content', $data))
+			$this->updateMarkdownCache($pageId, $data['content']);
 		return $success;
 	}
 
@@ -60,15 +62,18 @@ class Page extends Model
 
 	/**
 	 * Show details of a page.
+	 * Either a page id or url can be used as a key.
 	 */
-	public function view(int $pageId)
+	public function view($pageIdOrUrl, bool $useUrl = false)
 	{
+		$primaryColumn = $useUrl ? 'url' : 'id';
 		$page = $this->db->select(['id', 'header', 'url', 'title', 'is_public', 'content', 'created_at'])
 			->from('pages')
-			->where('id', $pageId)
+			->where($primaryColumn, $pageIdOrUrl)
 			->first();
 
-		$page->contentHtml = $this->getMarkdownCache($pageId);
+		if (!empty($page))
+			$page->contentHtml = $this->getMarkdownCache($page->id);
 		return $page;
 	}
 
