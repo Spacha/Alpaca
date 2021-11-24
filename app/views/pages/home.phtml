@@ -18,39 +18,39 @@
 
 			<ul class="resource-list hover-list full-width">
 				<?php if (count($pages) == 0): ?>
-				<li class="non-interactable text-center">No posts at the moment.</li>
+				<li class="non-interactable text-center">No pages, yet.</li>
 				<?php endif; ?>
 				<?php foreach ($pages as $page): ?>
-					<li>
-						<!-- Administrate -->
-						<div class="resource-list-leftie">
-							<input
-								type="checkbox"
-								name="is_public"
-								value="1"
-								onChange="updatePublicity(event, <?=$page->id?>, '<?=addslashes($page->title)?>', <?=$page->is_public?>)"
-								<?=($page->is_public ? "checked" : "")?>/>
-						</div>
+				<li>
+					<!-- Administrate -->
+					<div class="resource-list-leftie">
+						<input
+							type="checkbox"
+							name="is_public"
+							value="1"
+							onChange="updatePublicity(event, <?=$page->id?>, '<?=addslashes($page->title)?>', <?=$page->is_public?>)"
+							<?=($page->is_public ? "checked" : "")?>/>
+					</div>
 
-						<a href='/secret/pages/<?=$page->id?>'><?=$page->title?></a>
-						
-						<!-- Administrate -->
-						<span class="pull-right">
-							<a
-								class="mr-05"
-								href="/secret/pages/<?=$page->id?>/edit"
-							>
-								<i class="fas fa-pen"></i>
-							</a>
+					<a href='/secret/pages/<?=$page->id?>'><?=$page->title?></a>
+					
+					<!-- Administrate -->
+					<span class="pull-right">
+						<a
+							class="mr-05"
+							href="/secret/pages/<?=$page->id?>/edit"
+						>
+							<i class="fas fa-pen"></i>
+						</a>
 
-							<a
-								href="/blog/<?=$page->id?>/delete"
-								onClick="confirmDelete(event, <?=$page->id?>, '<?=$page->title?>')"
-							>
-								<i class="fas fa-trash"></i>
-							</a>
-						</span>
-					</li>
+						<a
+							href="/blog/<?=$page->id?>/delete"
+							onClick="confirmDelete(event, <?=$page->id?>, '<?=$page->title?>')"
+						>
+							<i class="fas fa-trash"></i>
+						</a>
+					</span>
+				</li>
 				<?php endforeach; ?>
 			</ul>
 
