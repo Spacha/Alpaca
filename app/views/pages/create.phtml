@@ -8,7 +8,7 @@ function autoFillUrl(evt)
 
 	// only autofill if the url is currently empty
 	if (urlEl.value.length == 0) {
-		urlEl.value = el.value.toLowerCase().replace(' ', '-')
+		urlEl.value = el.value.toLowerCase().replaceAll(' ', '-')
 	}
 }
 </script>

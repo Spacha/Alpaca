@@ -126,6 +126,6 @@ class PageController extends Controller
 	{
 		$this->model->delete($pageId);
 
-		redirect("/blog");
+		redirect("/secret/pages");
 	}
 }

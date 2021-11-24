@@ -7,6 +7,8 @@
 			<heading class="page-heading">
 				<h1><?=$page->header?></h1>
 			</heading>
+
+			<?php if($auth->loggedIn()): ?>
 			<div class="post-tools">
 				<div>
 					<a href="/<?=$page->url?>" target="_blank">
@@ -20,18 +22,17 @@
 					</a>
 				</div>
 			</div>
+			<?php endif ?>
+			
+			<?=$page->contentHtml?>
 
-			<div class="blog--post">
-				<?=$page->contentHtml?>
-
-				<p class="text-center mt-2"><a href="/blog"><i class="far fa-hand-point-left"></i> Return</a></p>
-			</div>
 		</div>
 	</article>
 </main>
 
 <?=$snippets['footer']?>
 
+<??>
 <script>
 	function confirmDelete(evt, id, title)
 	{
