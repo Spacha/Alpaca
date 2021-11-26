@@ -31,12 +31,15 @@ Class Core
 
 	/**
 	 * Tells if the app is currently set to run in production environment.
+	 * For security reasons, this is true "more often than it should".
+	 * The application is assumed to be in production unless
+	 * it specifically is in 'development' mode.
 	 *
 	 * @return bool
 	 */
 	public static function inProduction() : bool
 	{
-		return config('app')['env'] == 'production';
+		return !self::inDevelopment();
 	}
 
 	/**
