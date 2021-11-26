@@ -6256,6 +6256,10 @@ h2.bottom-border {
   padding-bottom: 0.4em;
 }
 
+article img {
+  max-width: 100%;
+}
+
 .empty-list {
   text-align: center;
   padding: 2em 0;
@@ -6647,7 +6651,7 @@ ul.hover-list li:not(.non-interactable):hover {
 }
 .blog--post h1, .blog--post h2, .blog--post h3, .blog--post h4 {
   color: #333;
-  margin: 0;
+  margin: 2.25rem 0 1rem 0;
 }
 .btn {
   display: inline-block;
