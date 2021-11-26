@@ -26,10 +26,14 @@ class ExceptionHandler
 
 	/**
 	 * Exception handler that catches exceptions and redirects them accordingly.
+	 *
+	 * @param Throwable $e 	Throwable caught by the error handler.
+	 *                      Contains the exception.
+	 * @return 
 	 */
 	public function handler(Throwable $e)
 	{
-		$env = config('app')['env'];
+		$env = config('app')['env'] ?? 'production';
 
 		$errCode = $e->getCode();
 		$errName = $e->name ?? "Internal Server Error";
@@ -56,7 +60,7 @@ class ExceptionHandler
 			echo "{$trace}<hr>";
 		}
 
-		if (config('app')['log_errors'])
+		if (config('app')['log_errors'] && $this->isLoggable($errCode))
 			ErrorLog::write($e);
 
 		if ($env == 'production') {
@@ -69,15 +73,20 @@ class ExceptionHandler
 				'errorDescription' 	=> $errDescription
 			], ['header', 'footer']);
 
-			/*
-			if (View::exists("_errors.{$code}")) {
-				return new View("_errors.{$code}");
-			} else {
-				return new View("_errors.default");
-			}
-			*/
 		}
 
 		die();
+	}
+
+	/**
+	 * Returns whether the error should be logged or not. Generally only
+	 * server errors (500 - 599) should be logged.
+	 * 
+	 * @param int $errCode 	The HTTP error code.
+	 * @param bool
+	 */
+	protected function isLoggable(int $errCode) : bool
+	{
+		return (500 <= $errCode) && ($errCode <= 599);
 	}
 }
