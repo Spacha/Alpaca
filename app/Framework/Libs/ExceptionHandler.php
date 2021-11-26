@@ -33,7 +33,7 @@ class ExceptionHandler
 	 */
 	public function handler(Throwable $e)
 	{
-		$env = config('app')['env'] ?? 'production';
+		$inProduction = Core::inProduction();
 
 		$errCode = $e->getCode();
 		$errName = $e->name ?? "Internal Server Error";
@@ -48,7 +48,7 @@ class ExceptionHandler
 		HttpResponse::setStatus($errCode);
 
 		// Show details if in development environment
-		if ($env == 'development') {
+		if (!$inProduction) {
 			$trace = "
 				<div style='padding: 1rem;'>
 					In File <span style='font-size: 110%; font-weight: bold;'>".$e->getFile()."</span> on line <span style='font-size: 110%; font-weight: bold;'>".$e->getLine()."</span>
@@ -63,7 +63,7 @@ class ExceptionHandler
 		if (config('app')['log_errors'] && $this->isLoggable($errCode))
 			ErrorLog::write($e);
 
-		if ($env == 'production') {
+		if ($inProduction) {
 
 			// show an error view
 			return new View("_errors.default", [
