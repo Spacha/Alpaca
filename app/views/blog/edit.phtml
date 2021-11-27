@@ -36,9 +36,9 @@
 							<?php endif; ?>
 						</select>
 					</div>
-					<div class="form-row form-row-inline">
+					<div class="form-row form-row-inline<?=($post->is_public ? ' form-warning' : '')?>">
 						<label for="is_public" style="width: 7.5rem;">Set public</label>
-						<input type="checkbox" id="is_public" name="is_public" value="1" class="" <?=($post->is_public ? "checked" : "")?> />
+						<input type="checkbox" id="is_public" name="is_public" value="1" class="" <?=($post->is_public ? "checked" : "")?> onChange="highlightWarning(event)" />
 					</div>
 					<div class="form-row-inline text-right form-bottom-buttom">
 						<button class="btn btn-primary" type="submit">Save</button>

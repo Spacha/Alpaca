@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Framework\Exceptions\RoutingException as NotFound;
+use App\Framework\Logs\ActivityLog as Log;
 use App\Framework\Libs\{
 	Auth\AuthMiddleware,
 	Auth\Authenticator,
@@ -27,6 +28,11 @@ class PageController extends Controller
 			new Page(),
 			new AuthMiddleware($this->requiresAuth)
 		);
+	}
+
+	public function afterMiddleware() : void
+	{
+		$this->user = Authenticator::user();
 	}
 
 	public function list()
@@ -92,21 +98,27 @@ class PageController extends Controller
 			'url' 			=> $request->data('url')
 		]);
 
-		if ($id > 0)
+		if ($id > 0) {
+			Log::write("User [{$this->user['id']}] CREATED a page [{$id}].");
 			redirect("/secret/pages/{$id}");
+		}
 
 		redirect("/secret/pages/create");
 	}
 
 	public function update(Request $request, $pageId)
 	{
-		$this->model->update($pageId, [
+		$success = $this->model->update($pageId, [
 			'header' 		=> $request->data('header'),
 			'title' 		=> $request->data('title'),
 			'content' 		=> $request->data('content'),
 			'is_public' 	=> ($request->data('is_public') == '1') ? '1' : '0',
 			'url' 			=> $request->data('url')
 		]);
+
+		if ($success) {
+			Log::write("User [{$this->user['id']}] EDITED a page [{$pageId}].");
+		}
 
 		redirect("/secret/pages/{$pageId}");
 	}
@@ -124,7 +136,10 @@ class PageController extends Controller
 
 	public function delete(Request $request, $pageId)
 	{
-		$this->model->delete($pageId);
+		$success = $this->model->delete($pageId);
+
+		if ($success)
+			Log::write("User [{$this->user['id']}] DELETED a blog post [{$postId}].");
 
 		redirect("/secret/pages");
 	}
