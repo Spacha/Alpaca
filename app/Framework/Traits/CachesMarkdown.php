@@ -30,7 +30,7 @@ trait CachesMarkdown
 	/**
 	 * Delete specified cache.
 	 */
-	protected static function deleteMarkdownCache(int $id) : bool
+	protected function deleteMarkdownCache(int $id) : bool
 	{
 		$cachePath = $this->cachePath($id);
 
