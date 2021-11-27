@@ -15,4 +15,15 @@ abstract class Controller
 		$this->model = $model;
 		$this->middleware = $middleware;
 	}
+
+	/**
+	 * Called after middleware has run, so any middlewre-dependent
+	 * initialization logic can be done here.
+	 *
+	 * @return void
+	 */
+	public function afterMiddleware() : void
+	{
+		return;
+	}
 }

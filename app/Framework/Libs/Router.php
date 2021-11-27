@@ -47,9 +47,11 @@ class Router
 		// Check controller middleware if there is one
 		$this->runMiddleware($controller);
 
-		$arguments = $this->getArguments();
+		// Call controller's after middleware handler
+		$controller->afterMiddleware();
 
 		// Call the action
+		$arguments = $this->getArguments();
 		call_user_func_array([$controller, $this->method], $arguments);
 	}
 
