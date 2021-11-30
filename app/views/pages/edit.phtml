@@ -26,7 +26,16 @@
 					</div>
 					<div class="form-row">
 						<label for="content">Content</label>
-						<textarea id="content" name="content" placeholder="Write some content..." style="min-height: 20rem;" onKeyDown="captureTab(event)"><?=$page->content?></textarea>
+						<div id="edit-content" class="input-group input-group-prepend prepend-horizontal">
+							<div class="input-group-prepend" style="z-index: 2;">
+								<ul class="form-toolbar">
+									<li><a href="#edit-content" class="active"><i class="fa fa-pen"></i> Edit</a></li>
+									<li><a href="/secret/pages/<?=$page->id?>/edit/preview"><i class="fa fa-eye"></i> Preview</a></li>
+									<li class="form-toolbar-right"><a href=""><i class="fa fa-file-upload"></i> Uploads</a></li>
+								</ul>
+							</div>
+							<textarea id="content" name="content" placeholder="Write some content..." style="min-height: 45rem; z-index: 1;" onKeyDown="captureTab(event)"><?=$page->content?></textarea>
+						</div>
 						<span class="form-note">Markdown help: <a href="https://daringfireball.net/projects/markdown/syntax" target="_blank">https://daringfireball.net/projects/markdown/syntax</a></span>
 					</div>
 					<div class="form-row form-row-inline<?=($page->is_public ? ' form-warning' : '')?>">

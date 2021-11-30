@@ -841,8 +841,6 @@ input.full-width {
 	 */
 	&.input-group-prepend {
 		input,select,textarea {
-			border-top-left-radius: 0;
-			border-bottom-left-radius: 0;
 			flex-grow: 1;
 		}
 
@@ -850,17 +848,45 @@ input.full-width {
 			border-radius: 6px;
 			padding: 0.6rem 0.8rem;
 			border: 1px solid #ccc;
-			border-top-right-radius: 0;
-			border-bottom-right-radius: 0;
-			margin-right: -2px;
 
-			background: #efefef;
+			// background: #efefef;
+			background: #fff;
 			color: #777;
 
 			label {
 				display: inline-block;
 				font-weight: normal;
 				padding: 0;
+			}
+		}
+
+		&:not(.prepend-horizontal) {
+			flex-direction: row;
+
+			input,select,textarea {
+				border-top-left-radius: 0;
+				border-bottom-left-radius: 0;
+			}
+
+			div.input-group-prepend {
+				border-top-right-radius: 0;
+				border-bottom-right-radius: 0;
+				margin-right: -2px;
+			}
+		}
+
+		&.prepend-horizontal {
+			flex-direction: column;
+
+			input,select,textarea {
+				border-top-left-radius: 0;
+				border-top-right-radius: 0;
+			}
+
+			div.input-group-prepend {
+				border-bottom-left-radius: 0;
+				border-bottom-right-radius: 0;
+				margin-bottom: -2px;
 			}
 		}
 	}
@@ -908,6 +934,36 @@ input.full-width {
 	border-top: 1px solid #eee;
 	margin-top: 0.4em;
 	padding-top: 0.4em;
+}
+
+ul.form-toolbar {
+	margin: 0 -0.8rem;
+	padding: 0;
+	list-style-type: none;
+	display: flex;
+
+	li {
+		display: inline-block;
+
+		a {
+			padding: 0.6em 0.8rem;
+
+			&.active {
+				color: #fff;
+				background: #337aaf;
+				border: 1px solid #000;
+				margin-left: -1px;
+			}
+		}
+
+		&:first-child a.active {
+			border-top-left-radius: 0.4rem;
+		}
+
+		&.form-toolbar-right {
+			margin-left: auto;
+		}
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////
