@@ -40,7 +40,8 @@ class PageController extends Controller
 		$pages = $this->model->list();
 
 		return new View('pages.home', [
-			'pages' => $pages
+			'pages' => $pages,
+			'active' => 'pages'
 		], self::SNIPPETS);
 	}
 
@@ -52,7 +53,7 @@ class PageController extends Controller
 		if (!$page || (!$page->is_public && !Authenticator::loggedIn()))
 			throw new NotFound("Page id '{$pageId}' not found");
 
-		return new View('pages.view', ['page' => $page], self::SNIPPETS);
+		return new View('pages.view', ['page' => $page, 'active' => 'pages'], self::SNIPPETS);
 	}
 
 	public function viewLive(Request $request, $url)

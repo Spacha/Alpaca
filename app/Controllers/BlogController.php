@@ -97,7 +97,6 @@ class BlogController extends Controller
 
 	public function update(Request $request, $postId)
 	{
-
 		$success = $this->model->update($postId, [
 			'title' 		=> $request->data('title'),
 			'content' 		=> $request->data('content'),
