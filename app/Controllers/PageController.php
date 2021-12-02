@@ -16,8 +16,10 @@ use App\Models\Page;
 
 class PageController extends Controller
 {
+	// only 'viewLive' is public
 	protected $requiresAuth = [
-		'create', 'edit', 'add', 'update', 'updatePublicity', 'delete', 'list'
+		'list', 'view', 'create', 'edit', 'add',
+		'update', 'updatePublicity', 'delete'
 	];
 
 	const SNIPPETS = ['header', 'footer', 'secret-toolbar'];
