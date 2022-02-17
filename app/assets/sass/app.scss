@@ -1,4 +1,8 @@
+// TODO: is this the way?
 @import url('https://fonts.googleapis.com/css?family=Quicksand:400,700');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
+
+// Font Awesome icons
 @import '~@fortawesome/fontawesome-free/scss/fontawesome.scss';
 @import '~@fortawesome/fontawesome-free/scss/solid.scss';
 @import '~@fortawesome/fontawesome-free/scss/regular.scss';
@@ -10,6 +14,7 @@
 $primary:			#337aaf;
 $secondary:			#000000;
 $main-font: 		'Quicksand', sans-serif;
+$edit-content-font: 'Roboto Mono', monospace;
 $main-transition: 	all ease-in-out 0.2s;
 $wrapper-padding: 	1rem;
 
@@ -815,6 +820,17 @@ input.full-width {
 	}
 }
 
+// A textrea within .edit-content is used in blogs,
+// page edits and others where large text
+// areas are used for content editing.
+.edit-content textarea {
+	font-family: $edit-content-font;
+	font-size: 0.85rem;
+	color: #3c3c3c;
+}
+
+// A small note that can be added below input
+// fields for help or footnoting.
 .form-note {
 	font-size: 0.8em;
 	padding: 0.4em;
