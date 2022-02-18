@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Framework\Libs\Auth\RequiresAuth;
 use App\Framework\Libs\Auth\AuthMiddleware;
 use App\Framework\Libs\{
+	Validator as Validate,
 	Controller,
 	Request,
 	View
@@ -105,6 +106,7 @@ class SecretController extends Controller
 
 	public function updateTodoStatus(Request $request, $todoId)
 	{
+		Validate::integer($todoId);
 		$isDone = $this->model->isDone($todoId);
 
 		$this->model->update($todoId, [
@@ -116,6 +118,7 @@ class SecretController extends Controller
 
 	public function deleteTodo(Request $request, $todoId)
 	{
+		Validate::integer($todoId);
 		$this->model->delete($todoId);
 
 		redirect("/secret/todo-list");

@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Framework\Exceptions\RoutingException as NotFound;
 use App\Framework\Logs\ActivityLog as Log;
 use App\Framework\Libs\{
+	Validator as Validate,
 	Auth\AuthMiddleware,
 	Auth\Authenticator,
 	Controller,
@@ -49,6 +50,7 @@ class PageController extends Controller
 
 	public function view(Request $request, $pageId)
 	{
+		Validate::integer($pageId);
 		$page = $this->model->view($pageId);
 
 		// page does not exist or is not public
@@ -80,6 +82,7 @@ class PageController extends Controller
 
 	public function edit(Request $request, $pageId)
 	{
+		Validate::integer($pageId);
 		$page = $this->model->view($pageId);
 
 		if (!$page)
@@ -111,6 +114,8 @@ class PageController extends Controller
 
 	public function update(Request $request, $pageId)
 	{
+		Validate::integer($pageId);
+
 		$success = $this->model->update($pageId, [
 			'header' 		=> $request->data('header'),
 			'title' 		=> $request->data('title'),
@@ -128,6 +133,7 @@ class PageController extends Controller
 
 	public function updatePublicity(Request $request, $pageId)
 	{
+		Validate::integer($pageId);
 		$isPublic = $this->model->isPublic($pageId);
 
 		$this->model->update($pageId, [
@@ -139,6 +145,7 @@ class PageController extends Controller
 
 	public function delete(Request $request, $pageId)
 	{
+		Validate::integer($pageId);
 		$success = $this->model->delete($pageId);
 
 		if ($success)

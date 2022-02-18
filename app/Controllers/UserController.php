@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Framework\Exceptions\RoutingException as NotFound;
 use App\Framework\Logs\ActivityLog;
 use App\Framework\Libs\{
+	Validator as Validate,
 	Auth\AuthMiddleware,
 	Auth\Authenticator,
 	Controller,
@@ -38,6 +39,8 @@ class UserController extends Controller
 
 	public function view(Request $request, $userId)
 	{
+		Validate::integer($userId);
+
 		$user = $this->model->view($userId);
 
 		// user not found

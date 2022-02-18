@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Framework\Exceptions\RoutingException as NotFound;
 use App\Framework\Logs\ActivityLog as Log;
 use App\Framework\Libs\{
+	Validator as Validate,
 	Auth\AuthMiddleware,
 	Auth\Authenticator,
 	Controller,
@@ -49,6 +50,8 @@ class BlogController extends Controller
 
 	public function view(Request $request, $postId)
 	{
+		Validate::integer($postId);
+
 		$post = $this->model->view($postId);
 
 		// post does not exist or is not public
@@ -65,6 +68,8 @@ class BlogController extends Controller
 
 	public function edit(Request $request, $postId)
 	{
+		Validate::integer($postId);
+
 		$post = $this->model->view($postId);
 
 		if (!$post)
@@ -97,6 +102,8 @@ class BlogController extends Controller
 
 	public function update(Request $request, $postId)
 	{
+		Validate::integer($postId);
+
 		$success = $this->model->update($postId, [
 			'title' 		=> $request->data('title'),
 			'content' 		=> $request->data('content'),
@@ -113,6 +120,7 @@ class BlogController extends Controller
 
 	public function updatePublicity(Request $request, $postId)
 	{
+		Validate::integer($postId);
 		$isPublic = $this->model->isPublic($postId);
 
 		$this->model->update($postId, [
@@ -124,6 +132,7 @@ class BlogController extends Controller
 
 	public function delete(Request $request, $postId)
 	{
+		Validate::integer($postId);
 		$success = $this->model->delete($postId);
 
 		if ($success)
