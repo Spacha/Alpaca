@@ -1,0 +1,49 @@
+<?=$snippets['header']?>
+
+<main class="page-content">
+	<article>
+		<div class="wrapper">
+
+			<heading class="page-heading">
+				<h1 class="breadcrumb">
+					<a href="/blog">Blog</a> <span class="breadcrumb-separator">/</span> <?=$post->title?>
+				</h1>
+			</heading>
+			<?php if($auth->loggedIn()): ?>
+			<div class="post-tools">
+				<div><a href="/blog/<?=$post->id?>/edit"><i class="fas fa-edit"></i> Edit</a></div>
+				<div>
+					<a href="/blog/<?=$post->id?>/delete" onClick="confirmDelete(event, <?=$post->id?>, '<?=$post->title?>')">
+						<i class="fas fa-trash"></i> Delete
+					</a>
+				</div>
+			</div>
+			<?php endif; ?>
+			<p class="blog--author"><span>by <?=$post->author?> <?=$post->created_at?></span></p>
+
+			<div class="blog--post">
+				<?=$post->contentHtml?>
+
+				<p class="text-center mt-2"><a href="/blog"><i class="far fa-hand-point-left"></i> Return</a></p>
+			</div>
+		</div>
+	</article>
+</main>
+
+<?=$snippets['footer']?>
+
+<?php if($auth->loggedIn()): ?>
+<script>
+	function confirmDelete(evt, id, title)
+	{
+		evt.preventDefault();
+		let sure = confirm(`Are you sure you want to delete post: "${title}"?`);
+
+		if (sure) {
+			window.location.href = `/blog/${id}/delete`;
+		}
+
+		return false;
+	}
+</script>
+<?php endif; ?>

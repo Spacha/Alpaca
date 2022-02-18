@@ -1,0 +1,67 @@
+<?=$snippets['header']?>
+
+<main class="page-content">
+	<article>
+		<div class="wrapper">
+			<heading class="clearfix page-heading">
+				<h1>Users</h1>
+				<?php if($auth->loggedIn()): ?>
+				<div class="heading-right">
+					<a href="/users/create" class="btn btn-primary"><i class="fas fa-user-plus"></i> New user</a>
+				</div>
+				<?php endif; ?>
+			</heading>
+
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+			consequat.</p>
+
+			<h2>Recent users</h2>
+
+			<p>Duis aute irure dolor in reprehenderit in voluptate velit esse
+			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+			<ul class="resource-list hover-list full-width">
+				<?php if (count($users) == 0): ?>
+				<li class="non-interactable text-center">No users at the moment.</li>
+				<?php endif; ?>
+				<?php foreach($users as $user): ?>
+					<li>
+						<div></div>
+						<a href='/users/<?=$user->id?>'><?=$user->name?></a>
+						<?php if($auth->loggedIn()): ?>
+						<a
+							class="pull-right"
+							href="/users/<?=$user->id?>/delete"
+							onClick="confirmDelete(event, <?=$user->id?>, '<?=$user->name?>')"
+						>
+							<i class="fas fa-trash"></i>
+						</a>
+						<?php endif; ?>
+					</li>
+				<?php endforeach; ?>
+			</ul>
+
+		</div>
+	</article>
+</main>
+
+<?=$snippets['footer']?>
+
+<?php if($auth->loggedIn()): ?>
+<script>
+	function confirmDelete(evt, id, name)
+	{
+		evt.preventDefault();
+		let sure = confirm(`Are you sure you want to delete user: "${name}"?`);
+
+		if (sure) {
+			window.location.href=`/users/${id}/delete`;
+		}
+
+		return false;
+	}
+</script>
+<?php endif; ?>

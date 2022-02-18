@@ -1,0 +1,1 @@
+(()=>{var e;(e=document.querySelector(".slogan"))&&"classList"in e&&e.classList.remove("before-fading")})();

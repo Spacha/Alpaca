@@ -9,10 +9,10 @@
 
 return [
 	// Application name
-	'name' => 'Alpaca',
+	'name' => 'Spacha',
 
 	// Application environment (development / production)
-	'env' => 'prod',
+	'env' => 'production',
 
 	// Default timezone
 	'timezone' => 'Europe/Helsinki',

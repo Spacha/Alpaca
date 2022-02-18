@@ -1,13 +1,3 @@
-<style>
-
-pre {
-    background: linear-gradient(90deg,#f8faff,rgba(255,255,255,0));
-    color: #4762a7;
-    padding: 1rem;
-}
-
-</style>
-
 <?php
 
 /**

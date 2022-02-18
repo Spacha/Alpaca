@@ -1,0 +1,16 @@
+Alpaca TODO:
+QueryBuilder
+	- Use parameter binding!
+		- using '...where id = some_string' --> error, and it's dangerous
+	- Also rethink other things: $this->delete is bool but why tho? (others are arrays)
+
+- Pick the changes from telemetryweb (joins)
+- Request validation
+	- e.g. spacha.test/users/kikkeli results in "valid" query...
+
+- Spacha website
+	- add toasters (use temporary session or sth)
+
+
+Commit:
+Querybuilder changes separately

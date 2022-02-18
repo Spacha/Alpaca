@@ -1,0 +1,59 @@
+<?=$snippets['header']?>
+
+<script>
+function autoFillUrl(evt)
+{
+	let el = evt.srcElement;
+	urlEl = document.querySelector('#url');
+
+	// only autofill if the url is currently empty
+	if (urlEl.value.length == 0) {
+		urlEl.value = el.value.toLowerCase().replaceAll(' ', '-')
+	}
+}
+</script>
+
+<main class="page-content">
+	<article>
+		<div class="wrapper">
+
+			<heading class="page-heading">
+				<h1 class="breadcrumb">
+					<a href="/secret/pages">Pages</a> <span class="breadcrumb-separator">/</span> New page
+				</h1>
+			</heading>
+
+			<section class="form">
+				<form action='/secret/pages/add' method='POST'>
+					<div class="form-row">
+						<label for="header">Header</label>
+						<input type="text" id="header" name="header" placeholder="Header" class="" onBlur="autoFillUrl(event)"/>
+					</div>
+					<div class="form-row">
+						<label for="title">Title</label>
+						<input type="text" id="title" name="title" placeholder="Title" class="" value="<?=titlePrefix()?>" />
+					</div>
+					<div class="form-row">
+						<label for="url">Url</label>
+						<input type="text" id="url" name="url" placeholder="Url" class="" />
+					</div>
+					<div class="form-row edit-content">
+						<label for="content">Content</label>
+						<textarea id="content" name="content" placeholder="Write some content..." style="min-height: 20rem;" onKeyDown="captureTab(event)"></textarea>
+						<span class="form-note">Markdown help: <a href="https://daringfireball.net/projects/markdown/syntax" target="_blank">https://daringfireball.net/projects/markdown/syntax</a></span>
+					</div>
+					<div class="form-row form-row-inline">
+						<label for="is_public" style="width: 7.5rem;">Set public</label>
+						<input type="checkbox" id="is_public" name="is_public" value="1" class="" onChange="highlightWarning(event)"/>
+					</div>
+					<div class="form-row-inline text-right form-bottom-buttom">
+						<button class="btn btn-primary" type="submit">Save</button>
+					</div>
+				</form>
+
+			</section>
+		</div>
+	</article>
+</main>
+
+<?=$snippets['footer']?>

@@ -1,0 +1,55 @@
+<?=$snippets['header']?>
+
+<main class="page-content">
+	<article>
+		<div class="wrapper">
+
+			<heading class="page-heading">
+				<h1 class="breadcrumb">
+					<a href="/secret/pages"><?=$page->header?></a> <span class="breadcrumb-separator">/</span> Edit page
+				</h1>
+			</heading>
+
+			<section class="form">
+				<form action='/secret/pages/<?=$page->id?>/update' method='POST'>
+					<div class="form-row">
+						<label for="header">Header</label>
+						<input type="text" id="header" name="header" placeholder="Header" class="" value="<?=$page->header?>" />
+					</div>
+					<div class="form-row">
+						<label for="title">Title</label>
+						<input type="text" id="title" name="title" placeholder="Title" class="" value="<?=$page->title?>" />
+					</div>
+					<div class="form-row">
+						<label for="url">Url</label>
+						<input type="text" id="url" name="url" placeholder="Url" class="" value="<?=$page->url?>" />
+					</div>
+					<div class="form-row">
+						<label for="content">Content</label>
+						<div id="edit-content" class="input-group input-group-prepend prepend-horizontal edit-content">
+							<div class="input-group-prepend" style="z-index: 2;">
+								<ul class="form-toolbar">
+									<li><a href="#edit-content" class="active"><i class="fa fa-pen"></i> Edit</a></li>
+									<li><a href="/secret/pages/<?=$page->id?>/edit/preview"><i class="fa fa-eye"></i> Preview</a></li>
+									<li class="form-toolbar-right"><a href=""><i class="fa fa-file-upload"></i> Uploads</a></li>
+								</ul>
+							</div>
+							<textarea id="content" name="content" placeholder="Write some content..." style="min-height: 45rem; z-index: 1;" onKeyDown="captureTab(event)"><?=$page->content?></textarea>
+						</div>
+						<span class="form-note">Markdown help: <a href="https://daringfireball.net/projects/markdown/syntax" target="_blank">https://daringfireball.net/projects/markdown/syntax</a></span>
+					</div>
+					<div class="form-row form-row-inline<?=($page->is_public ? ' form-warning' : '')?>">
+						<label for="is_public" style="width: 7.5rem;">Set public</label>
+						<input type="checkbox" id="is_public" name="is_public" value="1" class="" <?=($page->is_public ? "checked" : "")?> onChange="highlightWarning(event)"/>
+					</div>
+					<div class="form-row-inline text-right form-bottom-buttom">
+						<button class="btn btn-primary" type="submit">Save</button>
+					</div>
+				</form>
+
+			</section>
+		</div>
+	</article>
+</main>
+
+<?=$snippets['footer']?>

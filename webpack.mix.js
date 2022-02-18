@@ -16,6 +16,7 @@ let publicPath = 'public';
 
 mix
 	.js(sourcePath + '/js/app.js', 'js')
+	.js(sourcePath + '/js/after-dom.js', 'js')
 	.sass(sourcePath + '/sass/app.scss', 'css')
 	.setPublicPath(publicPath)
 	.version();
