@@ -14,14 +14,20 @@ use App\Framework\Libs\MdTemplater;
 class Markdown extends MdParser
 {
 	const HIGHLIGHT_KEYS = [
-		'php',
-		'html',
+		'markup', 'html', 'xml', 'svg', 'mathml', 'ssml', 'atom', 'rss'
 		'css',
+		'clike',
 		'c',
-		'javascript',
-		'js',
-		'json',
-		'shell'
+		'cpp',
+		'http',
+		'javascript', 'js',
+		'php',
+		'bash', 'shell',
+		'makefile',
+		'markdown', 'md',
+		'markup-templating',
+		'json', 'webmanifest',
+		'sql',
 	];
 
 	/**
