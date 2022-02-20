@@ -14,7 +14,7 @@ use App\Framework\Libs\MdTemplater;
 class Markdown extends MdParser
 {
 	const HIGHLIGHT_KEYS = [
-		'markup', 'html', 'xml', 'svg', 'mathml', 'ssml', 'atom', 'rss'
+		'markup', 'html', 'xml', 'svg', 'mathml', 'ssml', 'atom', 'rss',
 		'css',
 		'clike',
 		'c',
