@@ -18,10 +18,17 @@ class Markdown extends MdParser
 		'html',
 		'css',
 		'c',
-		'javascript',
-		'js',
-		'json',
-		'shell'
+		'cpp',
+		'http',
+		'javascript', 'js',
+		'php',
+		'python',
+		'bash', 'shell',
+		'makefile',
+		'markdown', 'md',
+		'markup-templating',
+		'json', 'webmanifest',
+		'sql'
 	];
 
 	/**
@@ -66,6 +73,9 @@ class Markdown extends MdParser
 		// add 'language-x' class for each code span and block of form:
 		// <code class="x">program_code_here</code>' for syntax highlighting
 		$html = self::addLanguagePrefix($html);
+
+		// add a 'language-plain' class to each non-formatted block anf form
+		$html = self::addPlainLanguagePrefix($html);
 
 		return $html;
 	}
@@ -121,6 +131,20 @@ class Markdown extends MdParser
 			$code = $matches[1][$k];
 			$html = str_replace($found, "<code class=\"language-{$code}\">", $html);
 		}
+
+		return $html;
+	}
+
+	/**
+	 * If at this point there are plain <code> or <pre> parts, add them
+	 * a generic formatting class 'language-plain' which adds basic
+	 * formatting to them to make them consistent
+	 * with the syntax-highlighted parts.
+	 */
+	private static function addPlainLanguagePrefix($html) : string
+	{
+		$html = str_replace("<code>", "<code class=\"language-plain\">", $html);
+		$html = str_replace("<pre>", "<pre class=\"language-plain\">", $html);
 
 		return $html;
 	}
