@@ -17,7 +17,7 @@ use App\Models\User;
 
 class UserController extends Controller
 {
-	protected $requiresAuth = ['create', 'add', 'delete', 'logout'];
+	protected $requiresAuth = ['create', 'add', 'list', 'view', 'delete', 'logout'];
 
 	public function __construct()
 	{
