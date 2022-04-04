@@ -12,7 +12,7 @@ use App\Framework\Libs\{
 	Request,
 	View
 };
-
+use App\Libs\EmailNotifier;
 use App\Models\User;
 
 class UserController extends Controller
