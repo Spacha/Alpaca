@@ -212,3 +212,18 @@ function bb(...$vars)
 
 	print_r('_______________________________________________________'.PHP_EOL);
 }
+
+
+/*---------------------------------------------------------
+ *      OTHER HELPERS
+ *---------------------------------------------------------
+ *
+ */
+
+/**
+ * Escapes HTML formatting and slashes and returns the string.
+ */
+function escapeHtmlAndSlashes(string $str)
+{
+    return htmlspecialchars(addslashes($str));
+}

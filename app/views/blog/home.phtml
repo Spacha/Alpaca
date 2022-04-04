@@ -29,7 +29,7 @@
 									type="checkbox"
 									name="is_public"
 									value="1"
-									onChange="updatePublicity(event, <?=$post->id?>, '<?=htmlspecialchars($post->title)?>', <?=$post->is_public?>)"
+									onChange="updatePublicity(event, <?=$post->id?>, '<?=escapeHtmlAndSlashes($post->title)?>', <?=$post->is_public?>)"
 									<?=($post->is_public ? "checked" : "")?>/>
 							</div>
 						<?php endif; ?>

@@ -28,7 +28,7 @@
 							type="checkbox"
 							name="is_public"
 							value="1"
-							onChange="updatePublicity(event, <?=$page->id?>, '<?=htmlspecialchars($page->title)?>', <?=$page->is_public?>)"
+							onChange="updatePublicity(event, <?=$page->id?>, '<?=escapeHtmlAndSlashes($page->title)?>', <?=$page->is_public?>)"
 							<?=($page->is_public ? "checked" : "")?>/>
 					</div>
 
