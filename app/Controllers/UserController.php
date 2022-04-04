@@ -116,8 +116,11 @@ class UserController extends Controller
 		ActivityLog::write("Login attempt: email: ${email}, ip: ${ip}, success: ${successStr}");
 
 		if ($success)
+		{
+			EmailNotifier::notifySuccessfulLogin($email);
 			redirect("/secret");
-		else
-			redirect("/login");
+		}
+
+		redirect("/login");
 	}
 }
