@@ -12,7 +12,7 @@ return [
 	'name' => 'Spacha',
 
 	// Application environment (development / production)
-	'env' => 'production',
+	'env' => 'development',
 
 	// Default timezone
 	'timezone' => 'Europe/Helsinki',
