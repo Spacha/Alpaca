@@ -4,7 +4,7 @@
  * Database config file
  *---------------------------------------------------------
  *
- * Change name to dbconfig.php when in use.
+ * Change name to dbConfig.php when in use.
  */
 
 return [
