@@ -19,6 +19,7 @@ class EmailNotifier
         if ($receiver == false)
             return false;
 
+        $headers["From"] = "Alpaca";
         return Email::send($receiver, $subject, $message, $headers);
     }
 
@@ -33,6 +34,6 @@ class EmailNotifier
     {
         return self::notify(
             "Successful login to spacha.dev",
-            "A user succesfully logged in to <a href=\"https//spacha.dev\">spacha.dev</a> using email: '{$email}'");
+            "A user succesfully logged in to spacha.dev using email: {$email}.");
     }
 }
