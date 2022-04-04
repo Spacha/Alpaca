@@ -51,6 +51,7 @@ Temporary Items
 # =========================
 
 /app/dbConfig.php
+/app/envConfig.php
 /logs/*
 /cache/*
 /vendor

@@ -30,13 +30,20 @@ function config(string $config = '', bool $anywhere = false) : array
 
 /**
  * Get the database configuration if found.
- *
- * @param string $name name of the config file
  * @return array
  **/
-function dbConfig($name = '')
+function dbConfig()
 {
 	return config(PATH_ROOT . '/dbConfig.php', true);
+}
+
+/**
+ * Get the environment configuration if found.
+ * @return array
+ **/
+function envConfig()
+{
+    return config(PATH_ROOT . '/envConfig.php', true);
 }
 
 /**
