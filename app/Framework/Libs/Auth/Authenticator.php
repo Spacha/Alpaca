@@ -20,7 +20,8 @@ class Authenticator
 
 		// check login
 		// TODO: use login throttling
-		if (!$user || ($password !== $user->password))
+		// create with password_hash('my-password', PASSWORD_BCRYPT)
+		if (!$user || (password_verify($password, $user->password) == false))
 			return false;
 
 		// authentication successful, log in
