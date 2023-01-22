@@ -14,26 +14,26 @@ use PDO;
  */
 class DatabaseConnection extends PDO
 {
-	/**
-	 * Description
-	 *
-	 * @param array $config 	The database config.
-	 * @return mixed 			PDO or DatabaseException on fail.
-	 */
-	public function __construct(array $config)
-	{
-		try {
-			parent::__construct(
-				$config['connection'] .';dbname='. $config['name'],
+    /**
+     * Description
+     *
+     * @param array $config     The database config.
+     * @return mixed            PDO or DatabaseException on fail.
+     */
+    public function __construct(array $config)
+    {
+        try {
+            parent::__construct(
+                $config['connection'] .';dbname='. $config['name'],
                 $config['user'],
                 $config['password'],
                 $config['options']
-			);
+            );
 
-			$this->exec('SET NAMES utf8');
-			$this->setAttribute(self::ATTR_ERRMODE, self::ERRMODE_WARNING);
-		} catch (\PDOException $e) {
-			throw new DatabaseException($e->getMessage());
-		}
-	}
+            $this->exec('SET NAMES utf8');
+            $this->setAttribute(self::ATTR_ERRMODE, self::ERRMODE_WARNING);
+        } catch (\PDOException $e) {
+            throw new DatabaseException($e->getMessage());
+        }
+    }
 }
