@@ -17,15 +17,15 @@
  */
 function config(string $config = '', bool $anywhere = false) : array
 {
-	$configPath = $anywhere
-		? $config
-		: PATH_ROOT . '/config/' . $config . '.php';
+    $configPath = $anywhere
+        ? $config
+        : PATH_ROOT . '/config/' . $config . '.php';
 
-	$configFile = file_exists($configPath)
-		? require($configPath)
-		: [];
+    $configFile = file_exists($configPath)
+        ? require($configPath)
+        : [];
 
-	return $configFile;
+    return $configFile;
 }
 
 /**
@@ -34,7 +34,7 @@ function config(string $config = '', bool $anywhere = false) : array
  **/
 function dbConfig()
 {
-	return config(PATH_ROOT . '/dbConfig.php', true);
+    return config(PATH_ROOT . '/dbConfig.php', true);
 }
 
 /**
@@ -51,22 +51,22 @@ function envConfig()
  * @link https://laravel-mix.com/docs/6.0/versioning
  *
  * @param  string $file Path to the asset file (use leading '/')
- * @return string 		Versioned file of the asset (if versioning used)
+ * @return string       Versioned file of the asset (if versioning used)
  */
 function mix(string $file)
 {
-	static $manifests;
-	$manifestPath = public_root('mix-manifest.json');
+    static $manifests;
+    $manifestPath = public_root('mix-manifest.json');
 
-	if (!is_file($manifestPath))
-		return $file;
+    if (!is_file($manifestPath))
+        return $file;
 
-	$manifests = json_decode(file_get_contents($manifestPath), true);
+    $manifests = json_decode(file_get_contents($manifestPath), true);
 
-	if (!isset($manifests[$file]))
-		return $file;
+    if (!isset($manifests[$file]))
+        return $file;
 
-	return $manifests[$file];
+    return $manifests[$file];
 }
 
 /**
@@ -77,8 +77,8 @@ function mix(string $file)
  */
 function redirect(string $to)
 {
-	header("Location: ". $to);
-	die();
+    header("Location: ". $to);
+    die();
 }
 
 /**
@@ -91,7 +91,7 @@ function now()
 }
 
 /*---------------------------------------------------------
- * 		PATH HELPERS
+ *      PATH HELPERS
  *---------------------------------------------------------
  *
  */
@@ -104,23 +104,23 @@ function now()
  */
 function app_root(string $path)
 {
-	return PATH_ROOT.'/'.$path;
+    return PATH_ROOT.'/'.$path;
 }
 
 /**
  * Get a path from the path config file by the key.
  *
- * @param string $name 	The path key
+ * @param string $name  The path key
  * @param string $after Path coming after the base path
- * @return string 		The corresponding path if found, or the key if path is not found
+ * @return string       The corresponding path if found, or the key if path is not found
  */
 function app_path(string $name, string $after = '')
 {
-	$paths = config('paths');
-	if (array_key_exists($name, $paths))
-		return PATH_ROOT.'/'.$paths[$name].'/'.$after;
-	else
-		return $name.'/'.$after;
+    $paths = config('paths');
+    if (array_key_exists($name, $paths))
+        return PATH_ROOT.'/'.$paths[$name].'/'.$after;
+    else
+        return $name.'/'.$after;
 }
 
 /**
@@ -132,12 +132,12 @@ function app_path(string $name, string $after = '')
  */
 function public_root(string $path)
 {
-	$paths = config('paths');
-	return dirname(PATH_ROOT).'/'.$paths['public'].'/'.$path;
+    $paths = config('paths');
+    return dirname(PATH_ROOT).'/'.$paths['public'].'/'.$path;
 }
 
 /*---------------------------------------------------------
- * 		VARIABLE HELPERS
+ *      VARIABLE HELPERS
  *---------------------------------------------------------
  *
  */
@@ -150,7 +150,7 @@ function public_root(string $path)
  */
 function data($params = [], $key = '')
 {
-	return $params[$key] ?? null;
+    return $params[$key] ?? null;
 }
 
 /**
@@ -163,7 +163,7 @@ function data($params = [], $key = '')
  */
 function opt($var = null, $default = null)
 {
-	return $var ?? $default;
+    return $var ?? $default;
 }
 
 /**
@@ -175,13 +175,13 @@ function opt($var = null, $default = null)
  */
 function array_unset(array &$array, $index = 0) : array
 {
-	unset($array[$index]);
-	return array_values($array);
+    unset($array[$index]);
+    return array_values($array);
 }
 
 
 /*---------------------------------------------------------
- * 		DEVELOPMENT HELPERS
+ *      DEVELOPMENT HELPERS
  *---------------------------------------------------------
  *
  */
@@ -193,11 +193,11 @@ function array_unset(array &$array, $index = 0) : array
  **/
 function dd($var = null)
 {
-	echo "<pre>";
-	
-	die(var_dump($var));
+    echo "<pre>";
+    
+    die(var_dump($var));
 
-	echo "</pre>";
+    echo "</pre>";
 }
 
 /**
@@ -209,15 +209,15 @@ function dd($var = null)
  **/
 function bb(...$vars)
 {
-	print_r('_______________________________________________________');
+    print_r('_______________________________________________________');
 
-	foreach ($vars as $var) {
-		print_r(PHP_EOL);
-		print_r($var);
-		print_r(PHP_EOL);
-	}
+    foreach ($vars as $var) {
+        print_r(PHP_EOL);
+        print_r($var);
+        print_r(PHP_EOL);
+    }
 
-	print_r('_______________________________________________________'.PHP_EOL);
+    print_r('_______________________________________________________'.PHP_EOL);
 }
 
 

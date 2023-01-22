@@ -6,15 +6,15 @@ use App\Framework\Libs\Database\QueryBuilder;
 
 abstract class Model
 {
-	protected $db;
-	
-	public function __construct()
-	{
-		$this->db = $this->connect();
-	}
+    protected $db;
+    
+    public function __construct()
+    {
+        $this->db = $this->connect();
+    }
 
-	public function connect()
-	{
-		return new QueryBuilder();
-	}
+    public function connect()
+    {
+        return new QueryBuilder();
+    }
 }

@@ -4,5 +4,5 @@ namespace App\Framework\Interfaces;
 
 interface Middleware
 {
-	public function check(string $methodName = '') : bool;
+    public function check(string $methodName = '') : bool;
 }

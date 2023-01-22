@@ -16,7 +16,6 @@ return [
 	// Static
 
 	'&:'										=> 'HomeController@home',
-	//'&: about'									=> 'HomeController@about',
 	
 	// Users
 
