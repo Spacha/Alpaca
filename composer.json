@@ -12,10 +12,15 @@
             "App\\" : "app/"
         }
     },
-    "require-dev": {
-        "phpdocumentor/phpdocumentor": "2.*"
-    },
     "require": {
-        "michelf/php-markdown": "^1.9"
+        "michelf/php-markdown": "^2.0"
+    },
+    "config": {
+        "allow-plugins": {
+            "symfony/flex": true
+        }
+    },
+    "require-dev": {
+        "phpdocumentor/phpdocumentor": "^3.1"
     }
 }
