@@ -49,9 +49,6 @@ class MySQLGrammar implements Grammar
      */
     protected function validateVocalbulary(array $operation, string $table, array $joins, array $whereClauses, array $orderBy, array $limit) : array
     {
-        // @todo Validate vocalbulary!
-        $this->queryType = $operation['type'];
-
         /**
         * SELECT:
         * SELECT [columns] FROM [table]
