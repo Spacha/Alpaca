@@ -44,7 +44,7 @@ class RouteMatcher
      * Get regular expressions
      *
      * @param string $key The regex key
-     * @return strign The regex
+     * @return string The regex
      */
     protected function regex($key) : string
     {
@@ -113,7 +113,7 @@ class RouteMatcher
             }
 
             // Make slashes optional
-            $url = $this->optionalizeSlashes($url, count($params));
+            $url = $this->optionalizeSlashes($url);
 
             // Make expressions of brackets and make slashes literal
             $url = trim(preg_replace(
