@@ -13,49 +13,49 @@ Template syntax:
  */
 
 use App\Framework\Interfaces\MdTemplateInterface;
-class PostTitlesTemplate implements MdTemplateInterface
-{
-    const NAME = "postTitles";
+// class PostTitlesTemplate implements MdTemplateInterface
+// {
+//     const NAME = "postTitles";
 
-    public function initialize($arg1 = null, $arg2 = null, $arg3 = null, $arg4 = null) : bool
-    {
-        // Set the class variables. Defines the 'public interface'
-        if (!in_array($arg2, ['latest', 'oldest']) || $arg1 < 0)
-            return false;
+//     public function initialize($arg1 = null, $arg2 = null, $arg3 = null, $arg4 = null) : bool
+//     {
+//         // Set the class variables. Defines the 'public interface'
+//         if (!in_array($arg2, ['latest', 'oldest']) || $arg1 < 0)
+//             return false;
 
-        $order = '';
-        if (strtolower($arg2) == 'latest')
-            $order = 'ASC';
-        else if (strtolower($arg2) == 'oldest')
-            $order = 'DESC';
-        else
-            return false;
+//         $order = '';
+//         if (strtolower($arg2) == 'latest')
+//             $order = 'ASC';
+//         else if (strtolower($arg2) == 'oldest')
+//             $order = 'DESC';
+//         else
+//             return false;
 
-        $this->order = $order;
-        $this->num = $arg1;
+//         $this->order = $order;
+//         $this->num = $arg1;
 
-        return true;
-    }
+//         return true;
+//     }
 
-    public function name() : string
-    {
-        return self::NAME;
-    }
+//     public function name() : string
+//     {
+//         return self::NAME;
+//     }
 
-    public static function render() : string
-    {
-        $blog = new \App\Models\Blog();
-        $titles = $blog->titles($this->num, $this->order);
+//     public static function render() : string
+//     {
+//         $blog = new \App\Models\Blog();
+//         $titles = $blog->titles($this->num, $this->order);
 
-        $list = "";
-        foreach($titles as $title)
-        {
-            $output .= "<li>{$title->created_at}: {$title->title}</li>\n";
-        }
+//         $list = "";
+//         foreach($titles as $title)
+//         {
+//             $output .= "<li>{$title->created_at}: {$title->title}</li>\n";
+//         }
 
-        return "<ul>{$list}<ul>";
-    }
-}
+//         return "<ul>{$list}<ul>";
+//     }
+// }
 
 /**
 * This library handles markdown templating.

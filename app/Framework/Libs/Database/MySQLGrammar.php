@@ -90,7 +90,6 @@ class MySQLGrammar implements Grammar
         switch($operation['type']) {
             case 'select':
                 return 'SELECT ' . implode(', ', $operation['data']) . ' FROM ' . $table;
-                break;
 
             case 'insert':
                 $placeholders = '';
@@ -102,7 +101,6 @@ class MySQLGrammar implements Grammar
                 }
 
                 return "INSERT INTO {$table} (". implode(', ', array_keys($operation['data'])) .") VALUES ({$placeholders})";
-                break;
 
             case 'update':
                 $updates = '';
@@ -114,16 +112,13 @@ class MySQLGrammar implements Grammar
                 }
 
                 return "UPDATE {$table} SET {$updates}";
-                break;
 
             case 'delete':
                 return "DELETE FROM {$table}";
-                break;
 
             default:
                 // throw new MySQLException();
-                dd('Virheellinen operaatio: '. $operation['type']);
-                break;
+                return dd('Virheellinen operaatio: '. $operation['type']);
         }
     }
 
@@ -208,7 +203,7 @@ class MySQLGrammar implements Grammar
 
         // add offset if larger than 0
         if ($this->vocalbulary['limit'][1] > 0)
-            $result .= ", {$this->limit[1]}";
+            $result .= ", {$this->vocalbulary['limit'][1]}";
 
         return $result;
     }

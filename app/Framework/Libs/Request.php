@@ -21,7 +21,7 @@ class Request
     /**
      * Get a piece or all of the data stored to object's $data property
      *
-     * @param sting $name   Name or key of the data piece
+     * @param string $name   Name or key of the data piece
      * @return mixed        Value of the data or an associative array of them
      */
     public function data(string $name = '')
