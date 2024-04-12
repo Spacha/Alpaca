@@ -13,65 +13,65 @@
 
 return [
 
-	// Static
+    // Static
 
-	'&:'										=> 'HomeController@home',
-	
-	// Users
+    '&:'                                        => 'HomeController@home',
+    
+    // Users
 
-	'&: users'									=> 'UserController@list',
-	'&: users/{userId}'							=> 'UserController@view',
-	'&: users/create'							=> 'UserController@create',
-	'&: users/{userId}/delete'					=> 'UserController@delete',
-	'$: users/add'								=> 'UserController@add',
+    '&: users'                                  => 'UserController@list',
+    '&: users/{userId}'                         => 'UserController@view',
+    '&: users/create'                           => 'UserController@create',
+    '&: users/{userId}/delete'                  => 'UserController@delete',
+    '$: users/add'                              => 'UserController@add',
 
-	// Blog
+    // Blog
 
-	'&: blog'									=> 'BlogController@list',
-	'&: blog/create'							=> 'BlogController@create',
-	'$: blog/add'								=> 'BlogController@add',
-	'&: blog/{postId}'							=> 'BlogController@view',
-	'&: blog/{postId}/edit'						=> 'BlogController@edit',
-	'$: blog/{postId}/update'					=> 'BlogController@update',
-	'&: blog/{postId}/delete'					=> 'BlogController@delete',
-	'&: blog/{postId}/update-publicity'			=> 'BlogController@updatePublicity',
+    '&: blog'                                   => 'BlogController@list',
+    '&: blog/create'                            => 'BlogController@create',
+    '$: blog/add'                               => 'BlogController@add',
+    '&: blog/{postId}'                          => 'BlogController@view',
+    '&: blog/{postId}/edit'                     => 'BlogController@edit',
+    '$: blog/{postId}/update'                   => 'BlogController@update',
+    '&: blog/{postId}/delete'                   => 'BlogController@delete',
+    '&: blog/{postId}/update-publicity'         => 'BlogController@updatePublicity',
 
-	// Authentication
+    // Authentication
 
-	'&: login'									=> 'UserController@login',
-	'$: login'									=> 'UserController@tryLogin',
+    '&: login'                                  => 'UserController@login',
+    '$: login'                                  => 'UserController@tryLogin',
 
-	//'&: register'								=> 'UserController@register',
-	//'$: register'								=> 'UserController@tryRegister',
+    //'&: register'                             => 'UserController@register',
+    //'$: register'                             => 'UserController@tryRegister',
 
-	'&: logout'									=> 'UserController@logout',
+    '&: logout'                                 => 'UserController@logout',
 
-	// Pages
+    // Pages
 
-	'&: secret/pages'							=> 'PageController@list',
-	'&: secret/pages/create'					=> 'PageController@create',
-	'$: secret/pages/add'						=> 'PageController@add',
-	'&: secret/pages/{pageId}'					=> 'PageController@view',
-	'&: secret/pages/{pageId}/edit'				=> 'PageController@edit',
-	'$: secret/pages/{pageId}/update'			=> 'PageController@update',
-	'&: secret/pages/{pageId}/delete'			=> 'PageController@delete',
-	'&: secret/pages/{pageId}/update-publicity'	=> 'PageController@updatePublicity',
+    '&: secret/pages'                           => 'PageController@list',
+    '&: secret/pages/create'                    => 'PageController@create',
+    '$: secret/pages/add'                       => 'PageController@add',
+    '&: secret/pages/{pageId}'                  => 'PageController@view',
+    '&: secret/pages/{pageId}/edit'             => 'PageController@edit',
+    '$: secret/pages/{pageId}/update'           => 'PageController@update',
+    '&: secret/pages/{pageId}/delete'           => 'PageController@delete',
+    '&: secret/pages/{pageId}/update-publicity' => 'PageController@updatePublicity',
 
-	// Secret
-	
-	'&: secret'									=> 'SecretController@home',
-	// Logs
-	'&: secret/logs'							=> 'SecretController@logs',
-	'&: secret/logs/error-log'					=> 'SecretController@errorLog',
-	'&: secret/logs/activity-log'				=> 'SecretController@activityLog',
-	// Todo list
-	'&: secret/todo-list'						=> 'SecretController@todoList',
-	'&: secret/todo-list/create'				=> 'SecretController@createTodo',
-	'$: secret/todo-list/add'					=> 'SecretController@addTodo',
-	'&: secret/todo-list/{todoId}/update-status'=> 'SecretController@updateTodoStatus',
-	'&: secret/todo-list/{todoId}/delete'		=> 'SecretController@deleteTodo',
-	'&: secret/settings'						=> 'SecretController@settings',
+    // Secret
+    
+    '&: secret'                                 => 'SecretController@home',
+    // Logs
+    '&: secret/logs'                            => 'SecretController@logs',
+    '&: secret/logs/error-log'                  => 'SecretController@errorLog',
+    '&: secret/logs/activity-log'               => 'SecretController@activityLog',
+    // Todo list
+    '&: secret/todo-list'                       => 'SecretController@todoList',
+    '&: secret/todo-list/create'                => 'SecretController@createTodo',
+    '$: secret/todo-list/add'                   => 'SecretController@addTodo',
+    '&: secret/todo-list/{todoId}/update-status'=> 'SecretController@updateTodoStatus',
+    '&: secret/todo-list/{todoId}/delete'       => 'SecretController@deleteTodo',
+    '&: secret/settings'                        => 'SecretController@settings',
 
-	// Wildcard for pages
-	'&: {url}' 									=> 'PageController@viewLive',
+    // Wildcard for pages
+    '&: {url}'                                  => 'PageController@viewLive',
 ];

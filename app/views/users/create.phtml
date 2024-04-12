@@ -1,45 +1,45 @@
 <?=$snippets['header']?>
 
 <main class="page-content">
-	<article>
-		<div class="wrapper">
+    <article>
+        <div class="wrapper">
 
-			<heading class="page-heading">
-				<h1 class="breadcrumb">
-					<a href="/users">Users</a> <span class="breadcrumb-separator">/</span> New user
-				</h1>
-			</heading>
+            <heading class="page-heading">
+                <h1 class="breadcrumb">
+                    <a href="/users">Users</a> <span class="breadcrumb-separator">/</span> New user
+                </h1>
+            </heading>
 
 
-			<section class="form">
+            <section class="form">
 
-				<form action='/users/add' method='POST'>
-					<table class="table" style="width: 80%;">
-						<tbody>
-							<tr>
-								<td><label for="name">Full name</label></td>
-								<td><input type="text" id="name" name="name" placeholder="Name" class="full-width" /></td>
-							</tr>
-							<tr>
-								<td><label for="phone">Email</label></td>
-								<td><input type="email" id="email" name="email" placeholder="Email" class="full-width" /></td>
-							</tr>
-							<tr>
-								<td><label for="age">Password</label></td>
-								<td><input type="password" id="password" name="password" placeholder="Password" disabled /></td>
-							</tr>
-							<tr>
-								<td></td>
-								<td class="text-right form-bottom-buttom">
-									<button class="btn btn-primary" type="submit">Add</button>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</form>
-			</section>
-		</div>
-	</article>
+                <form action='/users/add' method='POST'>
+                    <table class="table" style="width: 80%;">
+                        <tbody>
+                            <tr>
+                                <td><label for="name">Full name</label></td>
+                                <td><input type="text" id="name" name="name" placeholder="Name" class="full-width" /></td>
+                            </tr>
+                            <tr>
+                                <td><label for="phone">Email</label></td>
+                                <td><input type="email" id="email" name="email" placeholder="Email" class="full-width" /></td>
+                            </tr>
+                            <tr>
+                                <td><label for="age">Password</label></td>
+                                <td><input type="password" id="password" name="password" placeholder="Password" disabled /></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td class="text-right form-bottom-buttom">
+                                    <button class="btn btn-primary" type="submit">Add</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </section>
+        </div>
+    </article>
 </main>
 
 <?=$snippets['footer']?>

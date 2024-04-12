@@ -1,82 +1,82 @@
 <?php
 function titlePrefix() : string
 {
-	return config('app')['name'] . " &ndash; "; 
+    return config('app')['name'] . " &ndash; "; 
 }
 function makeTitle($active = "") : string
 {
-	$title = config('app')['name'];
-	if (strlen($active))
-		$title = titlePrefix() . ucfirst($active);
-	return $title;
+    $title = config('app')['name'];
+    if (strlen($active))
+        $title = titlePrefix() . ucfirst($active);
+    return $title;
 }
 
 // Returns ' active' if 
 $active = $active ?? null;
 $activeClass = function(string $page, $prefix = '') use ($active) : string
 {
-	return (isset($active) && $active == $page) ? "{$prefix}active" : '';
+    return (isset($active) && $active == $page) ? "{$prefix}active" : '';
 }
 ?>
 <!DOCTYPE html>
 <html lang="<?=config('app')['locale']?>">
-	<head>
-		<meta name="viewport" content= "width=device-width, initial-scale=1.0">
-		<title><?=$title ?? makeTitle($active ?? "")?></title>
+    <head>
+        <meta name="viewport" content= "width=device-width, initial-scale=1.0">
+        <title><?=$title ?? makeTitle($active ?? "")?></title>
 
-		<meta name="theme-color" content="#337aaf">
-		<meta name="description" content="Spacha's homepage. A software engineer, rocket enthusiast and just a nerd in general.">
+        <meta name="theme-color" content="#337aaf">
+        <meta name="description" content="Spacha's homepage. A software engineer, rocket enthusiast and just a nerd in general.">
 
-		<link href="/themes/prism.css" rel="stylesheet" />
-		<link rel="stylesheet" href="<?=mix("/css/app.css")?>">
-		<link rel="icon" href="/images/spacha.svg">
-		<script src="<?=mix("/js/app.js")?>"></script>
-	</head>
-	<body>
+        <link href="/themes/prism.css" rel="stylesheet" />
+        <link rel="stylesheet" href="<?=mix("/css/app.css")?>">
+        <link rel="icon" href="/images/spacha.svg">
+        <script src="<?=mix("/js/app.js")?>"></script>
+    </head>
+    <body>
 
-		<section class="top-section">
-			<header class="main-header">
-				<div class="wrapper">
-					<div class="main-header--cols hamburgerize">
-						
-						<div class="ham-header">
-							<div class="main-logo--container">
-								<a href="/">Spacha<span>.dev</span></a>
-							</div>
+        <section class="top-section">
+            <header class="main-header">
+                <div class="wrapper">
+                    <div class="main-header--cols hamburgerize">
+                        
+                        <div class="ham-header">
+                            <div class="main-logo--container">
+                                <a href="/">Spacha<span>.dev</span></a>
+                            </div>
 
-							<div class="hamburger-container">
-								<a class="hamburger" href="#" onClick="toggleHamMenu(event)">
-									<i class="fa fa-bars"></i>
-								</a>
-							</div>
-						</div>
+                            <div class="hamburger-container">
+                                <a class="hamburger" href="#" onClick="toggleHamMenu(event)">
+                                    <i class="fa fa-bars"></i>
+                                </a>
+                            </div>
+                        </div>
 
-						<nav class="main-nav--container">
-							<ul class="main-nav ham-menu">
-								<li class="<?=$activeClass('home')?>"><a href="/">Home</a></li>
-								<li class="<?=$activeClass('projects')?>"><a href="/projects">Projects</a></li>
-								<li class="<?=$activeClass('blog')?>"><a href="/blog">Blog</a></li>
-								<li class="<?=$activeClass('about')?>"><a href="/about">About</a></li>
-							</ul>
-						</nav>
+                        <nav class="main-nav--container">
+                            <ul class="main-nav ham-menu">
+                                <li class="<?=$activeClass('home')?>"><a href="/">Home</a></li>
+                                <li class="<?=$activeClass('projects')?>"><a href="/projects">Projects</a></li>
+                                <li class="<?=$activeClass('blog')?>"><a href="/blog">Blog</a></li>
+                                <li class="<?=$activeClass('about')?>"><a href="/about">About</a></li>
+                            </ul>
+                        </nav>
 
-					</div>
-				</div>
-			</header>
+                    </div>
+                </div>
+            </header>
 
-			<?=(isset($topSection) && $topSection == true) ? '' : '</section>'?>
+            <?=(isset($topSection) && $topSection == true) ? '' : '</section>'?>
 
-			<?php if($auth->loggedIn()): ?>
-			<div class="wrapper">
-				<div class="loggedin-box">
-					<span>
-						<i class="fa fa-shield-alt" style="color: #2fb934;"></i>
-						Signed in as <?=$auth->user()['name']?>
-					</span>
-					<span class="loggedin-links">
-						<a href="/secret">Secret area</a>
-						<a href="/logout">Sign Out</a>
-					</span>
-				</div>
-			</div>
-			<?php endif; ?>
+            <?php if($auth->loggedIn()): ?>
+            <div class="wrapper">
+                <div class="loggedin-box">
+                    <span>
+                        <i class="fa fa-shield-alt" style="color: #2fb934;"></i>
+                        Signed in as <?=$auth->user()['name']?>
+                    </span>
+                    <span class="loggedin-links">
+                        <a href="/secret">Secret area</a>
+                        <a href="/logout">Sign Out</a>
+                    </span>
+                </div>
+            </div>
+            <?php endif; ?>

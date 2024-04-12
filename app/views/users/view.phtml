@@ -1,26 +1,26 @@
 <?=$snippets['header']?>
 
 <main class="page-content">
-	<article>
-		<div class="wrapper">
+    <article>
+        <div class="wrapper">
 
-			<heading class="page-heading">
-				<h1 class="breadcrumb">
-					<a href="/users">Users</a> <span class="breadcrumb-separator">/</span> User details
-				</h1>
-			</heading>
-			
-			<table class="table bordered vertical-headings">
-				<tbody>
-					<tr><td>ID</td><td><?=$user->id?></td></tr>
-					<tr><td>Name</td><td><?=$user->name?></td></tr>
-					<tr><td>Email</td><td><?=$user->email?></td></tr>
-					<tr><td>Active</td><td><?=($user->active ? 'Yes' : 'No')?></td></tr>
-				</tbody>
-			</table>
+            <heading class="page-heading">
+                <h1 class="breadcrumb">
+                    <a href="/users">Users</a> <span class="breadcrumb-separator">/</span> User details
+                </h1>
+            </heading>
+            
+            <table class="table bordered vertical-headings">
+                <tbody>
+                    <tr><td>ID</td><td><?=$user->id?></td></tr>
+                    <tr><td>Name</td><td><?=$user->name?></td></tr>
+                    <tr><td>Email</td><td><?=$user->email?></td></tr>
+                    <tr><td>Active</td><td><?=($user->active ? 'Yes' : 'No')?></td></tr>
+                </tbody>
+            </table>
 
-		</div>
-	</article>
+        </div>
+    </article>
 </main>
 
 <?=$snippets['footer']?>

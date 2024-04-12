@@ -10,14 +10,14 @@
  * @return {void}
  */
 window.toggleHamMenu = evt => {
-	evt.preventDefault();
-	var menu = document.querySelector('.ham-menu');
+    evt.preventDefault();
+    var menu = document.querySelector('.ham-menu');
 
-	if (menu.classList.contains('ham-expanded')) {
-		menu.classList.remove('ham-expanded');
-	} else {
-		menu.classList.add('ham-expanded');
-	}
+    if (menu.classList.contains('ham-expanded')) {
+        menu.classList.remove('ham-expanded');
+    } else {
+        menu.classList.add('ham-expanded');
+    }
 }
 
 /**
@@ -27,27 +27,28 @@ window.toggleHamMenu = evt => {
  * @return {void}
  */
 window.highlightWarning = evt => {
-	if (evt.srcElement.checked) {
-		evt.srcElement.parentNode.classList.add("form-warning");
-	} else {
-		evt.srcElement.parentNode.classList.remove("form-warning");
-	}
+    if (evt.srcElement.checked) {
+        evt.srcElement.parentNode.classList.add("form-warning");
+    } else {
+        evt.srcElement.parentNode.classList.remove("form-warning");
+    }
 }
 
 /**
- * Highlight a checkbox's parent element when the value is true.
+ * Capture the tab key to an input rather than blurring.
+ *
  * @see https://stackoverflow.com/a/32523641
- * @param  {[MouseEvent]} evt
+ * @param  {[KeyboardEvent]} evt
  * @return {void}
  */
 window.captureTab = evt => {
-	// handle tab press
-	if(evt.keyCode === 9){
-		evt.preventDefault();
-		let el = evt.srcElement;
-		let v = el.value, s = el.selectionStart, e = el.selectionEnd;
-		el.value = v.substring(0, s)+'\t'+v.substring(e);
-		el.selectionStart = el.selectionEnd = s + 1;
-		return false;
-	}
+    // handle tab press
+    if(evt.keyCode === 9){
+        evt.preventDefault();
+        let el = evt.srcElement;
+        let v = el.value, s = el.selectionStart, e = el.selectionEnd;
+        el.value = v.substring(0, s)+'\t'+v.substring(e);
+        el.selectionStart = el.selectionEnd = s + 1;
+        return false;
+    }
 }
