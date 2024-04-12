@@ -55,7 +55,7 @@ class Authenticator
 
     public static function loggedIn() : bool
     {
-        return Authenticator::validSession();
+        return self::validSession();
     }
 
     public static function user()

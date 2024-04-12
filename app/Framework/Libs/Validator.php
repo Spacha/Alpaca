@@ -4,7 +4,7 @@ namespace App\Framework\Libs;
 
 use App\Framework\Exceptions\RoutingException as NotFound;
 
-Class Validator
+class Validator
 {
     /**
      * Validates an integer.

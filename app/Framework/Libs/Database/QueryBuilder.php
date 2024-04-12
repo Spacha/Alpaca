@@ -2,7 +2,8 @@
 
 namespace App\Framework\Libs\Database;
 
-use App\Framework\Libs\Database\{
+use \App\Framework\Libs\Database\{
+    QueryBuilderException,
     DatabaseConnection,
     MySQLGrammar
 };
@@ -111,7 +112,7 @@ class QueryBuilder
         if (!empty($this->delete))
             return ['type' => 'delete', 'data' => []];
 
-        // throw new QueryBuilderException();
+        throw new QueryBuilderException("Cannot build a query without an operation");
     }
 
 
@@ -125,7 +126,7 @@ class QueryBuilder
      * data: ['col1', 'col2']
      *
      * @param mixed $columns    string or array
-     * @return App\Framework\Libs\Database\QueryBuilder
+     * @return \App\Framework\Libs\Database\QueryBuilder
      */
     public function select($columns = '*') : QueryBuilder
     {
@@ -148,7 +149,7 @@ class QueryBuilder
      * data: ['col1' => 'value1', 'col2' => 'value2']
      *
      * @param array $values     Key-value pairs to insert into the table.
-     * @return App\Framework\Libs\Database\QueryBuilder
+     * @return \App\Framework\Libs\Database\QueryBuilder
      */
     public function insert(array $values) : QueryBuilder
     {
@@ -165,7 +166,7 @@ class QueryBuilder
      * data: ['col1' => 'value1', 'col2' => 'value2']
      *
      * @param array $values     Key-value pairs to update into the table.
-     * @return App\Framework\Libs\Database\QueryBuilder
+     * @return \App\Framework\Libs\Database\QueryBuilder
      */
     public function update(array $values) : QueryBuilder
     {
@@ -179,7 +180,7 @@ class QueryBuilder
     /**
      * Make a delete.
      *
-     * @return App\Framework\Libs\Database\QueryBuilder
+     * @return \App\Framework\Libs\Database\QueryBuilder
      */
     public function delete() : QueryBuilder
     {
@@ -191,7 +192,7 @@ class QueryBuilder
      * Choose which table to query (select). Alias of table().
      *
      * @param string $table
-     * @return App\Framework\Libs\Database\QueryBuilder
+     * @return \App\Framework\Libs\Database\QueryBuilder
      */
     public function from(string $table) : QueryBuilder
     {
@@ -202,7 +203,7 @@ class QueryBuilder
      * Choose which table to query (insert). Alias of table().
      *
      * @param string $table
-     * @return App\Framework\Libs\Database\QueryBuilder
+     * @return \App\Framework\Libs\Database\QueryBuilder
      */
     public function into(string $table) : QueryBuilder
     {
@@ -213,7 +214,7 @@ class QueryBuilder
      * Choose which table to query (any).
      *
      * @param string $table
-     * @return App\Framework\Libs\Database\QueryBuilder
+     * @return \App\Framework\Libs\Database\QueryBuilder
      */
     public function table(string $table) : QueryBuilder
     {
@@ -227,7 +228,7 @@ class QueryBuilder
      *
      * @param  string $table
      * @param  string $condition
-     * @return App\Framework\Libs\Database\QueryBuilder
+     * @return \App\Framework\Libs\Database\QueryBuilder
      */
     public function leftJoin(string $table, string $condition) : QueryBuilder
     {
@@ -242,7 +243,7 @@ class QueryBuilder
      *
      * @param mixed $arg1       string/array
      * @param string $arg2
-     * @return App\Framework\Libs\Database\QueryBuilder
+     * @return \App\Framework\Libs\Database\QueryBuilder
      */
     public function where($arg1, $arg2 = null) : QueryBuilder
     {
@@ -255,11 +256,11 @@ class QueryBuilder
     }
 
     /**
-     * Make a OR where clause.
+     * Make an OR where clause.
      *
      * @param mixed $arg1       string/array
      * @param string $arg2
-     * @return App\Framework\Libs\Database\QueryBuilder
+     * @return \App\Framework\Libs\Database\QueryBuilder
      */
     public function orWhere($arg1, $arg2 = null) : QueryBuilder
     {
@@ -276,7 +277,7 @@ class QueryBuilder
      *
      * @param string $by        What column to order by.
      * @param string $order     In what order to order (ASC/DESC).
-     * @return App\Framework\Libs\Database\QueryBuilder
+     * @return \App\Framework\Libs\Database\QueryBuilder
      */
     public function orderBy(string $by, string $order = 'ASC') : QueryBuilder
     {
@@ -289,7 +290,7 @@ class QueryBuilder
      *
      * @param int $limit    The limit.
      * @param int $offset   The limit offset.
-     * @return App\Framework\Libs\Database\QueryBuilder
+     * @return \App\Framework\Libs\Database\QueryBuilder
      */
     public function limit(int $limit, int $offset = 0) : QueryBuilder
     {

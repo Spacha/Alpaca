@@ -15,8 +15,8 @@ use App\Framework\Libs\{
 };
 
 /**
-*
-*/
+ * Bootstrap.
+ */
 class Bootstrap
 {
     protected $router;
