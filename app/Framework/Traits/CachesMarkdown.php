@@ -5,9 +5,9 @@ namespace App\Framework\Traits;
 use App\Framework\Libs\Markdown;
 
 /**
-* Gives a model an ability to store and retrieve markdown content
-* that is compiled to HTML after each update.
-*/
+ * Gives a model an ability to store and retrieve markdown content
+ * that is compiled to HTML after each update.
+ */
 trait CachesMarkdown
 {
     protected function updateMarkdownCache(int $id, string $markdown = '') : bool

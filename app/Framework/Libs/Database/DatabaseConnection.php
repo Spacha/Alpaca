@@ -31,7 +31,7 @@ class DatabaseConnection extends PDO
             );
 
             $this->exec('SET NAMES utf8');
-            $this->setAttribute(self::ATTR_ERRMODE, self::ERRMODE_WARNING);
+            $this->setAttribute(parent::ATTR_ERRMODE, parent::ERRMODE_WARNING);
         } catch (\PDOException $e) {
             throw new DatabaseException($e->getMessage());
         }

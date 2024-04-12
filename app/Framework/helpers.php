@@ -32,9 +32,9 @@ function config(string $config = '', bool $anywhere = false) : array
  * Get the database configuration if found.
  * @return array
  **/
-function dbConfig()
+function dbConfig(string $config = 'dbConfig')
 {
-    return config(PATH_ROOT . '/dbConfig.php', true);
+    return config(PATH_ROOT . "/{$config}.php", true);
 }
 
 /**
@@ -146,7 +146,7 @@ function public_root(string $path)
  * Get data value from array. Checks if stuff exists for you.
  *
  * @param array $params parameter array which Router passed to the method
- * @return Return the value from the array or null if not found
+ * @return * Return the value from the array or null if not found
  */
 function data($params = [], $key = '')
 {
@@ -159,7 +159,7 @@ function data($params = [], $key = '')
  *
  * @param $var The variable
  * @param $default If $var is undefined, use this, null as default
- * @return Return the value or default value
+ * @return * Return the value or default value
  */
 function opt($var = null, $default = null)
 {
